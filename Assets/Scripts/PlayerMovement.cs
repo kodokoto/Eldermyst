@@ -5,17 +5,27 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public Vector2 moveValue;
+    public Vector2 movement;
+    private Rigidbody2D rb;
     public float speed;
     // Start is called before the first frame update
 
-    void onMove(InputValue value) {
-        moveValue = value.Get<Vector2>();
+    void Awake() {
+        rb = GetComponent<Rigidbody2D>();
+    }
+    // void OnMove(InputValue value) {
+    //     moveValue = value.Get<Vector2>();
+    // }
+
+    void Run() {
+        
+    }
+
+    void OnMove(InputValue value) {
+        movement = value.Get<Vector2>();
     }
 
     void FixedUpdate() {
-        Vector2 movement = new Vector2(moveValue.x, moveValue.y);
-
-        GetComponent<Rigidbody2D>().AddForce(movement * speed * Time.fixedDeltaTime);
+        rb.MovePosition(rb.position + movement * speed * Time.fixedDeltaTime);
     }
 }
