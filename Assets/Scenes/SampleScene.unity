@@ -767,6 +767,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11b9699a7a976404e9d4b4bf87c62d27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 0}
+  groundCheck: {fileID: 2123962765}
+  groundCheckSize: {x: 0, y: 0}
+  frontChck: {fileID: 1161999884}
+  backCheck: {fileID: 823258136}
+  fallGravityMultiplier: 1.5
+  fallGravityMultiplierAfterJump: 2
+  maxFallingVelocity: 25
+  jumpHeight: 3.5
+  jumpApexTime: 0.3
+  jumpHangTimeThreshold: 1
+  jumpHangAccelerationMultiplier: 1.1
+  jumpHangMaxVelocityMultiplier: 1.3
+  runMaxSpeed: 10
+  runningAcceleration: 2.5
+  runningDeceleration: 5
+  airFriction: 0.65
+  coyoteTime: 0.1
 --- !u!1 &2123962764
 GameObject:
   m_ObjectHideFlags: 0
