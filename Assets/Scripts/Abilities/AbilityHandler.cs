@@ -5,8 +5,8 @@ using UnityEngine;
 public class AbilityHandler : MonoBehaviour
 {
     public Ability ability;
-    float cooldownTimer;
-    float activeTimer;
+    float cooldownTime;
+    float activeTime;
 
     enum AbilityState
     {
@@ -38,7 +38,7 @@ public class AbilityHandler : MonoBehaviour
                 else
                 {
                     state = AbilityState.Cooldown;
-                    cooldownTimer = ability.cooldown;
+                    cooldownTimer = ability.cooldownTime;
                 }
                 break;
             case AbilityState.Cooldown:
