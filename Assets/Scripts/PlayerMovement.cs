@@ -355,4 +355,16 @@ public class PlayerMovement : MonoBehaviour
         SetMovementParams();
     }
 
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == 8) {
+           
+            collision.gameObject.SetActive(false);
+            // here we can then update health/mana
+            // if (collision.gameObject.tag == "Health"){update health}
+            // else if (collision.gameObject.tag == "Mana"){update mana}
+
+        }
+    }
+
 }
