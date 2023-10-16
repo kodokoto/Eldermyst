@@ -12,20 +12,27 @@ public class PlayerMovement : MonoBehaviour
     private bool isFacingRight;
     private bool isJumping;
 
+    private bool isWallJumping;
 
-    // ground
+
+    // timers
 
     private float lastGrounded;
+    private float lastOnWall;
+	private float lastOnWallRight;
+	private float lastOnWallLeft;
+    private float lastPressedJump;
+
 
     // Jumping
     private bool isFinishedJumping;
     private bool isFallingAfterJump;
+    [SerializeField] public int bonusJumps = 1;
 
-
+    [SerializeField] private float wallJumpTime;
 
     // Collision checks
     [SerializeField] private Transform groundCheck;
-    [SerializeField] private Vector2 groundCheckSize;
     [SerializeField] private Transform frontChck;
 	[SerializeField] private Transform backCheck;
 
@@ -34,6 +41,9 @@ public class PlayerMovement : MonoBehaviour
     private float gravityScale;
     private float gravityStrength;
     private float jumpingForce;
+    [SerializeField] private Vector2 wallJumpForce = new Vector2(15, 25);
+
+    private int wallJumpDirection;
 
     [SerializeField] float fallGravityMultiplier = 1.5f;
     [SerializeField] float fallGravityMultiplierAfterJump = 2f;
@@ -69,13 +79,20 @@ public class PlayerMovement : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        lastGrounded -= Time.deltaTime;
 
+    void UpdateTimers()
+    {
+        lastGrounded-= Time.deltaTime;
+        lastOnWall-= Time.deltaTime;
+        lastOnWallLeft-= Time.deltaTime;
+        lastOnWallRight -= Time.deltaTime;
+        lastPressedJump -= Time.deltaTime;
+    }
+
+    void HandleInput()
+    {
         input.x = Input.GetAxisRaw("Horizontal");
 		input.y = Input.GetAxisRaw("Vertical");
-
 
         // if moving on the x axis
         if (input.x != 0)
@@ -87,13 +104,103 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            lastPressedJump = 0.1f;
+        }
+
+        if (Input.GetKeyUp(KeyCode.W))
+        {
+            if (isJumping && rb.velocity.y > 0)
+            {
+                isFinishedJumping = true;
+            }
+        }
+
+    }
+
+    bool isCollidingWithGround()
+    {
+        return Physics2D.OverlapBox(groundCheck.position, groundCheck.localScale, 0, LayerMask.GetMask("Ground"));
+    }
+
+    bool isCollidingWithWall(bool isRight)
+    {
+        return (Physics2D.OverlapBox(frontChck.position, frontChck.localScale, 0, LayerMask.GetMask("StickyWall")) && isRight) || (Physics2D.OverlapBox(backCheck.position, backCheck.localScale, 0, LayerMask.GetMask("StickyWall")) && !isRight);
+    }
+
+    void UpdateCollisions()
+    {
+        // Grounded
+        if (isCollidingWithGround())
+        {
+            lastGrounded = coyoteTime;
+            bonusJumps = 1;
+        }
+
+        // if we are on a wall to the right
+        if (isCollidingWithWall(isFacingRight))
+        {
+            lastOnWallRight = coyoteTime;
+        }
+
+        // if we are on a wall to the left
+        if (isCollidingWithWall(!isFacingRight))
+        {
+            lastOnWallLeft = coyoteTime;
+        }
+
+        lastOnWall = Mathf.Max(lastOnWallLeft, lastOnWallRight);
+    }
+
+    void UpdateGravity()
+    {
+        // falling after jump
+        if (isFinishedJumping) 
+        {
+            rb.gravityScale = gravityScale * fallGravityMultiplierAfterJump;
+            rb.velocity = new Vector2(rb.velocity.x, Mathf.Max(rb.velocity.y, -maxFallingVelocity));
+        }
+        // hanging in the air after jump
+        else if ((isJumping || isFallingAfterJump) && Mathf.Abs(rb.velocity.y) < jumpHangTimeThreshold)
+        {
+            rb.gravityScale = gravityScale * 0.5f;
+        }
+        // falling normally
+        else if (rb.velocity.y < 0)
+        {
+            rb.gravityScale = gravityScale * fallGravityMultiplier;
+            rb.velocity = new Vector2(rb.velocity.x, Mathf.Max(rb.velocity.y, -maxFallingVelocity));
+        }
+        else
+        {
+            rb.gravityScale = gravityScale;
+        }
+
+    }
+
+    void Update()
+    {
+
+        UpdateTimers();
+
+        HandleInput();
+
+
         if (!isJumping)
         {
-            // Grounded
-            if (Physics2D.OverlapBox(groundCheck.position, groundCheckSize, 0, LayerMask.GetMask("Ground")))
-            {
-                lastGrounded = coyoteTime;
-            }
+            UpdateCollisions();
+        }
+
+        if (isJumping && rb.velocity.y < 0)
+        {
+            isJumping = false;
+            isFallingAfterJump = true;
+        }
+
+        if (isWallJumping)
+        {
+            isWallJumping = false;
         }
 
         if (lastGrounded > 0 && !isJumping)
@@ -102,31 +209,46 @@ public class PlayerMovement : MonoBehaviour
             isFallingAfterJump = false;
         }
 
-        // GRAVITY
+        if (CanWallJump() && lastPressedJump > 0)
+        {
+            isWallJumping = true;
+            isJumping = false;
+            isFinishedJumping = false;
+            isFallingAfterJump = false;
+            WallJump();
 
-        // falling after jump
-        if (isFinishedJumping) 
+        } 
+        else if (CanJump() && lastPressedJump > 0)
         {
-            rb.gravityScale = gravityScale * fallGravityMultiplierAfterJump;
-            rb.velocity += new Vector2(rb.velocity.x, Mathf.Max(rb.velocity.y, -maxFallingVelocity));
+            if (lastGrounded <= 0)
+            {
+                bonusJumps--;
+            }
+
+            isJumping = true;
+            isWallJumping = false;
+            isFinishedJumping = false;
+            isFallingAfterJump = false;
+            Jump();
         }
-        // falling normally
-        else if (rb.velocity.y < 0)
-        {
-            rb.gravityScale = gravityScale * fallGravityMultiplier;
-            rb.velocity += new Vector2(rb.velocity.x, Mathf.Max(rb.velocity.y, -maxFallingVelocity));
-        }
-        else
-        {
-            rb.gravityScale = gravityScale;
-        }
+
+        UpdateGravity();
+    }
+
+    bool CanJump()
+    {
+        return bonusJumps > 0 || (lastGrounded > 0 && !isJumping);
+    }
+
+    bool CanWallJump()
+    {
+        return lastPressedJump > 0 && lastOnWall > 0 && lastGrounded <= 0;
     }
 
     void FixedUpdate()
     {
         Run(1);
     }
-
     void Run(float lerpAmount)
     {
         float velocity = input.x * maxVelocity;
@@ -148,7 +270,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // apply a multiplier if we're falling 
-        if (isFallingAfterJump && Mathf.Abs(rb.velocity.y) < jumpHangTimeThreshold)
+        if ((isJumping || isFallingAfterJump) && Mathf.Abs(rb.velocity.y) < jumpHangTimeThreshold)
         {
             acceletarion *= jumpHangAccelerationMultiplier;
             velocity *= jumpHangMaxVelocityMultiplier;
@@ -165,6 +287,45 @@ public class PlayerMovement : MonoBehaviour
         float distance = dVelocity * acceletarion;
 
         rb.AddForce(Vector2.right * distance, ForceMode2D.Force);
+    }
+
+    void Jump()
+    {
+        // Debug.Log("jumping");
+        lastPressedJump = 0;
+        lastGrounded = 0;
+
+        float force = jumpingForce;
+        if (rb.velocity.y < 0)
+        {
+            force -= rb.velocity.y;
+        }
+
+        rb.AddForce(Vector2.up * force, ForceMode2D.Impulse);
+    }
+
+    void WallJump()
+    {
+
+        wallJumpDirection =  (lastOnWallRight > 0) ? -1 : 1;
+        lastPressedJump = 0;
+        lastGrounded = 0;
+        lastOnWallLeft = 0;
+        lastOnWallRight = 0;
+
+        Vector2 force = new Vector2(wallJumpForce.x, wallJumpForce.y);
+        force.x *= wallJumpDirection;
+
+        if (Mathf.Sign(rb.velocity.x) != Mathf.Sign(force.x))
+        {
+            force.x -= rb.velocity.x;
+        }
+        if (rb.velocity.y < 0)
+        {
+            force.y -= rb.velocity.y;
+        }
+
+        rb.AddForce(force, ForceMode2D.Impulse);
     }
 
     void Flip()
