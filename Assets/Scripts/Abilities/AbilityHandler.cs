@@ -15,9 +15,9 @@ public class AbilityHandler : MonoBehaviour
         Cooldown,
     }
 
-    AbilityState state;
+    private AbilityState state;
 
-    KeyCode key;
+    public KeyCode key;
 
 
     // Update is called once per frame
@@ -27,7 +27,7 @@ public class AbilityHandler : MonoBehaviour
             case AbilityState.Ready:
                 if (Input.GetKeyDown(key))
                 {
-                    ability.Activate();
+                    ability.Activate(gameObject);
                 }
                 break;
             case AbilityState.Active:

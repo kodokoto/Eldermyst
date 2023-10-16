@@ -435,7 +435,7 @@ GameObject:
   - component: {fileID: 978995407}
   m_Layer: 0
   m_Name: Camera
-  m_TagString: Untagged
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -735,6 +735,7 @@ GameObject:
   - component: {fileID: 1842104896}
   - component: {fileID: 1842104895}
   - component: {fileID: 1842104899}
+  - component: {fileID: 1842104900}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -917,6 +918,20 @@ MonoBehaviour:
   runningDeceleration: 5
   airFriction: 0.65
   coyoteTime: 0.1
+--- !u!114 &1842104900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1842104894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf7a97e5d84d649e5b69a1ce5caf9c11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ability: {fileID: 11400000, guid: e514316db1dd04d899641440b5e5b296, type: 2}
+  key: 32
 --- !u!1 &2123962764
 GameObject:
   m_ObjectHideFlags: 0
