@@ -31,20 +31,20 @@ public class AbilityHandler : MonoBehaviour
                 }
                 break;
             case AbilityState.Active:
-                if (activeTimer > 0)
+                if (activeTime > 0)
                 {
-                    activeTimer -= Time.deltaTime;
+                    activeTime -= Time.deltaTime;
                 }
                 else
                 {
                     state = AbilityState.Cooldown;
-                    cooldownTimer = ability.cooldownTime;
+                    cooldownTime = ability.cooldownTime;
                 }
                 break;
             case AbilityState.Cooldown:
-                if (cooldownTimer > 0)
+                if (cooldownTime > 0)
                 {
-                    cooldownTimer -= Time.deltaTime;
+                    cooldownTime -= Time.deltaTime;
                 }
                 else
                 {
