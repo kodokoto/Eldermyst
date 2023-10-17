@@ -19,7 +19,6 @@ public class AbilityHandler : MonoBehaviour
 
     public KeyCode key;
 
-
     // Update is called once per frame
     void Update()
     {
@@ -37,6 +36,7 @@ public class AbilityHandler : MonoBehaviour
                 }
                 else
                 {
+                    ability.Deactivate(gameObject);
                     state = AbilityState.Cooldown;
                     cooldownTime = ability.cooldownTime;
                 }
