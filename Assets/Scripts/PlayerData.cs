@@ -20,7 +20,7 @@ public class PlayerData : ScriptableObject
     private float health;
     private float mana;
 
-    private bool isShielded;
+    [HideInInspector] public bool isShielded;
     
     void OnValidate() 
     {
