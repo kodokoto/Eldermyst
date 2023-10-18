@@ -5,14 +5,16 @@ using UnityEngine;
 [CreateAssetMenu]
 public class Teleport : Spell
 {
+    [SerializeField] public new int manaCost = 10;
+
     public float teleportDistance;
-    public override void Activate(GameObject parent)
+
+    public Vector2 preCalcPosition;
+
+    public override bool isValid(GameObject parent)
     {
-        // teleport towards the mouse cursor position by teleportDistance
 
-        // get the mouse position in world coordinates
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
         // get the direction from the player to the mouse
         Vector2 parentPosition = parent.transform.position;
         Vector2 direction = mousePosition - parentPosition;
@@ -27,10 +29,21 @@ public class Teleport : Spell
 
         if (Physics2D.OverlapCircle(newPosition, 0.5f, solidLayers))
         {
-            return;
+            Debug.Log("Teleport is invalid");
+            return false;
         }
+        else 
+        {
+            preCalcPosition = newPosition;
+            Debug.Log("Teleport is Valid");
+            return true;
+        }
+    }
 
+    public override void Activate(GameObject parent)
+    {
         // set the player's position to the new position
-        parent.transform.position = newPosition;
+        Debug.Log("Teleport is happening");
+        parent.transform.position = preCalcPosition;
     }
 }

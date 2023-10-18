@@ -5,9 +5,29 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public PlayerData data;
-
+    [SerializeField] private Transform projectileSpawnPoint;
     private float healthRegenTimer;
     private float manaRegenTimer;
+
+    public int getMana()
+    {
+        return data.mana;
+    }
+
+    public int getHealth()
+    {
+        return data.health;
+    }
+
+    public bool isShielded()
+    {
+        return data.isShielded;
+    }
+
+    public void setIsShielded(bool isShielded)
+    {
+        data.isShielded = isShielded;
+    }
 
     public void takeDamage(int damage)
     {
@@ -62,6 +82,11 @@ public class Player : MonoBehaviour
                 manaRegenTimer += Time.deltaTime;
             }
         }
+    }
+
+    public Transform getProjectileSpawnPoint()
+    {
+        return projectileSpawnPoint;
     }
 
     void Update()

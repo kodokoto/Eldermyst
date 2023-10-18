@@ -14,7 +14,7 @@ public class Projectile : MonoBehaviour
     void Update()
     {
         // Destroy the projectile if it goes off screen
-        if (transform.position.magnitude > 1000.0f)
+        if (transform.position.magnitude > 100.0f)
         {
             Destroy(gameObject);
         }

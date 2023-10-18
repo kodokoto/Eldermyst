@@ -6,21 +6,19 @@ using UnityEngine;
 public class Shield : Spell
 {
 
+    [SerializeField] public new int manaCost = 10;
     public Color32 sheildTint = new Color32(60, 240, 240, 240);
     public override void Activate(GameObject parent)
     {
         Player player = parent.GetComponent<Player>();
-        player.data.isShielded = true;
-
+        player.setIsShielded(true);
         parent.GetComponent<SpriteRenderer>().color = sheildTint;
-        Debug.Log(parent.GetComponent<SpriteRenderer>().color);
     }
 
     public override void Deactivate(GameObject parent)
     {
         Player player = parent.GetComponent<Player>();
-        player.data.isShielded = false;
-
+        player.setIsShielded(false);
         parent.GetComponent<SpriteRenderer>().color = Color.white;
     }
 }

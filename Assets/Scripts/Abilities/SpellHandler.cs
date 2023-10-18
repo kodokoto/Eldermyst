@@ -24,7 +24,7 @@ public class SpellHandler : MonoBehaviour
     {
         switch (state) {
             case SpellState.Ready:
-                if (Input.GetKeyDown(key))
+                if (Input.GetKeyDown(key) && spell.Validate(gameObject))
                 {
                     spell.Activate(gameObject);
                     state = SpellState.Active;
