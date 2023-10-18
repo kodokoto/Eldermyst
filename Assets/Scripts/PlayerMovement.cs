@@ -48,22 +48,22 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float fallGravityMultiplier = 1.5f;
     [SerializeField] float fallGravityMultiplierAfterJump = 2f;
     [SerializeField] float maxFallingVelocity = 25f;
-    [SerializeField] public float jumpHeight = 3.5f;
-    [SerializeField] public float jumpApexTime = 0.3f;
+    [SerializeField] float jumpHeight = 3.5f;
+    [SerializeField] float jumpApexTime = 0.3f;
 
-    [SerializeField] public float jumpHangTimeThreshold = 1f;
-    [SerializeField] public float jumpHangAccelerationMultiplier = 1.1f;
-    [SerializeField] public float jumpHangMaxVelocityMultiplier = 1.3f;
+    [SerializeField] float jumpHangTimeThreshold = 1f;
+    [SerializeField] float jumpHangAccelerationMultiplier = 1.1f;
+    [SerializeField] float jumpHangMaxVelocityMultiplier = 1.3f;
 
-    [SerializeField] public float maxVelocity = 10f;
-    [SerializeField] public float runningAcceleration = 2.5f;
-    [SerializeField] public float runningDeceleration = 5f;
+    [SerializeField] float maxVelocity = 10f;
+    [SerializeField] float runningAcceleration = 2.5f;
+    [SerializeField] float runningDeceleration = 5f;
 
     private float trueAcceleration;
     private float trueDeceleration;
-    [SerializeField] public float airFriction = 0.65f;
+    [SerializeField] float airFriction = 0.65f;
 
-    [SerializeField] public float coyoteTime = 0.1f;
+    [SerializeField] float coyoteTime = 0.1f;
 
 
     void Awake()
@@ -119,12 +119,12 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    bool isCollidingWithGround()
+    bool IsCollidingWithGround()
     {
         return Physics2D.OverlapBox(groundCheck.position, groundCheck.localScale, 0, LayerMask.GetMask("Ground"));
     }
 
-    bool isCollidingWithWall(bool isRight)
+    bool IsCollidingWithWall(bool isRight)
     {
         return (Physics2D.OverlapBox(frontChck.position, frontChck.localScale, 0, LayerMask.GetMask("StickyWall")) && isRight) || (Physics2D.OverlapBox(backCheck.position, backCheck.localScale, 0, LayerMask.GetMask("StickyWall")) && !isRight);
     }
@@ -132,20 +132,20 @@ public class PlayerMovement : MonoBehaviour
     void UpdateCollisions()
     {
         // Grounded
-        if (isCollidingWithGround())
+        if (IsCollidingWithGround())
         {
             lastGrounded = coyoteTime;
             bonusJumps = 1;
         }
 
         // if we are on a wall to the right
-        if (isCollidingWithWall(isFacingRight))
+        if (IsCollidingWithWall(isFacingRight))
         {
             lastOnWallRight = coyoteTime;
         }
 
         // if we are on a wall to the left
-        if (isCollidingWithWall(!isFacingRight))
+        if (IsCollidingWithWall(!isFacingRight))
         {
             lastOnWallLeft = coyoteTime;
         }
