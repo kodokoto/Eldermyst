@@ -2,20 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AbilityHandler : MonoBehaviour
+public class SpellHandler : MonoBehaviour
 {
-    public Ability ability;
+    public Spell spell;
     float cooldownTime;
     float activeTime;
 
-    enum AbilityState
+    enum SpellState
     {
         Ready,
         Active,
         Cooldown,
     }
 
-    private AbilityState state;
+    private SpellState state;
 
     public KeyCode key;
 
@@ -23,32 +23,34 @@ public class AbilityHandler : MonoBehaviour
     void Update()
     {
         switch (state) {
-            case AbilityState.Ready:
+            case SpellState.Ready:
                 if (Input.GetKeyDown(key))
                 {
-                    ability.Activate(gameObject);
+                    spell.Activate(gameObject);
+                    state = SpellState.Active;
+                    activeTime = spell.activeTime;
                 }
                 break;
-            case AbilityState.Active:
+            case SpellState.Active:
                 if (activeTime > 0)
                 {
                     activeTime -= Time.deltaTime;
                 }
                 else
                 {
-                    ability.Deactivate(gameObject);
-                    state = AbilityState.Cooldown;
-                    cooldownTime = ability.cooldownTime;
+                    spell.Deactivate(gameObject);
+                    state = SpellState.Cooldown;
+                    cooldownTime = spell.cooldownTime;
                 }
                 break;
-            case AbilityState.Cooldown:
+            case SpellState.Cooldown:
                 if (cooldownTime > 0)
                 {
                     cooldownTime -= Time.deltaTime;
                 }
                 else
                 {
-                    state = AbilityState.Ready;
+                    state = SpellState.Ready;
                 }
                 break;
 

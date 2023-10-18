@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 9218621308738987001}
   - component: {fileID: 7149744206618352863}
   - component: {fileID: 1257955447984634412}
+  - component: {fileID: -7137918622530986018}
   m_Layer: 0
   m_Name: Banana
   m_TagString: Untagged
@@ -149,3 +150,17 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
+--- !u!114 &-7137918622530986018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4619283876682261130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fed9e0f8156c4346b902dd90f377979, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 20
+  rb: {fileID: 7149744206618352863}

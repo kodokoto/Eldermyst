@@ -10,16 +10,14 @@ public class PlayerData : ScriptableObject
     [SerializeField] public float maxHealth;
     [SerializeField] public float maxMana;
 
-    [SerializeField] public float healthRegen;
+    [SerializeField] public int healthRegen;
+    [SerializeField] public float healthRegenRate;
+    [SerializeField] public int manaRegen;
+    [SerializeField] public float manaRegenRate;
 
-    [SerializeField] public float manaRegen;
-
-
-
-
-    private float health;
-    private float mana;
-
+    // Ingame stats
+    [HideInInspector] public float health;
+    [HideInInspector] public float mana;
     [HideInInspector] public bool isShielded;
     
     void OnValidate() 

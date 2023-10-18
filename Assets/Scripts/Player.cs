@@ -5,4 +5,68 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public PlayerData data;
+
+    private float healthRegenTimer;
+    private float manaRegenTimer;
+
+    public void takeDamage(int damage)
+    {
+        if (!data.isShielded)
+        {
+            data.health -= damage;
+        }
+    }
+
+    public void consumeMana(int mana)
+    {
+        data.mana -= mana;
+    }
+
+    public void restoreHealth(int healAmount)
+    {
+        data.health += healAmount;
+    }
+
+    public void restoreMana(int mana)
+    {
+        data.mana += mana;
+    }
+
+    public void healthRegen()
+    {
+        if (data.health < data.maxHealth)
+        {
+            if (healthRegenTimer > data.healthRegenRate)
+            {
+                restoreHealth(data.healthRegen);
+                healthRegenTimer = 0;
+            }
+            else
+            {
+                healthRegenTimer += Time.deltaTime;
+            }
+        }
+    }
+
+    public void manaRegen()
+    {
+        if (data.mana < data.maxMana)
+        {
+            if (manaRegenTimer > data.manaRegenRate)
+            {
+                restoreMana(data.manaRegen);
+                manaRegenTimer = 0;
+            }
+            else
+            {
+                manaRegenTimer += Time.deltaTime;
+            }
+        }
+    }
+
+    void Update()
+    {
+        healthRegen();
+        manaRegen();
+    }
 }

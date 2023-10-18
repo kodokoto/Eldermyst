@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu]
-public class Teleport : Ability
+public class Teleport : Spell
 {
     public float teleportDistance;
     public override void Activate(GameObject parent)

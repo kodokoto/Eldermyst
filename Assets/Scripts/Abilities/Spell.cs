@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ability : ScriptableObject
+public class Spell : ScriptableObject
 {
     public new string name;
     public float cooldownTime;
