@@ -7,13 +7,13 @@ public class PlayerData : ScriptableObject
 {
     
     [Header("Stats")]
-    [SerializeField] public int maxHealth;
-    [SerializeField] public int maxMana;
+    public int maxHealth;
+    public int maxMana;
 
-    [SerializeField] public int healthRegen;
-    [SerializeField] public float healthRegenRate;
-    [SerializeField] public int manaRegen;
-    [SerializeField] public float manaRegenRate;
+    public int healthRegen;
+    public float healthRegenRate;
+    public int manaRegen;
+    public float manaRegenRate;
 
     // Ingame stats
     [HideInInspector] public int health;

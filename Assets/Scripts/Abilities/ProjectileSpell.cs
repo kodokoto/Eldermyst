@@ -9,7 +9,7 @@ public class ProjectileSpell : Spell
     public override void Activate(GameObject parent)
     {
         Player player = parent.GetComponent<Player>();
-        Transform projectileSpawnPoint = player.getProjectileSpawnPoint();
+        Transform projectileSpawnPoint = player.GetProjectileSpawnPoint();
         Instantiate(projectilePrefab, projectileSpawnPoint.position, projectileSpawnPoint.rotation);
     }
 

@@ -21,17 +21,17 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        healthRegen();
-        manaRegen();
+        HealthRegen();
+        ManaRegen();
     }
 
-    public void healthRegen()
+    public void HealthRegen()
     {
         if (data.health < data.maxHealth)
         {
             if (healthRegenTimer > data.healthRegenRate)
             {
-                restoreHealth(data.healthRegen);
+                RestoreHealth(data.healthRegen);
                 healthRegenTimer = 0;
             }
             else
@@ -41,13 +41,13 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void manaRegen()
+    public void ManaRegen()
     {
         if (data.mana < data.maxMana)
         {
             if (manaRegenTimer > data.manaRegenRate)
             {
-                restoreMana(data.manaRegen);
+                RestoreMana(data.manaRegen);
                 manaRegenTimer = 0;
             }
             else
@@ -60,49 +60,49 @@ public class Player : MonoBehaviour
 
     // Helpers
 
-    public int getMana()
+    public int GetMana()
     {
         return data.mana;
     }
 
-    public int getHealth()
+    public int GetHealth()
     {
         return data.health;
     }
 
-    public bool isShielded()
+    public bool IsShielded()
     {
         return data.isShielded;
     }
 
-    public void setIsShielded(bool isShielded)
+    public void SetIsShielded(bool isShielded)
     {
         data.isShielded = isShielded;
     }
 
-    public void takeDamage(int damage)
+    public void TakeDamage(int damage)
     {
         if (!data.isShielded)
         {
-             removeHealth(damage);
+             RemoveHealth(damage);
         }
     }
 
-    public void consumeMana(int mana)
+    public void ConsumeMana(int mana)
     {
-        removeMana(mana);
+        RemoveMana(mana);
     }
 
-    public void restoreHealth(int healAmount)
+    public void RestoreHealth(int healAmount)
     {
-        addHealth(healAmount);
+        AddHealth(healAmount);
     }
 
-    public void restoreMana(int mana)
+    public void RestoreMana(int mana)
     {
-        addMana(mana);
+        AddMana(mana);
     }
-    public Transform getProjectileSpawnPoint()
+    public Transform GetProjectileSpawnPoint()
     {
         return projectileSpawnPoint;
     }
@@ -123,25 +123,25 @@ public class Player : MonoBehaviour
         manaBar.SetMaxMana(data.maxMana);
     }
 
-    private void addHealth(int amount)
+    private void AddHealth(int amount)
     {
         data.health = Mathf.Min(data.health + amount, data.maxHealth);
         healthBar.SetHealth(data.health);
     }
 
-    private void removeHealth(int amount)
+    private void RemoveHealth(int amount)
     {
         data.health = Mathf.Max(data.health - amount, 0);
         healthBar.SetHealth(data.health);
     }
 
-    private void addMana(int amount)
+    private void AddMana(int amount)
     {
         data.mana = Mathf.Min(data.mana + amount, data.maxMana);
         manaBar.SetMana(data.mana);
     }
 
-    private void removeMana(int amount)
+    private void RemoveMana(int amount)
     {
         data.mana = Mathf.Max(data.mana - amount, 0);
         manaBar.SetMana(data.mana);
