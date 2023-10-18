@@ -2,7 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+
+public interface TakeDamage
+{
+    void TakeDamage(int damage);
+}
+
+public class Player : MonoBehaviour , TakeDamage
 {
     public PlayerData data;
     [SerializeField] private Transform projectileSpawnPoint;
