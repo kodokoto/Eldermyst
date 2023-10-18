@@ -5,8 +5,6 @@ using UnityEngine;
 [CreateAssetMenu]
 public class Teleport : Spell
 {
-    [SerializeField] public new int manaCost = 10;
-
     public float teleportDistance;
 
     public Vector2 preCalcPosition;

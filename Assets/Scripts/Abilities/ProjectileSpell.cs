@@ -5,8 +5,6 @@ using UnityEngine;
 [CreateAssetMenu]
 public class ProjectileSpell : Spell
 {
-    [SerializeField] public new int manaCost = 10;
-
     public GameObject projectilePrefab;
     public override void Activate(GameObject parent)
     {

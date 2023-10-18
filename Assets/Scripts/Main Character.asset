@@ -15,4 +15,9 @@ MonoBehaviour:
   maxHealth: 100
   maxMana: 100
   healthRegen: 1
+  healthRegenRate: 1
   manaRegen: 1
+  manaRegenRate: 1
+  health: 100
+  mana: 36
+  isShielded: 0
