@@ -18,13 +18,14 @@ public class Potion : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             Player player = collision.gameObject.GetComponent<Player>();
-            if (type == PotionType.Health)
+            switch (type)
             {
-                player.restoreHealth(amount);
-            }
-            else if (type == PotionType.Mana)
-            {
-                player.restoreMana(amount);
+                case PotionType.Health:
+                    player.restoreHealth(amount);
+                    break;
+                case PotionType.Mana:
+                    player.restoreMana(amount);
+                    break;
             }
             Destroy(gameObject);
         }
