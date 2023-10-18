@@ -9,47 +9,10 @@ public class Player : MonoBehaviour
     private float healthRegenTimer;
     private float manaRegenTimer;
 
-    public int getMana()
+    void Update()
     {
-        return data.mana;
-    }
-
-    public int getHealth()
-    {
-        return data.health;
-    }
-
-    public bool isShielded()
-    {
-        return data.isShielded;
-    }
-
-    public void setIsShielded(bool isShielded)
-    {
-        data.isShielded = isShielded;
-    }
-
-    public void takeDamage(int damage)
-    {
-        if (!data.isShielded)
-        {
-            data.health -= damage;
-        }
-    }
-
-    public void consumeMana(int mana)
-    {
-        data.mana -= mana;
-    }
-
-    public void restoreHealth(int healAmount)
-    {
-        data.health += healAmount;
-    }
-
-    public void restoreMana(int mana)
-    {
-        data.mana += mana;
+        healthRegen();
+        manaRegen();
     }
 
     public void healthRegen()
@@ -84,14 +47,76 @@ public class Player : MonoBehaviour
         }
     }
 
+
+    // Helpers
+
+    public int getMana()
+    {
+        return data.mana;
+    }
+
+    public int getHealth()
+    {
+        return data.health;
+    }
+
+    public bool isShielded()
+    {
+        return data.isShielded;
+    }
+
+    public void setIsShielded(bool isShielded)
+    {
+        data.isShielded = isShielded;
+    }
+
+    public void takeDamage(int damage)
+    {
+        if (!data.isShielded)
+        {
+             removeHealth(damage);
+        }
+    }
+
+    public void consumeMana(int mana)
+    {
+        removeMana(mana);
+    }
+
+    public void restoreHealth(int healAmount)
+    {
+        addHealth(healAmount);
+    }
+
+    public void restoreMana(int mana)
+    {
+        addMana(mana);
+    }
     public Transform getProjectileSpawnPoint()
     {
         return projectileSpawnPoint;
     }
 
-    void Update()
+    // private data modifiers
+
+    private void addHealth(int amount)
     {
-        healthRegen();
-        manaRegen();
+        data.health = Mathf.Min(data.health + amount, data.maxHealth);
     }
+
+    private void removeHealth(int amount)
+    {
+        data.health = Mathf.Max(data.health - amount, 0);
+    }
+
+    private void addMana(int amount)
+    {
+        data.mana = Mathf.Min(data.mana + amount, data.maxMana);
+    }
+
+    private void removeMana(int amount)
+    {
+        data.mana = Mathf.Max(data.mana - amount, 0);
+    }
+
 }
