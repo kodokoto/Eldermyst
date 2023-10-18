@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 553707826476755466}
   - component: {fileID: 9101156443188638217}
   - component: {fileID: 1871398479985746323}
-  - component: {fileID: 140888671578165323}
   - component: {fileID: 982897371247597913}
   m_Layer: 8
   m_Name: Potion
@@ -133,38 +132,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &140888671578165323
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9044392057420844590}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11b9699a7a976404e9d4b4bf87c62d27, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rb: {fileID: 0}
-  bonusJumps: 1
-  wallJumpTime: 0
-  groundCheck: {fileID: 0}
-  frontChck: {fileID: 0}
-  backCheck: {fileID: 0}
-  wallJumpForce: {x: 15, y: 25}
-  fallGravityMultiplier: 1.5
-  fallGravityMultiplierAfterJump: 2
-  maxFallingVelocity: 25
-  jumpHeight: 3.5
-  jumpApexTime: 0.3
-  jumpHangTimeThreshold: 1
-  jumpHangAccelerationMultiplier: 1.1
-  jumpHangMaxVelocityMultiplier: 1.3
-  maxVelocity: 10
-  runningAcceleration: 2.5
-  runningDeceleration: 5
-  airFriction: 0.65
-  coyoteTime: 0.1
 --- !u!50 &982897371247597913
 Rigidbody2D:
   serializedVersion: 4
