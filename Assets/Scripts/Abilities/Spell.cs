@@ -18,11 +18,9 @@ public class Spell : ScriptableObject
 
     public bool Validate(GameObject parent)
     {
-        Debug.Log("Validate");
         Player player = parent.GetComponent<Player>();
         if (player.getMana() >= manaCost && isValid(parent))
         {
-            Debug.Log("Player has enough mana");
             player.consumeMana(manaCost);
             return true;
         }

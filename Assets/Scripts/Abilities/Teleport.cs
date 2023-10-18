@@ -29,13 +29,11 @@ public class Teleport : Spell
 
         if (Physics2D.OverlapCircle(newPosition, 0.5f, solidLayers))
         {
-            Debug.Log("Teleport is invalid");
             return false;
         }
         else 
         {
             preCalcPosition = newPosition;
-            Debug.Log("Teleport is Valid");
             return true;
         }
     }
@@ -43,7 +41,6 @@ public class Teleport : Spell
     public override void Activate(GameObject parent)
     {
         // set the player's position to the new position
-        Debug.Log("Teleport is happening");
         parent.transform.position = preCalcPosition;
     }
 }
