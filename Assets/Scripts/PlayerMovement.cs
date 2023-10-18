@@ -104,12 +104,12 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             lastPressedJump = 0.1f;
         }
 
-        if (Input.GetKeyUp(KeyCode.W))
+        if (Input.GetKeyUp(KeyCode.Space))
         {
             if (isJumping && rb.velocity.y > 0)
             {
@@ -330,9 +330,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Flip()
     {
-        Vector3 scale = transform.localScale;
-        scale.x *= -1;
-        transform.localScale = scale;
+        transform.Rotate(0f, 180f, 0f);
         isFacingRight = !isFacingRight;
     }
 
