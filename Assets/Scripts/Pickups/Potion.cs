@@ -21,10 +21,10 @@ public class Potion : MonoBehaviour
             switch (type)
             {
                 case PotionType.Health:
-                    player.restoreHealth(amount);
+                    player.RestoreHealth(amount);
                     break;
                 case PotionType.Mana:
-                    player.restoreMana(amount);
+                    player.RestoreMana(amount);
                     break;
             }
             Destroy(gameObject);

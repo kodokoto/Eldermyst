@@ -15,4 +15,6 @@ MonoBehaviour:
   name: Teleport
   cooldownTime: 0.5
   activeTime: 0
+  manaCost: 10
   teleportDistance: 8
+  preCalcPosition: {x: 0.92481697, y: 9.559071}

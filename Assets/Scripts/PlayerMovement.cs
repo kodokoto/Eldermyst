@@ -348,7 +348,7 @@ public class PlayerMovement : MonoBehaviour
         runningDeceleration = Mathf.Clamp(runningDeceleration, 0.01f, maxVelocity);
 
     }
-    void onValidate()
+    void OnValidate()
     {
         SetMovementParams();
     }

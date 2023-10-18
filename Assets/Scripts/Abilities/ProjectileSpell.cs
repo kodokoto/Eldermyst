@@ -5,13 +5,11 @@ using UnityEngine;
 [CreateAssetMenu]
 public class ProjectileSpell : Spell
 {
-    [SerializeField] public new int manaCost = 10;
-
     public GameObject projectilePrefab;
     public override void Activate(GameObject parent)
     {
         Player player = parent.GetComponent<Player>();
-        Transform projectileSpawnPoint = player.getProjectileSpawnPoint();
+        Transform projectileSpawnPoint = player.GetProjectileSpawnPoint();
         Instantiate(projectilePrefab, projectileSpawnPoint.position, projectileSpawnPoint.rotation);
     }
 

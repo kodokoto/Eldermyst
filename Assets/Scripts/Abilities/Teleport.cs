@@ -5,13 +5,11 @@ using UnityEngine;
 [CreateAssetMenu]
 public class Teleport : Spell
 {
-    [SerializeField] public new int manaCost = 10;
-
     public float teleportDistance;
 
     public Vector2 preCalcPosition;
 
-    public override bool isValid(GameObject parent)
+    public override bool IsValid(GameObject parent)
     {
 
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
