@@ -352,5 +352,4 @@ public class PlayerMovement : MonoBehaviour
     {
         SetMovementParams();
     }
-
 }
