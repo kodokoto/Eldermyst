@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public interface TakeDamage
+public interface ITakeDamage
 {
     void TakeDamage(int damage);
 }
 
-public class Player : MonoBehaviour , TakeDamage
+public class Player : MonoBehaviour , ITakeDamage
 {
     public PlayerData data;
     [SerializeField] private Transform projectileSpawnPoint;
