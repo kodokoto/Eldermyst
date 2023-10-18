@@ -12,6 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f18aef620f645472d9c6aadc7711b4c2, type: 3}
   m_Name: Shield
   m_EditorClassIdentifier: 
-  name: 
+  name: Shield
   cooldownTime: 0
-  activeTime: 0
+  activeTime: 1
+  manaCost: 10
+  sheildTint:
+    serializedVersion: 2
+    rgba: 4042321980

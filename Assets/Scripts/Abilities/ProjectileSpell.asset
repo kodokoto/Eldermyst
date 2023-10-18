@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f13fc83afcf04578a479440b1e649d6, type: 3}
   m_Name: ProjectileSpell
   m_EditorClassIdentifier: 
-  name: 
+  name: Banana
   cooldownTime: 0
   activeTime: 0
+  manaCost: 10
   projectilePrefab: {fileID: 4619283876682261130, guid: cbdf4f43b7cbd4eaab869696693d71bf, type: 3}
