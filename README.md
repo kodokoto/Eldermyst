@@ -1,6 +1,43 @@
 # Project-Hogsmeade
 2.5D wizard platformer
 
+## Project Plan
+
+### Prototype
+
+[x] player script, which holds the different properties for a player and proides helper methods for interacting with the player.
+[x] player movement script, with custom logic for jumping, double jumping, and wall jumping.
+[x] spell system, casting different spells. Including validation, cooldowns and sync it to the players mana.
+[x] script for pickups and prefabs for potions.
+[x] simple HUD, which displays the players health and mana.
+[x] simple enemy AI, which targets the player and throws projectiles at them.
+[x] basic menu system, with start game, options and quit buttons.
+[ ] simple tilemap system for creating levels 
+[ ] different types of terrains that affect the player, i.e by damaging, slowing or trapping them.
+[ ] xp and level system for the player 
+[ ] build at least 2 levels, whcih include transitions from one level to the next.
+[ ] add win/lose states
+[ ] build a save/load state and menu
+[ ] add a simple instructions scene
+
+
+### Full Game
+
+[ ] Write lore
+[ ] Implement tilemap rules
+[ ] Spell slot system
+[ ] Implement full stat system
+[ ] add more spells, enemies, terrains and pickups
+[ ] Create entity sprites and animations
+[ ] Create terrain sprites
+[ ] Create spectial fx sprites and animations
+[ ] Create sound fx and music
+[ ] Create lore dialogues
+[ ] Create lore cutscenes
+[ ] add boss battle
+[ ] add more settings to the options menu such as button mapping and diffictuly
+[ ] Add a win state
+ 
 ## Contrubution Guidelines
 
 
