@@ -13,7 +13,7 @@ public class Potion : MonoBehaviour
     public PotionType type;
     public int amount;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {

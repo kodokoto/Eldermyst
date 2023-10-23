@@ -8,6 +8,8 @@ TagManager:
   - Mana
   - Solid
   - Enemy
+  - Ground
+  - StickyWall
   layers:
   - Default
   - TransparentFX

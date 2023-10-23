@@ -25,7 +25,7 @@ public class Teleport : Spell
 
         LayerMask solidLayers = LayerMask.GetMask("Ground") | LayerMask.GetMask("StickyWall");
 
-        if (Physics2D.OverlapCircle(newPosition, 0.5f, solidLayers))
+        if (Physics.OverlapSphere(newPosition, 0.5f, solidLayers).Length > 0)
         {
             return false;
         }

@@ -1,355 +1,397 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public enum PlayerMovementState
+    {
+        Jumping,
+        MidAir,
+        Falling,
+        Grounded,
+        OnWall,
+        WallJumping
+    }
 
-    public Rigidbody2D rb;
-    private Vector2 input;
+    public Rigidbody rb;
 
-    // state
-    private bool isFacingRight;
-    private bool isJumping;
+    private PlayerMovementState state;
+    public float runSpeed;
+    public float maxFallSpeed;
 
-    private bool isWallJumping;
-
-
-    // timers
-
-    private float lastGrounded;
-    private float lastOnWall;
-	private float lastOnWallRight;
-	private float lastOnWallLeft;
-    private float lastPressedJump;
+    // public Vector3 velocity;
+    public Vector3 dVelocity;
+    public float gravity;
 
 
     // Jumping
-    private bool isFinishedJumping;
-    private bool isFallingAfterJump;
-    [SerializeField] public int bonusJumps = 1;
-
-    [SerializeField] private float wallJumpTime;
-
-    // Collision checks
-    [SerializeField] private Transform groundCheck;
-    [SerializeField] private Transform frontChck;
-	[SerializeField] private Transform backCheck;
+    public float jumpSpeed;
+    public float maxJumpSpeed;
+    public float midAirSpeed;
+    public float jumpMaxDuration = 15/60f;
+    public float jumpTimer;
+    public bool hasDoubleJump = true;
 
 
-    // movement parameters
-    private float gravityScale;
-    private float gravityStrength;
-    private float jumpingForce;
-    [SerializeField] private Vector2 wallJumpForce = new Vector2(15, 25);
-
-    private int wallJumpDirection;
-
-    [SerializeField] float fallGravityMultiplier = 1.5f;
-    [SerializeField] float fallGravityMultiplierAfterJump = 2f;
-    [SerializeField] float maxFallingVelocity = 25f;
-    [SerializeField] float jumpHeight = 3.5f;
-    [SerializeField] float jumpApexTime = 0.3f;
-
-    [SerializeField] float jumpHangTimeThreshold = 1f;
-    [SerializeField] float jumpHangAccelerationMultiplier = 1.1f;
-    [SerializeField] float jumpHangMaxVelocityMultiplier = 1.3f;
-
-    [SerializeField] float maxVelocity = 10f;
-    [SerializeField] float runningAcceleration = 2.5f;
-    [SerializeField] float runningDeceleration = 5f;
-
-    private float trueAcceleration;
-    private float trueDeceleration;
-    [SerializeField] float airFriction = 0.65f;
-
-    [SerializeField] float coyoteTime = 0.1f;
-
+    // wall jumping
+    public float wallJumpDirection;
+    public float wallFallSpeed; // should be 1/3 of fall speed
+    public Vector2 wallJumpForce = new(15, 10);
 
     void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
-    }
-
-    void Start()
-    {
-        SetMovementParams();
-        rb.gravityScale = gravityScale;
-        isFacingRight = true;
-    }
-
-    // Update is called once per frame
-
-    void UpdateTimers()
-    {
-        lastGrounded-= Time.deltaTime;
-        lastOnWall-= Time.deltaTime;
-        lastOnWallLeft-= Time.deltaTime;
-        lastOnWallRight -= Time.deltaTime;
-        lastPressedJump -= Time.deltaTime;
-    }
-
-    void HandleInput()
-    {
-        input.x = Input.GetAxisRaw("Horizontal");
-		input.y = Input.GetAxisRaw("Vertical");
-
-        // if moving on the x axis
-        if (input.x != 0)
-        {
-            // if moving right and is not facing right, flip
-            if (input.x > 0 != isFacingRight)
-            {
-			    Flip();
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            lastPressedJump = 0.1f;
-        }
-
-        if (Input.GetKeyUp(KeyCode.Space))
-        {
-            if (isJumping && rb.velocity.y > 0)
-            {
-                isFinishedJumping = true;
-            }
-        }
-
-    }
-
-    bool IsCollidingWithGround()
-    {
-        return Physics2D.OverlapBox(groundCheck.position, groundCheck.localScale, 0, LayerMask.GetMask("Ground"));
-    }
-
-    bool IsCollidingWithWall(bool isRight)
-    {
-        return (Physics2D.OverlapBox(frontChck.position, frontChck.localScale, 0, LayerMask.GetMask("StickyWall")) && isRight) || (Physics2D.OverlapBox(backCheck.position, backCheck.localScale, 0, LayerMask.GetMask("StickyWall")) && !isRight);
-    }
-
-    void UpdateCollisions()
-    {
-        // Grounded
-        if (IsCollidingWithGround())
-        {
-            lastGrounded = coyoteTime;
-            bonusJumps = 1;
-        }
-
-        // if we are on a wall to the right
-        if (IsCollidingWithWall(isFacingRight))
-        {
-            lastOnWallRight = coyoteTime;
-        }
-
-        // if we are on a wall to the left
-        if (IsCollidingWithWall(!isFacingRight))
-        {
-            lastOnWallLeft = coyoteTime;
-        }
-
-        lastOnWall = Mathf.Max(lastOnWallLeft, lastOnWallRight);
-    }
-
-    void UpdateGravity()
-    {
-        // falling after jump
-        if (isFinishedJumping) 
-        {
-            rb.gravityScale = gravityScale * fallGravityMultiplierAfterJump;
-            rb.velocity = new Vector2(rb.velocity.x, Mathf.Max(rb.velocity.y, -maxFallingVelocity));
-        }
-        // hanging in the air after jump
-        else if ((isJumping || isFallingAfterJump) && Mathf.Abs(rb.velocity.y) < jumpHangTimeThreshold)
-        {
-            rb.gravityScale = gravityScale * 0.5f;
-        }
-        // falling normally
-        else if (rb.velocity.y < 0)
-        {
-            rb.gravityScale = gravityScale * fallGravityMultiplier;
-            rb.velocity = new Vector2(rb.velocity.x, Mathf.Max(rb.velocity.y, -maxFallingVelocity));
-        }
-        else
-        {
-            rb.gravityScale = gravityScale;
-        }
-
+        rb = GetComponent<Rigidbody>();
+        state = PlayerMovementState.Falling;
     }
 
     void Update()
     {
-
-        UpdateTimers();
-
-        HandleInput();
-
-
-        if (!isJumping)
+        // if user presses space, start jumping
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            UpdateCollisions();
+            Debug.Log("Space is down");
+            StartJump();
+        }
+        // if user releases space, stop jumping
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            Debug.Log("Stop jump from release");
+            StopJump(true);
         }
 
-        if (isJumping && rb.velocity.y < 0)
-        {
-            isJumping = false;
-            isFallingAfterJump = true;
-        }
-
-        if (isWallJumping)
-        {
-            isWallJumping = false;
-        }
-
-        if (lastGrounded > 0 && !isJumping)
-        {
-            isFinishedJumping = false;
-            isFallingAfterJump = false;
-        }
-
-        if (CanWallJump() && lastPressedJump > 0)
-        {
-            isWallJumping = true;
-            isJumping = false;
-            isFinishedJumping = false;
-            isFallingAfterJump = false;
-            WallJump();
-
-        } 
-        else if (CanJump() && lastPressedJump > 0)
-        {
-            if (lastGrounded <= 0)
-            {
-                bonusJumps--;
-            }
-
-            isJumping = true;
-            isWallJumping = false;
-            isFinishedJumping = false;
-            isFallingAfterJump = false;
-            Jump();
-        }
-
-        UpdateGravity();
     }
-
-    bool CanJump()
-    {
-        return bonusJumps > 0 || (lastGrounded > 0 && !isJumping);
-    }
-
-    bool CanWallJump()
-    {
-        return lastPressedJump > 0 && lastOnWall > 0 && lastGrounded <= 0;
-    }
-
     void FixedUpdate()
     {
-        Run(1);
+        Debug.Log("Start frame ");
+        Move();
+        switch (state)
+        {
+            case PlayerMovementState.Jumping:
+                Jump();
+                break;
+            case PlayerMovementState.WallJumping:
+                WallJump();
+                break;
+            case PlayerMovementState.MidAir:
+                MidAir();
+                break;
+            default:
+                break;
+        }
+        Gravity();
+        ResolveMovement();
+        Debug.Log("End frame");
     }
-    void Run(float lerpAmount)
+
+    void MidAir()
     {
-        float velocity = input.x * maxVelocity;
+        AddForce(Vector3.up, midAirSpeed);
+    }
 
-        // Linear interpolation
-        velocity = Mathf.Lerp(rb.velocity.x, velocity, lerpAmount);
-
-        float acceletarion;
-
-        // set acceleration based on if we're grounded or not
-        if (lastGrounded > 0)
+    IEnumerator JumpTimer()
+    {
+        // wait for 15 frames then call StopJump
+        yield return new WaitForSeconds(jumpMaxDuration);
+        if (state.Equals(PlayerMovementState.Jumping))
         {
-            acceletarion = (Mathf.Abs(velocity) > 0.01f) ? trueAcceleration : trueDeceleration;
+            Debug.Log("Stop jump from coroutine");
+            StopJump();
         }
-        // apply a multiplier if we're in the air
-        else
+    }
+
+    IEnumerator MidAirTimer()
+    {
+        // wait for 15 frames then call StopJump
+        yield return new WaitForSeconds(jumpMaxDuration);
+        if (state.Equals(PlayerMovementState.MidAir))
         {
-            acceletarion = (Mathf.Abs(velocity) > 0.01f) ? trueAcceleration * airFriction : trueDeceleration * airFriction;
+            Debug.Log("Changed state from MidAirTimer to Falling");
+            ChangeMovementState(PlayerMovementState.Falling);
         }
+    }
 
-        // apply a multiplier if we're falling 
-        if ((isJumping || isFallingAfterJump) && Mathf.Abs(rb.velocity.y) < jumpHangTimeThreshold)
+    IEnumerator WallJumpTimer()
+    {
+        yield return new WaitForSeconds(jumpMaxDuration * 2);
+        if (state.Equals(PlayerMovementState.WallJumping))
         {
-            acceletarion *= jumpHangAccelerationMultiplier;
-            velocity *= jumpHangMaxVelocityMultiplier;
+            Debug.Log("Changed state from WallJumpTimer to Falling");
+            ChangeMovementState(PlayerMovementState.Falling);
         }
+    }
 
-        // momentum conservation if we are moving faster than the max velocity
-        if (Mathf.Abs(rb.velocity.x) > Mathf.Abs(velocity) && Mathf.Sign(rb.velocity.x) == Mathf.Sign(velocity) && Mathf.Abs(velocity) > 0.01f && lastGrounded < 0)
+    void StopAllMovementTimers()
+    {
+        StopCoroutine(JumpTimer());
+        StopCoroutine(MidAirTimer());
+        StopCoroutine(WallJumpTimer());
+    }
+
+    void Move()
+    {
+        if (!state.Equals(PlayerMovementState.OnWall))
         {
-            acceletarion = 0;
+            float xInput = Input.GetAxisRaw("Horizontal");
+            AddForce(Vector3.right, xInput * runSpeed);
         }
+    }
 
-        float dVelocity = velocity - rb.velocity.x;
+    void Gravity()
+    {
+        Vector3 direction = state switch
+        {
+            PlayerMovementState.OnWall => Vector3.left * wallJumpDirection,
+            _ => Vector3.down,
+        };
 
-        float distance = dVelocity * acceletarion;
+        var scale = state switch
+        {
+            PlayerMovementState.Falling => gravity,
+            PlayerMovementState.OnWall => wallFallSpeed,
+            // PlayerMovementState.MidAir => midAirSpeed,
+            _ => 0,
+        };
+        Debug.Log("Gravity " + direction * scale);
+        AddForce(direction, scale);
+    }
 
-        rb.AddForce(Vector2.right * distance, ForceMode2D.Force);
+    bool IsInAir()
+    {
+        return state.Equals(PlayerMovementState.Falling) || state.Equals(PlayerMovementState.Jumping) || state.Equals(PlayerMovementState.MidAir);
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            Debug.Log("Changed state from OnCollisionEnter to Grounded");
+            ChangeMovementState(PlayerMovementState.Grounded);
+            hasDoubleJump = true;
+        }
+        else if (collision.gameObject.CompareTag("StickyWall") && !state.Equals(PlayerMovementState.Grounded))
+        {
+            Debug.Log("Changed state from OnCollisionEnter to OnWall");
+            bool res = ChangeMovementState(PlayerMovementState.OnWall);
+            if (res)
+            {
+                // use collision normal to determine which direction to jump
+                wallJumpDirection = collision.contacts[0].normal.x;
+                hasDoubleJump = true;
+            }
+        }
+    }
+
+    void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground") && !state.Equals(PlayerMovementState.Jumping) && !Physics.Raycast(transform.position, Vector3.down, 0.1f, LayerMask.GetMask("Ground")))
+        {
+            Debug.Log("Changed state from OnCollisionExit to Falling");
+            ChangeMovementState(PlayerMovementState.Falling);
+        }
+        else if (collision.gameObject.CompareTag("StickyWall") && state.Equals(PlayerMovementState.OnWall))
+        {
+            ChangeMovementState(PlayerMovementState.Falling);
+        }
+    }
+
+
+    // void OnCollisionStay(Collision collision)
+    // {
+    //     if (collision.gameObject.CompareTag("Ground"))
+    //     {
+    //         ChangeMovementState(PlayerMovementState.Grounded);
+    //     }
+    //     else if (collision.gameObject.CompareTag("StickyWall"))
+    //     {
+    //         ChangeMovementState(PlayerMovementState.OnWall);
+    //     }
+    // }
+
+    // JUMPING
+
+    IEnumerator JumpInputBuffer()
+    {
+        float bufferTime = 0.1f; // Adjust the time window as needed
+
+        // Wait for the specified buffer time
+        yield return new WaitForSeconds(bufferTime);
+
+        if (state == PlayerMovementState.Grounded)
+        {
+            StartJump();
+        }
+    }
+
+    IEnumerator CoyoteBuffer()
+    {
+        float bufferTime = 0.1f; // Adjust the time window as needed
+
+        // Wait for the specified buffer time
+        yield return new WaitForSeconds(bufferTime);
+
+        if (state != PlayerMovementState.Jumping)
+        {
+            ChangeMovementState(PlayerMovementState.Falling);
+        }
+    }
+
+    void StartJump()
+    {
+        if (state.Equals(PlayerMovementState.Grounded))
+        {
+            StopCoroutine(JumpTimer());
+            ChangeMovementState(PlayerMovementState.Jumping);
+        } 
+        else if (IsInAir() && hasDoubleJump)
+        {
+            if (state.Equals(PlayerMovementState.Jumping))
+            {  
+                StopCoroutine(JumpTimer());
+            } else if (state.Equals(PlayerMovementState.WallJumping))
+            {
+                StopCoroutine(WallJumpTimer());
+            } 
+            ChangeMovementState(PlayerMovementState.Jumping);
+            hasDoubleJump = false;
+        }
+        else if (state.Equals(PlayerMovementState.Falling))
+        {
+            StartCoroutine(JumpInputBuffer());
+        }
+        else if (state.Equals(PlayerMovementState.OnWall))
+        {
+            WallJump();
+            ChangeMovementState(PlayerMovementState.WallJumping);
+        }
     }
 
     void Jump()
     {
-        // Debug.Log("jumping");
-        lastPressedJump = 0;
-        lastGrounded = 0;
-
-        float force = jumpingForce;
-        if (rb.velocity.y < 0)
-        {
-            force -= rb.velocity.y;
-        }
-
-        rb.AddForce(Vector2.up * force, ForceMode2D.Impulse);
+        AddForce(Vector3.up, jumpSpeed);
     }
+
 
     void WallJump()
     {
-
-        wallJumpDirection =  (lastOnWallRight > 0) ? -1 : 1;
-        lastPressedJump = 0;
-        lastGrounded = 0;
-        lastOnWallLeft = 0;
-        lastOnWallRight = 0;
-
-        Vector2 force = new Vector2(wallJumpForce.x, wallJumpForce.y);
-        force.x *= wallJumpDirection;
-
-        if (Mathf.Sign(rb.velocity.x) != Mathf.Sign(force.x))
+        Debug.Log("Wall Jump");
+        if (Input.GetAxisRaw("Horizontal") != wallJumpDirection)
         {
-            force.x -= rb.velocity.x;
-        }
-        if (rb.velocity.y < 0)
+            AddForce(Vector3.right, wallJumpDirection * wallJumpForce.x / 2);
+        } else
         {
-            force.y -= rb.velocity.y;
+            AddForce(Vector3.right, wallJumpDirection * wallJumpForce.x);
         }
-
-        rb.AddForce(force, ForceMode2D.Impulse);
+        AddForce(Vector3.up, wallJumpForce.y);
     }
 
-    void Flip()
+    void StopJump(bool sharp = false)
     {
-        transform.Rotate(0f, 180f, 0f);
-        isFacingRight = !isFacingRight;
+        if (state.Equals(PlayerMovementState.Jumping))
+        {
+            
+            if (sharp)
+            {
+                Debug.Log("Sharp Jump");
+                AddForce(Vector3.down, Mathf.Abs((rb.velocity.y / Time.fixedDeltaTime) / 1.5f));
+                ChangeMovementState(PlayerMovementState.Falling);
+            } else {
+                ChangeMovementState(PlayerMovementState.MidAir);
+            }
+        }
     }
 
-    void SetMovementParams()
+
+    bool ChangeMovementState(PlayerMovementState newState)
     {
-        gravityStrength = -(2 * jumpHeight) / Mathf.Pow(jumpApexTime, 2);
-        gravityScale = gravityStrength / Physics2D.gravity.y;
+        bool completed = true;
+        switch (newState)
+        {
+            case PlayerMovementState.Jumping:
+                StartCoroutine(JumpTimer());
+                state = newState;
+                break;
+            case PlayerMovementState.MidAir:
+                StartCoroutine(MidAirTimer());
+                state = newState;
+                break;
+            case PlayerMovementState.Falling:
+                StopAllMovementTimers();
+                state = newState;
+                break;
+            case PlayerMovementState.Grounded:
+                StopAllMovementTimers();
+                state = newState;
+                break;
+            case PlayerMovementState.OnWall:
+                StopAllMovementTimers();
+                state = newState;
+                break;
+            case PlayerMovementState.WallJumping:
+                StartCoroutine(WallJumpTimer());
+                state = newState;
+                break;
 
-        trueAcceleration = (50 * runningAcceleration) / maxVelocity;
-        trueDeceleration = (50 * runningDeceleration) / maxVelocity;
-
-        jumpingForce = Mathf.Abs(gravityStrength) * jumpApexTime;
-
-        runningAcceleration = Mathf.Clamp(runningAcceleration, 0.01f, maxVelocity);
-        runningDeceleration = Mathf.Clamp(runningDeceleration, 0.01f, maxVelocity);
-
+        }
+        return completed;
     }
-    void OnValidate()
+
+    void AddForce(Vector3 direction, float scale)
     {
-        SetMovementParams();
+        dVelocity += direction * (scale); 
+    }
+
+
+
+    void ResolveMovement()
+    {
+        Vector3 targetVelocity = dVelocity;
+
+        float minVerticalVelocity = state switch {
+            PlayerMovementState.Falling => -1*maxFallSpeed,
+            PlayerMovementState.OnWall => wallFallSpeed,
+            _ => 0,
+        };
+
+        // clamp vertical velocity
+        targetVelocity.y = Mathf.Clamp(targetVelocity.y, minVerticalVelocity, maxJumpSpeed);
+
+        // // move the player
+        // targetVelocity.x -= rb.velocity.x;
+        // rb.AddForce(targetVelocity, ForceMode.Impulse);
+
+        // move the player
+
+        // // if the player is changing direction (signs are different), ignore the current horizontal velocity
+        // if (Math.Sign(targetVelocity.x) != Math.Sign(rb.velocity.x))
+        // {
+        //     targetVelocity.x = dVelocity.x;
+        // }
+
+        // targetVelocity *= Time.fixedDeltaTime * 100;
+        rb.velocity = targetVelocity * 2;
+        Debug.Log("Target Velocity " + targetVelocity);
+        Debug.Log("State " + state);
+
+        // reset the dVelocity
+        dVelocity = Vector3.zero;
+
+        // update the movement state if jumping or rising
+        // if (state.Equals(PlayerMovementState.Jumping) || state.Equals(PlayerMovementState.MidAir))
+        // {
+        //     if (targetVelocity.y <= 0)
+        //     {
+        //         ChangeMovementState(PlayerMovementState.Falling);
+        //     }
+        // }
+
+        // else if (state.Equals(PlayerMovementState.Falling))
+        // {
+        //     if (velocity.y >= 0)
+        //     {
+        //         ChangeMovementState(PlayerMovementState.MidAir);
+        //     }
+        // }
     }
 }
