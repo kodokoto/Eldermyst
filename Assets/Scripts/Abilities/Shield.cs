@@ -11,13 +11,16 @@ public class Shield : Spell
     {
         Player player = parent.GetComponent<Player>();
         player.SetIsShielded(true);
-        parent.GetComponent<SpriteRenderer>().color = sheildTint;
+        // make the player capsule tinted
+        player.GetComponent<Renderer>().material.color = sheildTint;
+        
     }
 
     public override void Deactivate(GameObject parent)
     {
         Player player = parent.GetComponent<Player>();
         player.SetIsShielded(false);
-        parent.GetComponent<SpriteRenderer>().color = Color.white;
+        // set the player capsule to white
+        player.GetComponent<Renderer>().material.color = Color.white;
     }
 }

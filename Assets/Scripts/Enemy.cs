@@ -17,7 +17,6 @@ public class Enemy : MonoBehaviour, ITakeDamage
 
     public float fireRate = 2f;
 
-
     void Start()
     {
         StartCoroutine(Routine());
@@ -35,22 +34,20 @@ public class Enemy : MonoBehaviour, ITakeDamage
 
     void CheckIfPlayerInFOV()
     {
-        Collider2D[] collisionChecks = Physics2D.OverlapCircleAll(projectileSpawnPoint.position, fovRadius, targetMask);
+        Collider[] collisionChecks = Physics.OverlapSphere(projectileSpawnPoint.position, fovRadius, targetMask);
         
         if (collisionChecks.Length != 0)
         {
             Transform target = collisionChecks[0].transform;
 
-            Vector2 directionToTarget = (target.position - projectileSpawnPoint.position).normalized;
+            Vector3 directionToTarget = (target.position - projectileSpawnPoint.position).normalized;
 
-            float distanceToTarget = Vector2.Distance(projectileSpawnPoint.position, target.position);
+            float distanceToTarget = Vector3.Distance(projectileSpawnPoint.position, target.position);
 
-            if (!Physics2D.Raycast(projectileSpawnPoint.position, directionToTarget, distanceToTarget, obstructionMask))
+            if (!Physics.Raycast(projectileSpawnPoint.position, directionToTarget, distanceToTarget, obstructionMask))
             {
-                // get rotation to face player
-                float angle = Mathf.Atan2(directionToTarget.y, directionToTarget.x) * Mathf.Rad2Deg;
-                projectileSpawnPoint.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
+                projectileSpawnPoint.right = directionToTarget;
                 Instantiate(projectile, projectileSpawnPoint.position, projectileSpawnPoint.rotation);
             }
         }

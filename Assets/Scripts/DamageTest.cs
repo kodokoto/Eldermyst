@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DamageTest : MonoBehaviour
 {
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter(Collider collision)
     {
         Debug.Log("Collision detected");
         if (collision.gameObject.CompareTag("Player"))
