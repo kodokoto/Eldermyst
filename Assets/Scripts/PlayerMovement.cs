@@ -18,8 +18,12 @@ public class PlayerMovement : MonoBehaviour
     public Rigidbody rb;
 
     private PlayerMovementState state;
+    public float fallSpeedYDampingChangeThreshold;
+
+    public float jumpBufferTime = 0.1f;
     public float runSpeed;
     public float maxFallSpeed;
+
 
     // public Vector3 velocity;
     public Vector3 dVelocity;
@@ -59,6 +63,17 @@ public class PlayerMovement : MonoBehaviour
         {
             Debug.Log("Stop jump from release");
             StopJump(true);
+        }
+
+        if (rb.velocity.y < fallSpeedYDampingChangeThreshold && !CameraManager.instance.IsLerpingYDamping && !CameraManager.instance.LerpedFromPlayerFalling)
+        {
+            CameraManager.instance.LerpYDamping(true);
+        }
+
+        if (rb.velocity.y >= 0f && !CameraManager.instance.IsLerpingYDamping && CameraManager.instance.LerpedFromPlayerFalling)
+        {
+            CameraManager.instance.LerpedFromPlayerFalling = false;
+            CameraManager.instance.LerpYDamping(false);
         }
 
     }
