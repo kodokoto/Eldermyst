@@ -1035,8 +1035,16 @@ PrefabInstance:
       value: 50
       objectReference: {fileID: 0}
     - target: {fileID: -7014791797157811991, guid: a2208b3e13b546a4ca80c9075c5de92d, type: 3}
+      propertyPath: damage
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -7014791797157811991, guid: a2208b3e13b546a4ca80c9075c5de92d, type: 3}
       propertyPath: LoseText
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -7014791797157811991, guid: a2208b3e13b546a4ca80c9075c5de92d, type: 3}
+      propertyPath: damageRate
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3394397787644078688, guid: a2208b3e13b546a4ca80c9075c5de92d, type: 3}
       propertyPath: m_LocalScale.x
