@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Callbacks;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
@@ -20,11 +19,12 @@ public class Projectile : MonoBehaviour
 
     void Update()
     {
-        // Destroy the projectile if it goes off screen
-        if (transform.position.magnitude > 100.0f)
+        // Destroy the projectile if it goes off screen based on camera view
+        if (Camera.main.WorldToViewportPoint(transform.position).x > 1)
         {
             Destroy(gameObject);
         }
+
     }
 
     // Destroy the projectile if it hits an enemy

@@ -50,6 +50,13 @@ public class PlayerMovement : MonoBehaviour
         state = PlayerMovementState.Falling;
     }
 
+    void Flip()
+    {
+        // rotate the player
+        // transform.rotation.Set(transform.rotation.x, transform.rotation.y, transform.rotation.z + 180, transform.rotation.w);
+        transform.right = transform.right * -1;
+    }
+
     void Update()
     {
         // if user presses space, start jumping
@@ -149,6 +156,10 @@ public class PlayerMovement : MonoBehaviour
         if (!state.Equals(PlayerMovementState.OnWall))
         {
             float xInput = Input.GetAxisRaw("Horizontal");
+            if (Math.Sign(xInput) != 0 && Math.Sign(transform.right.x) != Math.Sign(xInput))
+            {
+                Flip();
+            }
             AddForce(Vector3.right, xInput * runSpeed);
         }
     }

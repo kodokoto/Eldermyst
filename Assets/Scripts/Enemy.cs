@@ -46,9 +46,9 @@ public class Enemy : MonoBehaviour, ITakeDamage
 
             if (!Physics.Raycast(projectileSpawnPoint.position, directionToTarget, distanceToTarget, obstructionMask))
             {
-
                 projectileSpawnPoint.right = directionToTarget;
-                Instantiate(projectile, projectileSpawnPoint.position, projectileSpawnPoint.rotation);
+                Projectile p = Instantiate(projectile, projectileSpawnPoint.position, projectileSpawnPoint.rotation);
+                Debug.Log(p.transform.position);
             }
         }
     }

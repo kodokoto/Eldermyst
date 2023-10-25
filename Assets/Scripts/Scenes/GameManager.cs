@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Cinemachine;
-using TMPro.EditorUtilities;
 using UnityEngine.SceneManagement;
 
 public enum GameState {
@@ -25,11 +23,6 @@ public class GameManager : MonoBehaviour
         gameState = GameState.Playing;
     }
 
-    private void Update()
-    {
-        Debug.Log("Game state: " + gameState);
-    }
-
     public void SetGameState(GameState state)
     {
         switch (state)
@@ -49,7 +42,6 @@ public class GameManager : MonoBehaviour
     public void RestartGame()
     {
         SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
-        // restart player 
     }
 
     public void MainMenu()
