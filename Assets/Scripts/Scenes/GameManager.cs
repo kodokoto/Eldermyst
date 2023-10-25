@@ -52,6 +52,11 @@ public class GameManager : MonoBehaviour
         // restart player 
     }
 
+    public void MainMenu()
+    {
+        SceneManager.LoadSceneAsync("MainMenu");
+    }
+
 
     public GameState GetGameState()
     {
