@@ -2,15 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public interface ITakeDamage
 {
     void TakeDamage(int damage);
 }
 
+public enum PlayerState
+{
+    Alive,
+    Dead
+}
+
 public class Player : MonoBehaviour , ITakeDamage
 {
     public PlayerData data;
+    public PlayerState state;
     [SerializeField] private Transform projectileSpawnPoint;
     private float healthRegenTimer;
     private float manaRegenTimer;
@@ -21,6 +27,7 @@ public class Player : MonoBehaviour , ITakeDamage
 
     void Start()
     {
+        data.Reset();
         healthBar.SetMaxHealth(data.maxHealth);
         manaBar.SetMaxMana(data.maxMana);
     }
@@ -131,24 +138,46 @@ public class Player : MonoBehaviour , ITakeDamage
 
     private void AddHealth(int amount)
     {
+        if (state.Equals(PlayerState.Dead))
+        {
+            return;
+        }
         data.health = Mathf.Min(data.health + amount, data.maxHealth);
         healthBar.SetHealth(data.health);
     }
 
     private void RemoveHealth(int amount)
     {
+        if (state.Equals(PlayerState.Dead))
+        {
+            return;
+        }
         data.health = Mathf.Max(data.health - amount, 0);
         healthBar.SetHealth(data.health);
+        if (data.health <= 0)
+        {
+            Debug.Log("Health is 0");
+            GameManager.instance.SetGameState(GameState.Lost);
+            state = PlayerState.Dead;
+        }
     }
 
     private void AddMana(int amount)
     {
+        if (state.Equals(PlayerState.Dead))
+        {
+            return;
+        }
         data.mana = Mathf.Min(data.mana + amount, data.maxMana);
         manaBar.SetMana(data.mana);
     }
 
     private void RemoveMana(int amount)
     {
+        if (state.Equals(PlayerState.Dead))
+        {
+            return;
+        }
         data.mana = Mathf.Max(data.mana - amount, 0);
         manaBar.SetMana(data.mana);
     }

@@ -25,4 +25,10 @@ public class PlayerData : ScriptableObject
         health = maxHealth;
         mana = maxMana;
     }
+
+    public void Reset()
+    {
+        health = maxHealth;
+        mana = maxMana;
+    }
 }
