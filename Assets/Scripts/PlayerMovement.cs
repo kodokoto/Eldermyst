@@ -55,13 +55,13 @@ public class PlayerMovement : MonoBehaviour
         // if user presses space, start jumping
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Debug.Log("Space is down");
+            // Debug.Log("Space is down");
             StartJump();
         }
         // if user releases space, stop jumping
         if (Input.GetKeyUp(KeyCode.Space))
         {
-            Debug.Log("Stop jump from release");
+            // Debug.Log("Stop jump from release");
             StopJump(true);
         }
 
@@ -79,7 +79,7 @@ public class PlayerMovement : MonoBehaviour
     }
     void FixedUpdate()
     {
-        Debug.Log("Start frame ");
+        // Debug.Log("Start frame ");
         Move();
         switch (state)
         {
@@ -97,7 +97,7 @@ public class PlayerMovement : MonoBehaviour
         }
         Gravity();
         ResolveMovement();
-        Debug.Log("End frame");
+        // Debug.Log("End frame");
     }
 
     void MidAir()
@@ -111,7 +111,7 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(jumpMaxDuration);
         if (state.Equals(PlayerMovementState.Jumping))
         {
-            Debug.Log("Stop jump from coroutine");
+            // Debug.Log("Stop jump from coroutine");
             StopJump();
         }
     }
@@ -122,7 +122,7 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(jumpMaxDuration);
         if (state.Equals(PlayerMovementState.MidAir))
         {
-            Debug.Log("Changed state from MidAirTimer to Falling");
+            // Debug.Log("Changed state from MidAirTimer to Falling");
             ChangeMovementState(PlayerMovementState.Falling);
         }
     }
@@ -132,7 +132,7 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(jumpMaxDuration * 2);
         if (state.Equals(PlayerMovementState.WallJumping))
         {
-            Debug.Log("Changed state from WallJumpTimer to Falling");
+            // Debug.Log("Changed state from WallJumpTimer to Falling");
             ChangeMovementState(PlayerMovementState.Falling);
         }
     }
@@ -168,7 +168,7 @@ public class PlayerMovement : MonoBehaviour
             // PlayerMovementState.MidAir => midAirSpeed,
             _ => 0,
         };
-        Debug.Log("Gravity " + direction * scale);
+        // Debug.Log("Gravity " + direction * scale);
         AddForce(direction, scale);
     }
 
@@ -181,13 +181,13 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
-            Debug.Log("Changed state from OnCollisionEnter to Grounded");
+            // Debug.Log("Changed state from OnCollisionEnter to Grounded");
             ChangeMovementState(PlayerMovementState.Grounded);
             hasDoubleJump = true;
         }
         else if (collision.gameObject.CompareTag("StickyWall") && !state.Equals(PlayerMovementState.Grounded))
         {
-            Debug.Log("Changed state from OnCollisionEnter to OnWall");
+            // Debug.Log("Changed state from OnCollisionEnter to OnWall");
             bool res = ChangeMovementState(PlayerMovementState.OnWall);
             if (res)
             {
@@ -202,7 +202,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ground") && !state.Equals(PlayerMovementState.Jumping) && !Physics.Raycast(transform.position, Vector3.down, 0.1f, LayerMask.GetMask("Ground")))
         {
-            Debug.Log("Changed state from OnCollisionExit to Falling");
+            // Debug.Log("Changed state from OnCollisionExit to Falling");
             ChangeMovementState(PlayerMovementState.Falling);
         }
         else if (collision.gameObject.CompareTag("StickyWall") && state.Equals(PlayerMovementState.OnWall))
@@ -290,7 +290,7 @@ public class PlayerMovement : MonoBehaviour
 
     void WallJump()
     {
-        Debug.Log("Wall Jump");
+        // Debug.Log("Wall Jump");
         if (Input.GetAxisRaw("Horizontal") != wallJumpDirection)
         {
             AddForce(Vector3.right, wallJumpDirection * wallJumpForce.x / 2);
@@ -308,7 +308,7 @@ public class PlayerMovement : MonoBehaviour
             
             if (sharp)
             {
-                Debug.Log("Sharp Jump");
+                // Debug.Log("Sharp Jump");
                 AddForce(Vector3.down, Mathf.Abs((rb.velocity.y / Time.fixedDeltaTime) / 1.5f));
                 ChangeMovementState(PlayerMovementState.Falling);
             } else {
@@ -386,8 +386,8 @@ public class PlayerMovement : MonoBehaviour
 
         // targetVelocity *= Time.fixedDeltaTime * 100;
         rb.velocity = targetVelocity * 2;
-        Debug.Log("Target Velocity " + targetVelocity);
-        Debug.Log("State " + state);
+        // Debug.Log("Target Velocity " + targetVelocity);
+        // Debug.Log("State " + state);
 
         // reset the dVelocity
         dVelocity = Vector3.zero;

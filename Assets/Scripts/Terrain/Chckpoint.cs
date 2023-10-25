@@ -1,19 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
-using TMPro;
 
-public class Lava : MonoBehaviour
+public class Chckpoint : MonoBehaviour
 {
-    public int amount;
-
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            Player player = other.gameObject.GetComponent<Player>();
-            player.TakeDamage(amount);
-           
+            GameManager.instance.SetGameState(GameState.Won);
         }
     }
 }
