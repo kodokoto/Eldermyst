@@ -53,7 +53,6 @@ public class SpellHandler : MonoBehaviour
                     state = SpellState.Ready;
                 }
                 break;
-
         }
     }
 }

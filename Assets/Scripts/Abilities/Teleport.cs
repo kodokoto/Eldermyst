@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [CreateAssetMenu]
@@ -27,7 +29,8 @@ public class Teleport : Spell
     public override void Activate(GameObject parent)
     {
         Debug.Log("Teleporting");
-        // set the player's position to the new position
-        parent.transform.position = preCalcPosition;
+        Debug.Log("To: " + (parent.transform.position + parent.transform.right * teleportDistance) + " From: " + parent.transform.position);
+        // teleport the player forward by teleportDistance in the direction they're facing
+        parent.GetComponent<PlayerMovement>().isDashing = true;
     }
 }
