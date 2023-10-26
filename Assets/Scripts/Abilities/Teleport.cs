@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [CreateAssetMenu]
@@ -9,36 +11,26 @@ public class Teleport : Spell
 
     public Vector2 preCalcPosition;
 
+
     public override bool IsValid(GameObject parent)
     {
-
-        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        // get the direction from the player to the mouse
-        Vector2 parentPosition = parent.transform.position;
-        Vector2 direction = mousePosition - parentPosition;
-        // normalize the direction vector
-        direction.Normalize();
-        // multiply the direction vector by the teleportDistance
-        direction *= teleportDistance;
-        // add the direction vector to the player's position
-        Vector2 newPosition = parentPosition + direction;
-
-        LayerMask solidLayers = LayerMask.GetMask("Ground") | LayerMask.GetMask("StickyWall");
-
-        if (Physics.OverlapSphere(newPosition, 0.5f, solidLayers).Length > 0)
+        Debug.Log("Checking if valid");
+        //  raycast in the direction the player is facing
+        RaycastHit hit;
+        if (!Physics.Raycast(parent.transform.position, parent.transform.right, out hit, teleportDistance, LayerMask.GetMask("StickyWall", "Ground")))
         {
-            return false;
+                Debug.Log("Ladies and gentlemen, we got him");
+            // if the raycast hits something, check if it's a valid teleport location
+                return true;
         }
-        else 
-        {
-            preCalcPosition = newPosition;
-            return true;
-        }
+        return false;
     }
 
     public override void Activate(GameObject parent)
     {
-        // set the player's position to the new position
-        parent.transform.position = preCalcPosition;
+        Debug.Log("Teleporting");
+        Debug.Log("To: " + (parent.transform.position + parent.transform.right * teleportDistance) + " From: " + parent.transform.position);
+        // teleport the player forward by teleportDistance in the direction they're facing
+        parent.GetComponent<PlayerMovement>().isDashing = true;
     }
 }

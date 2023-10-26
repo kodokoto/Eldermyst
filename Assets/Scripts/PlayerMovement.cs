@@ -23,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
     public float jumpBufferTime = 0.1f;
     public float runSpeed;
     public float maxFallSpeed;
+    public bool isDashing = false;
 
 
     // public Vector3 velocity;
@@ -48,6 +49,13 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         state = PlayerMovementState.Falling;
+    }
+
+    void Flip()
+    {
+        // rotate the player
+        // transform.rotation.Set(transform.rotation.x, transform.rotation.y, transform.rotation.z + 180, transform.rotation.w);
+        transform.right = transform.right * -1;
     }
 
     void Update()
@@ -79,7 +87,7 @@ public class PlayerMovement : MonoBehaviour
     }
     void FixedUpdate()
     {
-        // Debug.Log("Start frame ");
+        Debug.Log("Start frame " + state);
         Move();
         switch (state)
         {
@@ -95,9 +103,13 @@ public class PlayerMovement : MonoBehaviour
             default:
                 break;
         }
+        if (isDashing)
+        {
+            Dash(10);
+        }
         Gravity();
         ResolveMovement();
-        // Debug.Log("End frame");
+        Debug.Log("End frame " + state);
     }
 
     void MidAir()
@@ -149,8 +161,18 @@ public class PlayerMovement : MonoBehaviour
         if (!state.Equals(PlayerMovementState.OnWall))
         {
             float xInput = Input.GetAxisRaw("Horizontal");
+            if (Math.Sign(xInput) != 0 && Math.Sign(transform.right.x) != Math.Sign(xInput))
+            {
+                Flip();
+            }
             AddForce(Vector3.right, xInput * runSpeed);
         }
+    }
+
+    void Dash(float distance)
+    {
+        transform.position += transform.right * distance;
+        isDashing = false;
     }
 
     void Gravity()
@@ -164,11 +186,12 @@ public class PlayerMovement : MonoBehaviour
         var scale = state switch
         {
             PlayerMovementState.Falling => gravity,
-            PlayerMovementState.OnWall => wallFallSpeed,
+            // PlayerMovementState.OnWall => wallFallSpeed,
+            // PlayerMovementState.WallJumping ,
             // PlayerMovementState.MidAir => midAirSpeed,
             _ => 0,
         };
-        // Debug.Log("Gravity " + direction * scale);
+        Debug.Log("Gravity " + direction * scale);
         AddForce(direction, scale);
     }
 
@@ -207,7 +230,8 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("StickyWall") && state.Equals(PlayerMovementState.OnWall))
         {
-            ChangeMovementState(PlayerMovementState.Falling);
+            Debug.Log("Changed state from OnCollisionExit to Falling");
+            ChangeMovementState(PlayerMovementState.WallJumping);
         }
     }
 
@@ -362,16 +386,17 @@ public class PlayerMovement : MonoBehaviour
     void ResolveMovement()
     {
         Vector3 targetVelocity = dVelocity;
-
+        Debug.Log("Target Velocity " + targetVelocity);
         float minVerticalVelocity = state switch {
             PlayerMovementState.Falling => -1*maxFallSpeed,
-            PlayerMovementState.OnWall => wallFallSpeed,
+            // PlayerMovementState.OnWall => wallFallSpeed,
             _ => 0,
         };
 
         // clamp vertical velocity
         targetVelocity.y = Mathf.Clamp(targetVelocity.y, minVerticalVelocity, maxJumpSpeed);
 
+        Debug.Log("After clamp " + targetVelocity);
         // // move the player
         // targetVelocity.x -= rb.velocity.x;
         // rb.AddForce(targetVelocity, ForceMode.Impulse);
@@ -391,6 +416,7 @@ public class PlayerMovement : MonoBehaviour
 
         // reset the dVelocity
         dVelocity = Vector3.zero;
+        Debug.Log("Velocity " + rb.velocity);
 
         // update the movement state if jumping or rising
         // if (state.Equals(PlayerMovementState.Jumping) || state.Equals(PlayerMovementState.MidAir))
