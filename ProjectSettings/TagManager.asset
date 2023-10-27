@@ -11,6 +11,7 @@ TagManager:
   - Ground
   - StickyWall
   - Lava
+  - Ice
   layers:
   - Default
   - TransparentFX
