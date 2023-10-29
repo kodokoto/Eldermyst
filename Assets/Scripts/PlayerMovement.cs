@@ -76,7 +76,7 @@ public class PlayerMovement : MonoBehaviour
 	private bool doubleJumpBuffered;
 	private bool dashBuffered;
 
-	// 
+	// Coroutine references
 	private bool ledgeBuffered;
 	private bool headBumpBuffered;
 
@@ -157,7 +157,7 @@ public class PlayerMovement : MonoBehaviour
 		input = Input.GetAxisRaw("Horizontal");
 		if (CanWallSlide())
 		{
-			if (touchingWallL && Input.GetKey(KeyCode.A) && !wallSliding)
+			if (touchingWallL && Input.GetKey(KeyCode.LeftArrow) && !wallSliding)
 			{
 				doubleJumpAvailable = true;
 				wallSliding = true;
@@ -165,7 +165,7 @@ public class PlayerMovement : MonoBehaviour
 				wallSlidingR = false;
 				FaceLeft();
 			}
-			if (touchingWallR && Input.GetKey(KeyCode.D) && !wallSliding)
+			if (touchingWallR && Input.GetKey(KeyCode.RightArrow) && !wallSliding)
 			{
 				doubleJumpAvailable = false;
 				wallSliding = true;
