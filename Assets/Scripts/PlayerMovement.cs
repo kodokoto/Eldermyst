@@ -24,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
     // controller state
 
     public bool grounded;
+	public bool wasGrounded;
 	public bool falling;
 	public bool running;
     public bool jumping;
@@ -38,6 +39,22 @@ public class PlayerMovement : MonoBehaviour
     public readonly float JUMP_SPEED = 16.65f;
     public readonly float MAX_JUMP_TIME = 9f;
 
+	public readonly float JUMP_BUFFER_TIME = 0.1f;
+	private readonly int DOUBLE_JUMP_BUFFER_TIME = 10;
+	private readonly float FLOATING_BUFFER_TIME = 0.18f;
+	private readonly int LEDGE_BUFFER_TIME = 2;
+
+
+	// timers
+	private float floatingBufferTimer;
+	private float ledgeBufferTimer;
+
+	// buffer states
+	private bool jumpBuffered;
+	private bool doubleJumpBuffered;
+	private bool ledgeBuffered;
+
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -49,6 +66,7 @@ public class PlayerMovement : MonoBehaviour
     {
         HandleFalling();
         HandleInput();
+
     }
 
     private void FixedUpdate()
@@ -72,6 +90,8 @@ public class PlayerMovement : MonoBehaviour
 		{
 			rb.velocity = new Vector2(rb.velocity.x, -MAX_FALL_VELOCITY);
 		}
+
+		wasGrounded = grounded;
     }
 
     private void HandleInput()
@@ -88,18 +108,52 @@ public class PlayerMovement : MonoBehaviour
 			{
 				StartDoubleJump();
 			}
+			else
+			{
+				HanldeJumpBuffer();
+				HandleDoubleJumpBuffer();
+			}
         }
         else if (Input.GetButtonUp("Jump"))
         {
             JumpReleased();
         }
+		else if (Input.GetButton("Jump"))
+		{
+			// Handle buffered inputs
+			if (jumpBuffered)
+			{
+				StartJump();
+			}
+			else if (doubleJumpBuffered)
+			{
+				if (grounded)
+				{
+					StartJump();
+				}
+				else
+				{
+					StartDoubleJump();
+				}
+			}
+		}
     }
 
     private void HandleFalling()
     {
         if (rb.velocity.y < 0f)
         {
-            if (!TouchingGround())
+            if (TouchingGround())
+			{
+				floatingBufferTimer += Time.deltaTime;
+				if (floatingBufferTimer > FLOATING_BUFFER_TIME)
+				{
+					HandleGrounded();
+					floatingBufferTimer = 0f;
+					return;
+				}
+			}
+			else
             {
                 falling = true;
                 grounded = false;
@@ -180,9 +234,13 @@ public class PlayerMovement : MonoBehaviour
 			rb.velocity = new Vector2(rb.velocity.x, 0f);
 			CancelJump();
 		}
+		jumpBuffered = false;
+		doubleJumpBuffered = false;
 	}
 
-		// ======== DOUBLE JUMP ========
+	
+
+	// ======== DOUBLE JUMP ========
 
 	private void StartDoubleJump()
 	{
@@ -216,6 +274,74 @@ public class PlayerMovement : MonoBehaviour
 		}
 	}
 
+	// ======== BUFFERED INPUTS ========
+
+	private void HanldeJumpBuffer()
+	{
+		CancelJumpBuffer();
+		jumpBuffered = true;
+		StartCoroutine(JumpBufferTimer());
+	}
+
+	private void CancelJumpBuffer()
+	{
+		if (jumpBuffered)
+		{
+			StopCoroutine(JumpBufferTimer());
+			jumpBuffered = false;
+		}
+	}
+
+	private IEnumerator JumpBufferTimer()
+	{
+		yield return new WaitForSeconds(Time.fixedDeltaTime * JUMP_BUFFER_TIME);
+		jumpBuffered = false;
+	}
+
+	private void HandleDoubleJumpBuffer()
+	{
+		CancelDoubleJumpBuffer();
+		doubleJumpBuffered = true;
+		StartCoroutine(DoubleJumpBufferTimer());
+	}
+
+	private void CancelDoubleJumpBuffer()
+	{
+		if (doubleJumpBuffered)
+		{
+			StopCoroutine(DoubleJumpBufferTimer());
+			doubleJumpBuffered = false;
+		}
+	}
+
+	private IEnumerator DoubleJumpBufferTimer()
+	{
+		yield return new WaitForSeconds(Time.fixedDeltaTime * DOUBLE_JUMP_BUFFER_TIME);
+		doubleJumpBuffered = false;
+	}
+
+	private void HandleLedgeBuffer()
+	{
+		CancelLedgeBuffer();
+		ledgeBuffered = true;
+		StartCoroutine(LedgeBufferTimer());
+	}
+
+	private void CancelLedgeBuffer()
+	{
+		if (ledgeBuffered)
+		{
+			StopCoroutine(LedgeBufferTimer());
+			ledgeBuffered = false;
+		}
+	}
+
+	private IEnumerator LedgeBufferTimer()
+	{
+		yield return new WaitForSeconds(Time.fixedDeltaTime * LEDGE_BUFFER_TIME);
+		ledgeBuffered = false;
+	}
+
     // ======== COLLISIONS ========
 
 	private void OnCollisionEnter(Collision collision)
@@ -226,6 +352,19 @@ public class PlayerMovement : MonoBehaviour
 			if (collisionSide == CollisionSide.bottom)
 			{
 				HandleGrounded();
+			}
+		}
+	}
+
+	private void OnCollisionExit(Collision collision)
+	{
+		if  (IsCollidingWithWall(collision) && !TouchingGround())
+		{
+			grounded = false;
+			running = false;
+			if (wasGrounded)
+			{
+				HandleLedgeBuffer();
 			}
 		}
 	}
@@ -283,6 +422,12 @@ public class PlayerMovement : MonoBehaviour
 		return collision.gameObject.layer == LayerMask.NameToLayer("Ground");
 	}
 
+	private bool IsCollidingWithWall(Collision collision)
+	{
+		return collision.gameObject.layer == LayerMask.NameToLayer("StickyWall");
+	}
+
+
 	// ======== HELPER METHODS ========
 
 	private bool CanJump()
@@ -293,6 +438,11 @@ public class PlayerMovement : MonoBehaviour
 		}
 		if (grounded)
 		{
+			return true;
+		}
+		if (ledgeBuffered)
+		{
+			ledgeBuffered = false;
 			return true;
 		}
 		return false;
