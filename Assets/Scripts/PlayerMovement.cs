@@ -155,7 +155,6 @@ public class PlayerMovement : MonoBehaviour
 	private void HandleInput()
 	{
 		input = Input.GetAxisRaw("Horizontal");
-		FilterInput();
 		if (CanWallSlide())
 		{
 			if (touchingWallL && Input.GetKey(KeyCode.A) && !wallSliding)
@@ -934,22 +933,6 @@ public class PlayerMovement : MonoBehaviour
 		if (gravityScale <= Mathf.Epsilon && gravityApplies)
 		{
 			gravityScale = DEFAULT_GRAVITY_SCALE;
-		}
-	}
-
-	private void FilterInput()
-	{
-		if (input > 0.3f)
-		{
-			input = 1f;
-		}
-		else if (input < -0.3f)
-		{
-			input = -1f;
-		}
-		else
-		{
-			input = 0f;
 		}
 	}
 
