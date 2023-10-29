@@ -31,6 +31,6 @@ public class Teleport : Spell
         Debug.Log("Teleporting");
         Debug.Log("To: " + (parent.transform.position + parent.transform.right * teleportDistance) + " From: " + parent.transform.position);
         // teleport the player forward by teleportDistance in the direction they're facing
-        parent.GetComponent<PlayerMovement>().isDashing = true;
+        // parent.GetComponent<PlayerMovement>().dashing = true;
     }
 }
