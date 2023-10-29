@@ -15,22 +15,30 @@ public class Teleport : Spell
     public override bool IsValid(GameObject parent)
     {
         Debug.Log("Checking if valid");
-        //  raycast in the direction the player is facing
-        RaycastHit hit;
-        if (!Physics.Raycast(parent.transform.position, parent.transform.right, out hit, teleportDistance, LayerMask.GetMask("StickyWall", "Ground")))
+        //  use overlapsphere in the direction the player is facing
+        //  if the spherecast line hits a wall but it ends not colliding with one, return true
+        //  else return false
+
+        Vector3 direction = parent.transform.right;
+        Vector3 origin = parent.transform.position;
+        Vector3 destination = origin + direction * teleportDistance;
+
+        Collider[] intersecting = Physics.OverlapSphere(destination, parent.transform.localScale.y / 2f, LayerMask.GetMask("StickyWall"));
+        
+        if (intersecting.Length > 0)
         {
-                Debug.Log("Ladies and gentlemen, we got him");
-            // if the raycast hits something, check if it's a valid teleport location
-                return true;
+            Debug.Log("Not valid");
+            return false;
         }
-        return false;
+        
+        return true;
     }
 
     public override void Activate(GameObject parent)
     {
-        Debug.Log("Teleporting");
-        Debug.Log("To: " + (parent.transform.position + parent.transform.right * teleportDistance) + " From: " + parent.transform.position);
-        // teleport the player forward by teleportDistance in the direction they're facing
-        parent.GetComponent<PlayerMovement>().isDashing = true;
+        Vector3 direction = parent.transform.right;
+        Vector3 origin = parent.transform.position;
+        Vector3 destination = origin + direction * teleportDistance;
+        parent.transform.position = destination;
     }
 }
