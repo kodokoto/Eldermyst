@@ -24,9 +24,11 @@ public class PlayerMovement : MonoBehaviour
     // controller state
 
     public bool grounded;
+	public bool falling;
+	public bool running;
     public bool jumping;
-    public bool falling;
-    public bool running;
+	public bool doubleJumping;
+
 
     // constants
 
@@ -57,6 +59,10 @@ public class PlayerMovement : MonoBehaviour
         {
             Jump();
         }
+		if (doubleJumping)
+		{
+			DoubleJump();
+		}
 
 		// Apply gravity
 		rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y + (gravityScale * Time.fixedDeltaTime * Physics.gravity.y));
@@ -77,6 +83,10 @@ public class PlayerMovement : MonoBehaviour
             if (CanJump())
 			{
 				StartJump();
+			}
+			else if (CanDoubleJump())
+			{
+				StartDoubleJump();
 			}
         }
         else if (Input.GetButtonUp("Jump"))
@@ -106,6 +116,10 @@ public class PlayerMovement : MonoBehaviour
 	{
 		falling = false;
 		CancelJump();
+		if (doubleJumping)
+		{
+			StartDoubleJump();
+		}
 		if (Mathf.Abs(input) > Mathf.Epsilon)
 		{
 			running = true;
@@ -165,6 +179,40 @@ public class PlayerMovement : MonoBehaviour
 		{
 			rb.velocity = new Vector2(rb.velocity.x, 0f);
 			CancelJump();
+		}
+	}
+
+		// ======== DOUBLE JUMP ========
+
+	private void StartDoubleJump()
+	{
+		CancelJump();
+		doubleJumping = true;
+		StartCoroutine(DoubleJumpTimer());
+		doubleJumpAvailable = false;
+	}
+
+	IEnumerator DoubleJumpTimer()
+	{
+		yield return new WaitForSeconds(Time.fixedDeltaTime * MAX_JUMP_TIME);
+		doubleJumping = false;
+	}
+
+	private void DoubleJump()
+	{
+		rb.velocity = new Vector2(rb.velocity.x, JUMP_SPEED * 1.1f);
+		if (grounded)
+		{
+			CancelDoubleJump();
+		}
+	}
+
+	private void CancelDoubleJump()
+	{
+		if (doubleJumping)
+		{
+			StopCoroutine(DoubleJumpTimer());
+			doubleJumping = false;
 		}
 	}
 
@@ -248,6 +296,11 @@ public class PlayerMovement : MonoBehaviour
 			return true;
 		}
 		return false;
+	}
+
+	private bool CanDoubleJump()
+	{
+		return doubleJumpAvailable && !grounded;
 	}
 
 }
