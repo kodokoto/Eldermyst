@@ -1,8 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System;
-using UnityEngine.InputSystem;
 
 public enum CollisionSide
 {
@@ -14,26 +12,30 @@ public enum CollisionSide
 
 public class PlayerMovement : MonoBehaviour
 {
-    public Rigidbody rb;
-    public CapsuleCollider col;
+	public Rigidbody rb;
+	public CapsuleCollider col;
 
-    // ingame variables
-    public float input;
-    public float gravityScale;
+	// ingame variables
+	public float input;
+	public float gravityScale;
 	public bool doubleJumpAvailable = true;
 	private float currentWalljumpSpeed;
 	private float walljumpSpeedDecel;
+	private bool dashAvailable = true;
 
-    // controller state
 
-    public bool grounded;
+	[Space(5)]
+	[Header("Movement States")]
+
+	public bool grounded;
 	public bool wasGrounded;
 	public bool falling;
 	public bool running;
-    public bool jumping;
+	public bool jumping;
 	public bool doubleJumping;
 	public bool wallJumping;
 	public bool wallJumpedRight;
+	public bool dashing;
 	public bool touchingWall;
 	public bool touchingWallR;
 	public bool touchingWallL;
@@ -41,20 +43,27 @@ public class PlayerMovement : MonoBehaviour
 	public bool wallSlidingR;
 	public bool wallSlidingL;
 
-    // constants
+	// constants
 
-    public readonly float RUN_SPEED = 10f;
-    public readonly float DEFAULT_GRAVITY_SCALE = 5f;
-    public readonly float MAX_FALL_VELOCITY = 20f;
-    public readonly float JUMP_SPEED = 16.65f;
-    public readonly float MAX_JUMP_TIME = 9f;
-	public float WALL_JUMP_SPEED = 16f;
-	public float WALL_JUMP_TIME = 10f;
-	public readonly float JUMP_BUFFER_TIME = 0.1f;
+	private readonly float RUN_SPEED = 10f;
+	private readonly float DEFAULT_GRAVITY_SCALE = 5f;
+	private readonly float MAX_FALL_VELOCITY = 20f;
+	private readonly float JUMP_SPEED = 16.65f;
+	private readonly float MAX_JUMP_TIME = 9f;
+	private readonly float WALL_JUMP_SPEED = 16f;
+	private readonly float WALL_JUMP_TIME = 10f;
+	private readonly float JUMP_BUFFER_TIME = 0.1f;
 	private readonly float DOUBLE_JUMP_BUFFER_TIME = 10f;
 	private readonly float FLOATING_BUFFER_TIME = 0.18f;
 	private readonly int LEDGE_BUFFER_TIME = 2;
 	private readonly int WALL_STICK_TIME = 3;
+	private readonly float DASH_SPEED = 20f;
+	private readonly float DASH_TIME = 4;
+	private readonly int DASH_BUFFER_TIME = 10;
+	private readonly float DASH_COOLDOWN = 0.6f;
+	private readonly float BUMP_VELOCITY = 4f;
+	private readonly float BUMP_VELOCITY_DASH = 5f;
+	private readonly int HEAD_BUMP_STEPS = 3;
 
 
 
@@ -62,48 +71,58 @@ public class PlayerMovement : MonoBehaviour
 	private float floatingBufferTimer;
 	private int wallUnstickTimer;
 
-
 	// buffer states
 	private bool jumpBuffered;
 	private bool doubleJumpBuffered;
+	private bool dashBuffered;
+
+	// 
 	private bool ledgeBuffered;
+	private bool headBumpBuffered;
 
 
-    private void Awake()
-    {
-        rb = GetComponent<Rigidbody>();
-        col = GetComponent<CapsuleCollider>();
-        gravityScale = DEFAULT_GRAVITY_SCALE;
-    }
+	private void Awake()
+	{
+		rb = GetComponent<Rigidbody>();
+		col = GetComponent<CapsuleCollider>();
+		gravityScale = DEFAULT_GRAVITY_SCALE;
+	}
 
-    private void Update()
-    {
-        HandleFalling();
-        HandleInput();
+	private void Update()
+	{
+		HandleFalling();
+		HandleInput();
 		HandleBufferedInput();
 		if (wallSliding)
 		{
 			HandleWallSliding();
 		}
-    }
+	}
 
-    private void FixedUpdate()
-    {
-        Move(input);
-
-		// if we are not touching the wall, flip the sprite
-		if (!wallSliding && !wallJumping)
+	private void FixedUpdate()
+	{
+		if (!dashing)
 		{
-			if (input != transform.right.x)
+			Move(input);
+
+			// if we are not touching the wall, flip the sprite
+			if (!wallSliding && !wallJumping)
 			{
-				Flip();
+				if (input > 0f && !IsFacingRight())
+				{
+					Flip();
+				}
+				else if (input < 0f && IsFacingRight())
+				{
+					Flip();
+				}
 			}
 		}
 
-        if (jumping)
-        {
-            Jump();
-        }
+		if (jumping)
+		{
+			Jump();
+		}
 		if (doubleJumping)
 		{
 			DoubleJump();
@@ -116,6 +135,10 @@ public class PlayerMovement : MonoBehaviour
 		{
 			WallSlide();
 		}
+		if (dashing)
+		{
+			Dash();
+		}
 
 		// Apply gravity
 		rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y + (gravityScale * Time.fixedDeltaTime * Physics.gravity.y));
@@ -127,12 +150,12 @@ public class PlayerMovement : MonoBehaviour
 		}
 
 		wasGrounded = grounded;
-    }
+	}
 
-    private void HandleInput()
-    {
-        input = Input.GetAxisRaw("Horizontal");
-    
+	private void HandleInput()
+	{
+		input = Input.GetAxisRaw("Horizontal");
+
 		if (CanWallSlide())
 		{
 			if (touchingWallL && Input.GetKey(KeyCode.A) && !wallSliding)
@@ -158,9 +181,9 @@ public class PlayerMovement : MonoBehaviour
 			CancelWallsliding();
 			Flip();
 		}
-        if (Input.GetButtonDown("Jump"))
-        {
-            if (CanWallJump())
+		if (Input.GetButtonDown("Jump"))
+		{
+			if (CanWallJump())
 			{
 				StartWallJump();
 			}
@@ -174,15 +197,26 @@ public class PlayerMovement : MonoBehaviour
 			}
 			else
 			{
-				HanldeJumpBuffer();
-				HandleDoubleJumpBuffer();
+				HanldeBufferedJump();
+				HandleBufferedDoubleJump();
 			}
-        }
-        else if (Input.GetButtonUp("Jump"))
-        {
-            JumpReleased();
-        }
-    }
+		}
+		else if (Input.GetButtonUp("Jump"))
+		{
+			JumpReleased();
+		}
+		if (Input.GetKeyDown(KeyCode.LeftShift))
+		{
+			if (CanDash())
+			{
+				StartDash();
+			}
+			else
+			{
+				HandleBufferedDash();
+			}
+		}
+	}
 
 	private void HandleBufferedInput()
 	{
@@ -205,30 +239,41 @@ public class PlayerMovement : MonoBehaviour
 				}
 			}
 		}
+		if (Input.GetKeyDown(KeyCode.LeftShift) && dashBuffered && dashAvailable)
+		{
+			if (CanDash())
+			{
+				StartDash();
+			}
+			else
+			{
+				HandleBufferedDash();
+			}
+		}
 	}
 
-    private void HandleFalling()
-    {
+	private void HandleFalling()
+	{
 		// if velocity indicates that we are currently falling
-        if (rb.velocity.y <= -1E-06f)
-        {
+		if (rb.velocity.y <= -1E-06f)
+		{
 			// if we are not touching the ground, we should be falling
-            if (!TouchingGround())
-            {
-                falling = true;
-                grounded = false;
-                running = false;
-            }
-        }
-        else
-        {
-            falling = false;
-        }
+			if (!TouchingGround())
+			{
+				falling = true;
+				grounded = false;
+				running = false;
+			}
+		}
+		else
+		{
+			falling = false;
+		}
 
 		// if we have no vertical velocity, and we arent grounded, falling or jumping
 		// then we are floating, if we are touching the ground we should be grounded
 		// so we wait a bit before setting grounded to true
-		if (rb.velocity.y == 0f && !grounded && !falling && !jumping)
+		if (rb.velocity.y == 0f && !grounded && !falling && !jumping && !dashing)
 		{
 			if (TouchingGround())
 			{
@@ -245,7 +290,7 @@ public class PlayerMovement : MonoBehaviour
 				floatingBufferTimer = 0f;
 			}
 		}
-    }
+	}
 
 	private void HandleGrounded()
 	{
@@ -276,22 +321,24 @@ public class PlayerMovement : MonoBehaviour
 		{
 			running = false;
 		}
-		rb.velocity = new Vector2(move_direction * RUN_SPEED, rb.velocity.y);
+		if (!wallSliding)
+		{
+			rb.velocity = new Vector2(move_direction * RUN_SPEED, rb.velocity.y);
+		}
 	}
-
 
 	// ======== JUMP ========
 
 	void StartJump()
 	{
-	    jumping = true;
+		jumping = true;
 		StartCoroutine(JumpTimer());
 	}
 
 	IEnumerator JumpTimer()
 	{
 		doubleJumpBuffered = false;
-        yield return new WaitForSeconds(Time.fixedDeltaTime * MAX_JUMP_TIME);
+		yield return new WaitForSeconds(Time.fixedDeltaTime * MAX_JUMP_TIME);
 		jumping = false;
 	}
 
@@ -310,7 +357,7 @@ public class PlayerMovement : MonoBehaviour
 		}
 	}
 
-    private void JumpReleased()
+	private void JumpReleased()
 	{
 		if (rb.velocity.y > 0f)
 		{
@@ -377,7 +424,7 @@ public class PlayerMovement : MonoBehaviour
 		currentWalljumpSpeed = WALL_JUMP_SPEED;
 		walljumpSpeedDecel = (WALL_JUMP_SPEED - RUN_SPEED) / WALL_JUMP_TIME;
 		StartJump();
-		
+
 		wallJumping = true;
 		StartCoroutine(WallJumpTimer());
 		jumpBuffered = false;
@@ -391,7 +438,7 @@ public class PlayerMovement : MonoBehaviour
 
 	private void WallJump()
 	{
-		rb.velocity = wallJumpedRight ? new Vector2(currentWalljumpSpeed, JUMP_SPEED) 
+		rb.velocity = wallJumpedRight ? new Vector2(currentWalljumpSpeed, JUMP_SPEED)
 									  : new Vector2(-currentWalljumpSpeed, JUMP_SPEED);
 
 		currentWalljumpSpeed -= walljumpSpeedDecel;
@@ -469,77 +516,85 @@ public class PlayerMovement : MonoBehaviour
 		touchingWallR = false;
 	}
 
+	// ======== DASH ========
 
-
-	// ======== BUFFERED INPUTS ========
-
-	private void HanldeJumpBuffer()
+	private void StartDash()
 	{
-		CancelJumpBuffer();
-		jumpBuffered = true;
-		StartCoroutine(JumpBufferTimer());
+		if (wallSliding)
+		{
+			Flip();
+		}
+		else if (Input.GetKeyDown(KeyCode.A))
+		{
+			FaceRight();
+		}
+		else if (Input.GetKeyDown(KeyCode.D))
+		{
+			FaceLeft();
+		}
+		dashing = true;
+		dashBuffered = false;
+		HanldeDashCooldown();
+		StartCoroutine(DashTimer());
 	}
 
-	private void CancelJumpBuffer()
+	IEnumerator DashTimer()
 	{
-		if (jumpBuffered)
+		yield return new WaitForSeconds(Time.fixedDeltaTime * DASH_TIME);
+		FinishedDashing();
+	}
+
+	private void Dash()
+	{
+		AffectedByGravity(false);
+		float num = DASH_SPEED;
+		if (IsFacingRight())
 		{
-			StopCoroutine(JumpBufferTimer());
-			jumpBuffered = false;
+			if (CheckForBump(CollisionSide.right))
+			{
+				rb.velocity = new Vector2(num, grounded ? BUMP_VELOCITY : BUMP_VELOCITY_DASH);
+			}
+			else
+			{
+				rb.velocity = new Vector2(num, 0f);
+			}
+		}
+		else if (CheckForBump(CollisionSide.left))
+		{
+			rb.velocity = new Vector2(-num, grounded ? BUMP_VELOCITY : BUMP_VELOCITY_DASH);
+		}
+		else
+		{
+			rb.velocity = new Vector2(-num, 0f);
 		}
 	}
 
-	private IEnumerator JumpBufferTimer()
+	private void FinishedDashing()
 	{
-		yield return new WaitForSeconds(Time.fixedDeltaTime * JUMP_BUFFER_TIME);
-		jumpBuffered = false;
-	}
-
-	private void HandleDoubleJumpBuffer()
-	{
-		CancelDoubleJumpBuffer();
-		doubleJumpBuffered = true;
-		StartCoroutine(DoubleJumpBufferTimer());
-	}
-
-	private void CancelDoubleJumpBuffer()
-	{
-		if (doubleJumpBuffered)
+		CancelDash();
+		AffectedByGravity(true);
+		if (touchingWall && !grounded && (touchingWallL || touchingWallR))
 		{
-			StopCoroutine(DoubleJumpBufferTimer());
-			doubleJumpBuffered = false;
+			wallSliding = true;
+			if (touchingWallL)
+			{
+				wallSlidingL = true;
+			}
+			if (touchingWallR)
+			{
+				wallSlidingR = true;
+			}
 		}
 	}
 
-	private IEnumerator DoubleJumpBufferTimer()
+	private void CancelDash()
 	{
-		yield return new WaitForSeconds(Time.fixedDeltaTime * DOUBLE_JUMP_BUFFER_TIME);
-		doubleJumpBuffered = false;
+		dashing = false;
+		StopCoroutine(DashTimer());
+		AffectedByGravity(true);
 	}
 
-	private void HandleLedgeBuffer()
-	{
-		CancelLedgeBuffer();
-		ledgeBuffered = true;
-		StartCoroutine(LedgeBufferTimer());
-	}
-
-	private void CancelLedgeBuffer()
-	{
-		if (ledgeBuffered)
-		{
-			StopCoroutine(LedgeBufferTimer());
-			ledgeBuffered = false;
-		}
-	}
-
-	private IEnumerator LedgeBufferTimer()
-	{
-		yield return new WaitForSeconds(Time.fixedDeltaTime * LEDGE_BUFFER_TIME);
-		ledgeBuffered = false;
-	}
-
-    // ======== COLLISIONS ========
+	// ======== COLLISIONS ========
 
 	private void OnCollisionEnter(Collision collision)
 	{
@@ -548,7 +603,7 @@ public class PlayerMovement : MonoBehaviour
 		{
 			if (collisionSide == CollisionSide.top)
 			{
-				// headBumpTimer = HEAD_BUMP_STEPS * Time.fixedDeltaTime;
+				HandleHeadBump();
 				if (jumping)
 				{
 					CancelJump();
@@ -564,7 +619,7 @@ public class PlayerMovement : MonoBehaviour
 
 	private void OnCollisionStay(Collision collision)
 	{
-		if  (IsCollidingWithWall(collision))
+		if (IsCollidingWithWall(collision))
 		{
 			if (TouchingWall(CollisionSide.left, false))
 			{
@@ -609,7 +664,7 @@ public class PlayerMovement : MonoBehaviour
 		{
 			StartCoroutine(LeaveWallR());
 		}
-		if  (IsCollidingWithWall(collision) && !TouchingGround())
+		if (IsCollidingWithWall(collision) && !TouchingGround())
 		{
 			grounded = false;
 			running = false;
@@ -650,9 +705,9 @@ public class PlayerMovement : MonoBehaviour
 			")"
 		}));
 		return CollisionSide.bottom;
-	}		
-    
-    public bool TouchingGround()
+	}
+
+	public bool TouchingGround()
 	{
 		LayerMask groundLayer = LayerMask.GetMask("Ground");
 		float z = col.bounds.center.z;
@@ -675,30 +730,34 @@ public class PlayerMovement : MonoBehaviour
 		float distance = 0.1f;
 		float z = col.bounds.center.z;
 
-		Vector3 topVec = side switch {
+		Vector3 topVec = side switch
+		{
 			CollisionSide.left => new(col.bounds.min.x, col.bounds.max.y, z),
 			CollisionSide.right => new(col.bounds.max.x, col.bounds.max.y, z),
 			_ => throw new ArgumentOutOfRangeException(nameof(side), side, "Invalid CollisionSide specified.")
 		};
 
-		Vector3 midVec = side switch {
+		Vector3 midVec = side switch
+		{
 			CollisionSide.left => new(col.bounds.min.x, col.bounds.center.y, z),
 			CollisionSide.right => new(col.bounds.max.x, col.bounds.center.y, z),
 			_ => throw new ArgumentOutOfRangeException(nameof(side), side, "Invalid CollisionSide specified.")
 		};
 
-		Vector3 bottomVec = side switch {
+		Vector3 bottomVec = side switch
+		{
 			CollisionSide.left => new(col.bounds.min.x, col.bounds.min.y, z),
 			CollisionSide.right => new(col.bounds.max.x, col.bounds.min.y, z),
 			_ => throw new ArgumentOutOfRangeException(nameof(side), side, "Invalid CollisionSide specified.")
 		};
 
-		Vector3 direction = side switch {
+		Vector3 direction = side switch
+		{
 			CollisionSide.left => Vector2.left,
 			CollisionSide.right => Vector2.right,
 			_ => throw new ArgumentOutOfRangeException(nameof(side), side, "Invalid CollisionSide specified.")
 		};
-			
+
 		float padding = 0.02f * Math.Sign(direction.x);
 
 		topVec.x -= padding;
@@ -709,7 +768,7 @@ public class PlayerMovement : MonoBehaviour
 		Debug.DrawLine(midVec, midVec + direction * distance, Color.magenta, 0.15f);
 		Debug.DrawLine(bottomVec, bottomVec + direction * distance, Color.magenta, 0.15f);
 
-        if (Physics.Raycast(midVec, direction, out RaycastHit midHit, distance, wallLayerMask))
+		if (Physics.Raycast(midVec, direction, out RaycastHit midHit, distance, wallLayerMask))
 		{
 			if (!midHit.collider.isTrigger)
 			{
@@ -731,6 +790,83 @@ public class PlayerMovement : MonoBehaviour
 			}
 		}
 		return false;
+	}
+
+	public bool CheckForBump(CollisionSide side)
+	{
+		float num = 0.025f;
+		float num2 = 0.2f;
+		float num3 = 0.32f + num2;
+
+		LayerMask wallLayerMask = LayerMask.GetMask("StickyWall");
+		float z = col.bounds.center.z;
+
+		Vector3 vector = new(col.bounds.min.x + num2, col.bounds.min.y + 0.2f, z);
+		Vector3 vector2 = new(col.bounds.min.x + num2, col.bounds.min.y - num, z);
+		Vector3 vector3 = new(col.bounds.max.x - num2, col.bounds.min.y + 0.2f, z);
+		Vector3 vector4 = new(col.bounds.max.x - num2, col.bounds.min.y - num, z);
+
+		Vector3 vec = side switch
+		{
+			CollisionSide.left => vector,
+			CollisionSide.right => vector3,
+			_ => throw new ArgumentOutOfRangeException(nameof(side), side, "Invalid CollisionSide specified.")
+		};
+		Vector3 vec2 = side switch
+		{
+			CollisionSide.left => vector2,
+			CollisionSide.right => vector4,
+			_ => throw new ArgumentOutOfRangeException(nameof(side), side, "Invalid CollisionSide specified.")
+		};
+		Vector3 direction = side switch
+		{
+			CollisionSide.left => Vector2.left,
+			CollisionSide.right => Vector2.right,
+			_ => throw new ArgumentOutOfRangeException(nameof(side), side, "Invalid CollisionSide specified.")
+		};
+
+		Debug.DrawLine(vec2, vec2 + direction * num3, Color.cyan, 0.15f);
+		Debug.DrawLine(vec, vec + direction * num3, Color.cyan, 0.15f);
+
+		if (Physics.Raycast(vec2, direction, out RaycastHit hit2, num3, wallLayerMask) && !Physics.Raycast(vec, direction, out RaycastHit hit, num3, wallLayerMask))
+		{
+			Vector3 vector5 = hit2.point + new Vector3((side == CollisionSide.right) ? 0.1f : (-0.1f), 1f, z);
+			Vector3 vector6 = hit2.point + new Vector3((side == CollisionSide.right) ? (-0.1f) : 0.1f, 1f, z);
+			if (Physics.Raycast(vector5, Vector2.down, out RaycastHit hit3, 1.5f, wallLayerMask))
+			{
+				Debug.DrawLine(vector5, hit3.point, Color.cyan, 0.15f);
+				if (!Physics.Raycast(vector6, Vector2.down, out RaycastHit hit4, 1.5f, wallLayerMask))
+				{
+					return true;
+				}
+				Debug.DrawLine(vector6, hit4.point, Color.cyan, 0.15f);
+				float num4 = hit3.point.y - hit4.point.y;
+				if (num4 > 0f)
+				{
+					Debug.Log("Bump Height: " + num4.ToString());
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	public bool CheckNearRoof()
+	{
+		LayerMask wallLayerMask = LayerMask.GetMask("StickyWall");
+		Vector2 vector = col.bounds.max;
+		Vector2 vector2 = new(col.bounds.min.x, col.bounds.max.y);
+		new Vector2(col.bounds.center.x, col.bounds.max.y);
+		Vector2 vector3 = new(col.bounds.center.x + col.bounds.size.x / 4f, col.bounds.max.y);
+		Vector2 vector4 = new(col.bounds.center.x - col.bounds.size.x / 4f, col.bounds.max.y);
+		Vector2 vector5 = new(-0.5f, 1f);
+		Vector2 vector6 = new(0.5f, 1f);
+		Vector2 up = Vector2.up;
+		Physics.Raycast(vector2, vector5, out RaycastHit hit, 2f, wallLayerMask);
+		Physics.Raycast(vector, vector6, out RaycastHit hit2, 2f, wallLayerMask);
+		Physics.Raycast(vector3, up, out RaycastHit hit3, 1f, wallLayerMask);
+		Physics.Raycast(vector4, up, out RaycastHit hit4, 1f, wallLayerMask);
+		return hit.collider != null || hit2.collider != null || hit3.collider != null || hit4.collider != null;
 	}
 
 	private bool IsCollidingWithGround(Collision collision)
@@ -788,9 +924,21 @@ public class PlayerMovement : MonoBehaviour
 		return transform.right.x > 0f;
 	}
 
+	public void AffectedByGravity(bool gravityApplies)
+	{
+		if (gravityScale > Mathf.Epsilon && !gravityApplies)
+		{
+			gravityScale = 0f;
+			return;
+		}
+		if (gravityScale <= Mathf.Epsilon && gravityApplies)
+		{
+			gravityScale = DEFAULT_GRAVITY_SCALE;
+		}
+	}
 	private bool CanJump()
 	{
-		if (wallSliding || jumping)
+		if (wallSliding || dashing || jumping)
 		{
 			return false;
 		}
@@ -798,7 +946,7 @@ public class PlayerMovement : MonoBehaviour
 		{
 			return true;
 		}
-		if (ledgeBuffered)
+		if (ledgeBuffered && headBumpBuffered && !CheckNearRoof())
 		{
 			ledgeBuffered = false;
 			return true;
@@ -808,7 +956,17 @@ public class PlayerMovement : MonoBehaviour
 
 	private bool CanDoubleJump()
 	{
-		return doubleJumpAvailable && !grounded && !wallSliding;
+		return doubleJumpAvailable && !dashing && !wallSliding && !grounded;
+	}
+
+	private bool CanDash()
+	{
+		return dashAvailable && !dashing && (grounded || wallSliding);
+	}
+
+	private bool CanWallSlide()
+	{
+		return !dashing && !grounded && (falling || wallSliding) && !doubleJumping;
 	}
 
 	private bool CanWallJump()
@@ -816,9 +974,141 @@ public class PlayerMovement : MonoBehaviour
 		return wallSliding || (touchingWall && !grounded);
 	}
 
-	private bool CanWallSlide()
+	// ======== BUFFERED INPUTS ========
+
+	private void HanldeBufferedJump()
 	{
-		return !grounded && (falling || wallSliding) && !doubleJumping;
+		CancelBufferedJump();
+		jumpBuffered = true;
+		StartCoroutine(BufferedJumpTimer());
+	}
+
+	private void CancelBufferedJump()
+	{
+		if (jumpBuffered)
+		{
+			StopCoroutine(BufferedJumpTimer());
+			jumpBuffered = false;
+		}
+	}
+
+	private IEnumerator BufferedJumpTimer()
+	{
+		yield return new WaitForSeconds(Time.fixedDeltaTime * JUMP_BUFFER_TIME);
+		jumpBuffered = false;
+	}
+
+	private void HandleBufferedDoubleJump()
+	{
+		CancelBufferedDoubleJump();
+		doubleJumpBuffered = true;
+		StartCoroutine(DoubleBufferedJumpTimer());
+	}
+
+	private void CancelBufferedDoubleJump()
+	{
+		if (doubleJumpBuffered)
+		{
+			StopCoroutine(DoubleBufferedJumpTimer());
+			doubleJumpBuffered = false;
+		}
+	}
+
+	private IEnumerator DoubleBufferedJumpTimer()
+	{
+		yield return new WaitForSeconds(Time.fixedDeltaTime * DOUBLE_JUMP_BUFFER_TIME);
+		doubleJumpBuffered = false;
+	}
+
+	private void HandleBufferedDash()
+	{
+		CancelBufferedDash();
+		dashBuffered = true;
+		StartCoroutine(BufferedDashTimer());
+	}
+
+	private void CancelBufferedDash()
+	{
+		if (dashBuffered)
+		{
+			StopCoroutine(BufferedDashTimer());
+			dashBuffered = false;
+		}
+	}
+
+	private IEnumerator BufferedDashTimer()
+	{
+		yield return new WaitForSeconds(Time.fixedDeltaTime * DASH_BUFFER_TIME);
+		dashBuffered = false;
+	}
+
+
+	// ======== COROUTINE TIMERS ========
+
+	private void HanldeDashCooldown()
+	{
+		CancelDashCooldown();
+		dashAvailable = false;
+		StartCoroutine(DashCooldownTimer());
+	}
+
+	private void CancelDashCooldown()
+	{
+		if (!dashAvailable)
+		{
+			StopCoroutine(DashCooldownTimer());
+			dashAvailable = true;
+		}
+	}
+
+	private IEnumerator DashCooldownTimer()
+	{
+		yield return new WaitForSeconds(Time.fixedDeltaTime * DASH_COOLDOWN);
+		dashAvailable = true;
+	}
+
+	private void HandleLedgeBuffer()
+	{
+		CancelLedgeBuffer();
+		ledgeBuffered = true;
+		StartCoroutine(LedgeBufferTimer());
+	}
+
+	private void CancelLedgeBuffer()
+	{
+		if (ledgeBuffered)
+		{
+			StopCoroutine(LedgeBufferTimer());
+			ledgeBuffered = false;
+		}
+	}
+
+	private IEnumerator LedgeBufferTimer()
+	{
+		yield return new WaitForSeconds(Time.fixedDeltaTime * LEDGE_BUFFER_TIME);
+		ledgeBuffered = false;
+	}
+
+	private void HandleHeadBump()
+	{
+		CancelHeadBump();
+		headBumpBuffered = true;
+		StartCoroutine(HeadBumpTimer());
+	}
+
+	private void CancelHeadBump()
+	{
+		if (headBumpBuffered)
+		{
+			StopCoroutine(HeadBumpTimer());
+			headBumpBuffered = false;
+		}
+	}
+
+	private IEnumerator HeadBumpTimer()
+	{
+		yield return new WaitForSeconds(Time.fixedDeltaTime * HEAD_BUMP_STEPS);
+		headBumpBuffered = false;
 	}
 
 }
