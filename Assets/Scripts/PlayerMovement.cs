@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.InputSystem;
 
 public enum CollisionSide
 {
@@ -20,6 +21,8 @@ public class PlayerMovement : MonoBehaviour
     public float input;
     public float gravityScale;
 	public bool doubleJumpAvailable = true;
+	private float currentWalljumpSpeed;
+	private float walljumpSpeedDecel;
 
     // controller state
 
@@ -29,7 +32,14 @@ public class PlayerMovement : MonoBehaviour
 	public bool running;
     public bool jumping;
 	public bool doubleJumping;
-
+	public bool wallJumping;
+	public bool wallJumpedRight;
+	public bool touchingWall;
+	public bool touchingWallR;
+	public bool touchingWallL;
+	public bool wallSliding;
+	public bool wallSlidingR;
+	public bool wallSlidingL;
 
     // constants
 
@@ -38,16 +48,20 @@ public class PlayerMovement : MonoBehaviour
     public readonly float MAX_FALL_VELOCITY = 20f;
     public readonly float JUMP_SPEED = 16.65f;
     public readonly float MAX_JUMP_TIME = 9f;
-
+	public float WALL_JUMP_SPEED = 16f;
+	public float WALL_JUMP_TIME = 10f;
 	public readonly float JUMP_BUFFER_TIME = 0.1f;
-	private readonly int DOUBLE_JUMP_BUFFER_TIME = 10;
+	private readonly float DOUBLE_JUMP_BUFFER_TIME = 10f;
 	private readonly float FLOATING_BUFFER_TIME = 0.18f;
 	private readonly int LEDGE_BUFFER_TIME = 2;
+	private readonly int WALL_STICK_TIME = 3;
+
 
 
 	// timers
 	private float floatingBufferTimer;
-	private float ledgeBufferTimer;
+	private int wallUnstickTimer;
+
 
 	// buffer states
 	private bool jumpBuffered;
@@ -66,12 +80,25 @@ public class PlayerMovement : MonoBehaviour
     {
         HandleFalling();
         HandleInput();
-
+		HandleBufferedInput();
+		if (wallSliding)
+		{
+			HandleWallSliding();
+		}
     }
 
     private void FixedUpdate()
     {
         Move(input);
+
+		// if we are not touching the wall, flip the sprite
+		if (!wallSliding && !wallJumping)
+		{
+			if (input != transform.right.x)
+			{
+				Flip();
+			}
+		}
 
         if (jumping)
         {
@@ -80,6 +107,14 @@ public class PlayerMovement : MonoBehaviour
 		if (doubleJumping)
 		{
 			DoubleJump();
+		}
+		if (wallJumping)
+		{
+			WallJump();
+		}
+		if (wallSliding)
+		{
+			WallSlide();
 		}
 
 		// Apply gravity
@@ -98,9 +133,38 @@ public class PlayerMovement : MonoBehaviour
     {
         input = Input.GetAxisRaw("Horizontal");
     
+		if (CanWallSlide())
+		{
+			if (touchingWallL && Input.GetKey(KeyCode.A) && !wallSliding)
+			{
+				doubleJumpAvailable = true;
+				wallSliding = true;
+				wallSlidingL = true;
+				wallSlidingR = false;
+				FaceLeft();
+			}
+			if (touchingWallR && Input.GetKey(KeyCode.D) && !wallSliding)
+			{
+				doubleJumpAvailable = false;
+				wallSliding = true;
+				wallSlidingL = false;
+				wallSlidingR = true;
+				FaceRight();
+			}
+		}
+
+		if (wallSliding && Input.GetKeyDown(KeyCode.S))
+		{
+			CancelWallsliding();
+			Flip();
+		}
         if (Input.GetButtonDown("Jump"))
         {
-            if (CanJump())
+            if (CanWallJump())
+			{
+				StartWallJump();
+			}
+			else if (CanJump())
 			{
 				StartJump();
 			}
@@ -118,14 +182,18 @@ public class PlayerMovement : MonoBehaviour
         {
             JumpReleased();
         }
-		else if (Input.GetButton("Jump"))
+    }
+
+	private void HandleBufferedInput()
+	{
+		if (Input.GetButton("Jump"))
 		{
 			// Handle buffered inputs
-			if (jumpBuffered)
+			if (jumpBuffered && CanJump())
 			{
 				StartJump();
 			}
-			else if (doubleJumpBuffered)
+			else if (doubleJumpBuffered && CanDoubleJump())
 			{
 				if (grounded)
 				{
@@ -137,23 +205,15 @@ public class PlayerMovement : MonoBehaviour
 				}
 			}
 		}
-    }
+	}
 
     private void HandleFalling()
     {
-        if (rb.velocity.y < 0f)
+		// if velocity indicates that we are currently falling
+        if (rb.velocity.y <= -1E-06f)
         {
-            if (TouchingGround())
-			{
-				floatingBufferTimer += Time.deltaTime;
-				if (floatingBufferTimer > FLOATING_BUFFER_TIME)
-				{
-					HandleGrounded();
-					floatingBufferTimer = 0f;
-					return;
-				}
-			}
-			else
+			// if we are not touching the ground, we should be falling
+            if (!TouchingGround())
             {
                 falling = true;
                 grounded = false;
@@ -164,6 +224,27 @@ public class PlayerMovement : MonoBehaviour
         {
             falling = false;
         }
+
+		// if we have no vertical velocity, and we arent grounded, falling or jumping
+		// then we are floating, if we are touching the ground we should be grounded
+		// so we wait a bit before setting grounded to true
+		if (rb.velocity.y == 0f && !grounded && !falling && !jumping)
+		{
+			if (TouchingGround())
+			{
+				floatingBufferTimer += Time.deltaTime;
+				if (floatingBufferTimer > FLOATING_BUFFER_TIME)
+				{
+					HandleGrounded();
+					floatingBufferTimer = 0f;
+					return;
+				}
+			}
+			else
+			{
+				floatingBufferTimer = 0f;
+			}
+		}
     }
 
 	private void HandleGrounded()
@@ -209,6 +290,7 @@ public class PlayerMovement : MonoBehaviour
 
 	IEnumerator JumpTimer()
 	{
+		doubleJumpBuffered = false;
         yield return new WaitForSeconds(Time.fixedDeltaTime * MAX_JUMP_TIME);
 		jumping = false;
 	}
@@ -216,6 +298,7 @@ public class PlayerMovement : MonoBehaviour
 	private void Jump()
 	{
 		rb.velocity = new Vector2(rb.velocity.x, JUMP_SPEED);
+		ledgeBuffered = false;
 	}
 
 	private void CancelJump()
@@ -237,8 +320,6 @@ public class PlayerMovement : MonoBehaviour
 		jumpBuffered = false;
 		doubleJumpBuffered = false;
 	}
-
-	
 
 	// ======== DOUBLE JUMP ========
 
@@ -273,6 +354,122 @@ public class PlayerMovement : MonoBehaviour
 			doubleJumping = false;
 		}
 	}
+
+	// ======== WALL JUMP ========
+
+	private void StartWallJump()
+	{
+		if (touchingWallL)
+		{
+			FaceRight();
+			wallJumpedRight = true;
+		}
+		else if (touchingWallR)
+		{
+			FaceLeft();
+			wallJumpedRight = false;
+		}
+		CancelWallsliding();
+		touchingWall = false;
+		touchingWallL = false;
+		touchingWallR = false;
+		doubleJumpAvailable = true;
+		currentWalljumpSpeed = WALL_JUMP_SPEED;
+		walljumpSpeedDecel = (WALL_JUMP_SPEED - RUN_SPEED) / WALL_JUMP_TIME;
+		StartJump();
+		
+		wallJumping = true;
+		StartCoroutine(WallJumpTimer());
+		jumpBuffered = false;
+	}
+
+	private IEnumerator WallJumpTimer()
+	{
+		yield return new WaitForSeconds(Time.fixedDeltaTime * WALL_JUMP_TIME);
+		CancelWallJump();
+	}
+
+	private void WallJump()
+	{
+		rb.velocity = wallJumpedRight ? new Vector2(currentWalljumpSpeed, JUMP_SPEED) 
+									  : new Vector2(-currentWalljumpSpeed, JUMP_SPEED);
+
+		currentWalljumpSpeed -= walljumpSpeedDecel;
+	}
+
+	private void CancelWallJump()
+	{
+		if (wallJumping)
+		{
+			StopCoroutine(WallJumpTimer());
+			wallJumping = false;
+		}
+	}
+
+	private void HandleWallSliding()
+	{
+		doubleJumpAvailable = true;
+		if (grounded)
+		{
+			Flip();
+			CancelWallsliding();
+		}
+		if (!touchingWall)
+		{
+			Flip();
+			CancelWallsliding();
+		}
+		if (!CanWallSlide())
+		{
+			CancelWallsliding();
+		}
+	}
+	private void WallSlide()
+	{
+		if (wallSlidingL && Input.GetKeyDown(KeyCode.LeftArrow))
+		{
+			wallUnstickTimer++;
+		}
+		else if (wallSlidingR && Input.GetKeyDown(KeyCode.RightArrow))
+		{
+			wallUnstickTimer++;
+		}
+		else
+		{
+			wallUnstickTimer = 0;
+		}
+		if (wallUnstickTimer >= WALL_STICK_TIME)
+		{
+			CancelWallsliding();
+		}
+		{
+			CancelWallsliding();
+		}
+		if (wallSlidingL)
+		{
+			if (!TouchingWall(CollisionSide.left, false))
+			{
+				Flip();
+				CancelWallsliding();
+			}
+		}
+		else if (wallSlidingR && !TouchingWall(CollisionSide.right, false))
+		{
+			Flip();
+			CancelWallsliding();
+		}
+	}
+
+	private void CancelWallsliding()
+	{
+		wallSliding = false;
+		wallSlidingL = false;
+		wallSlidingR = false;
+		touchingWallL = false;
+		touchingWallR = false;
+	}
+
+
 
 	// ======== BUFFERED INPUTS ========
 
@@ -347,8 +544,17 @@ public class PlayerMovement : MonoBehaviour
 	private void OnCollisionEnter(Collision collision)
 	{
 		CollisionSide collisionSide = FindCollisionDirection(collision);
-		if (IsCollidingWithGround(collision))
+		if (IsCollidingWithWall(collision) || IsCollidingWithGround(collision))
 		{
+			if (collisionSide == CollisionSide.top)
+			{
+				// headBumpTimer = HEAD_BUMP_STEPS * Time.fixedDeltaTime;
+				if (jumping)
+				{
+					CancelJump();
+					CancelDoubleJump();
+				}
+			}
 			if (collisionSide == CollisionSide.bottom)
 			{
 				HandleGrounded();
@@ -356,8 +562,53 @@ public class PlayerMovement : MonoBehaviour
 		}
 	}
 
+	private void OnCollisionStay(Collision collision)
+	{
+		if  (IsCollidingWithWall(collision))
+		{
+			if (TouchingWall(CollisionSide.left, false))
+			{
+				touchingWall = true;
+				touchingWallL = true;
+				touchingWallR = false;
+			}
+			else if (TouchingWall(CollisionSide.right, false))
+			{
+				touchingWall = true;
+				touchingWallL = false;
+				touchingWallR = true;
+			}
+			else
+			{
+				StartCoroutine(LeaveWall());
+			}
+			if (TouchingGround())
+			{
+				if (falling)
+				{
+					HandleGrounded();
+					return;
+				}
+			}
+			else if (jumping || falling)
+			{
+				grounded = false;
+				running = false;
+				return;
+			}
+		}
+	}
+
 	private void OnCollisionExit(Collision collision)
 	{
+		if (touchingWallL && !TouchingWall(CollisionSide.left, false))
+		{
+			StartCoroutine(LeaveWallL());
+		}
+		if (touchingWallR && !TouchingWall(CollisionSide.right, false))
+		{
+			StartCoroutine(LeaveWallR());
+		}
 		if  (IsCollidingWithWall(collision) && !TouchingGround())
 		{
 			grounded = false;
@@ -417,6 +668,71 @@ public class PlayerMovement : MonoBehaviour
 		return Physics.Raycast(mid, Vector2.down, distance, groundLayer) || Physics.Raycast(midLeft, Vector2.down, distance, groundLayer) || Physics.Raycast(midRight, Vector2.down, distance, groundLayer);
 	}
 
+	private bool TouchingWall(CollisionSide side, bool checkTop = false)
+	{
+
+		LayerMask wallLayerMask = LayerMask.GetMask("StickyWall");
+		float distance = 0.1f;
+		float z = col.bounds.center.z;
+
+		Vector3 topVec = side switch {
+			CollisionSide.left => new(col.bounds.min.x, col.bounds.max.y, z),
+			CollisionSide.right => new(col.bounds.max.x, col.bounds.max.y, z),
+			_ => throw new ArgumentOutOfRangeException(nameof(side), side, "Invalid CollisionSide specified.")
+		};
+
+		Vector3 midVec = side switch {
+			CollisionSide.left => new(col.bounds.min.x, col.bounds.center.y, z),
+			CollisionSide.right => new(col.bounds.max.x, col.bounds.center.y, z),
+			_ => throw new ArgumentOutOfRangeException(nameof(side), side, "Invalid CollisionSide specified.")
+		};
+
+		Vector3 bottomVec = side switch {
+			CollisionSide.left => new(col.bounds.min.x, col.bounds.min.y, z),
+			CollisionSide.right => new(col.bounds.max.x, col.bounds.min.y, z),
+			_ => throw new ArgumentOutOfRangeException(nameof(side), side, "Invalid CollisionSide specified.")
+		};
+
+		Vector3 direction = side switch {
+			CollisionSide.left => Vector2.left,
+			CollisionSide.right => Vector2.right,
+			_ => throw new ArgumentOutOfRangeException(nameof(side), side, "Invalid CollisionSide specified.")
+		};
+			
+		float padding = 0.02f * Math.Sign(direction.x);
+
+		topVec.x -= padding;
+		midVec.x -= padding;
+		bottomVec.x -= padding;
+
+		Debug.DrawLine(topVec, topVec + direction * distance, Color.magenta, 0.15f);
+		Debug.DrawLine(midVec, midVec + direction * distance, Color.magenta, 0.15f);
+		Debug.DrawLine(bottomVec, bottomVec + direction * distance, Color.magenta, 0.15f);
+
+        if (Physics.Raycast(midVec, direction, out RaycastHit midHit, distance, wallLayerMask))
+		{
+			if (!midHit.collider.isTrigger)
+			{
+				return true;
+			}
+		}
+		if (Physics.Raycast(bottomVec, direction, out RaycastHit bottomHit, distance, wallLayerMask))
+		{
+			if (!bottomHit.collider.isTrigger)
+			{
+				return true;
+			}
+		}
+		if (checkTop && Physics.Raycast(topVec, direction, out RaycastHit topHit, distance, wallLayerMask))
+		{
+			if (!topHit.collider.isTrigger)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
 	private bool IsCollidingWithGround(Collision collision)
 	{
 		return collision.gameObject.layer == LayerMask.NameToLayer("Ground");
@@ -427,12 +743,54 @@ public class PlayerMovement : MonoBehaviour
 		return collision.gameObject.layer == LayerMask.NameToLayer("StickyWall");
 	}
 
+	IEnumerator LeaveWallL()
+	{
+		yield return new WaitForSeconds(0.1f);
+		touchingWall = false;
+		touchingWallL = false;
+	}
+
+	IEnumerator LeaveWallR()
+	{
+		yield return new WaitForSeconds(0.1f);
+		touchingWall = false;
+		touchingWallR = false;
+	}
+
+	IEnumerator LeaveWall()
+	{
+		yield return new WaitForSeconds(0.1f);
+		touchingWall = false;
+		touchingWallL = false;
+		touchingWallR = false;
+	}
+
 
 	// ======== HELPER METHODS ========
 
+	public void FaceRight()
+	{
+		transform.right = Vector3.right;
+	}
+
+	public void FaceLeft()
+	{
+		transform.right = Vector3.left;
+	}
+
+	public void Flip()
+	{
+		transform.right *= -1f;
+	}
+
+	private bool IsFacingRight()
+	{
+		return transform.right.x > 0f;
+	}
+
 	private bool CanJump()
 	{
-		if (jumping)
+		if (wallSliding || jumping)
 		{
 			return false;
 		}
@@ -450,7 +808,17 @@ public class PlayerMovement : MonoBehaviour
 
 	private bool CanDoubleJump()
 	{
-		return doubleJumpAvailable && !grounded;
+		return doubleJumpAvailable && !grounded && !wallSliding;
+	}
+
+	private bool CanWallJump()
+	{
+		return wallSliding || (touchingWall && !grounded);
+	}
+
+	private bool CanWallSlide()
+	{
+		return !grounded && (falling || wallSliding) && !doubleJumping;
 	}
 
 }
