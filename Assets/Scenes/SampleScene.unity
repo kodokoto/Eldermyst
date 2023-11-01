@@ -1846,6 +1846,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4971603857996838606, guid: e5d2f166402824465b9860fe65b5525f, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5541694652321761149, guid: e5d2f166402824465b9860fe65b5525f, type: 3}
       propertyPath: xpBar
       value: 

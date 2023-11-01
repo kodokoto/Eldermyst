@@ -99,6 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 20
+  Xp: 10
   fovRadius: 10
   projectileSpawnPoint: {fileID: 3077763852619369437}
   targetMask:
@@ -109,6 +110,7 @@ MonoBehaviour:
     m_Bits: 128
   projectile: {fileID: 9087610323165539508, guid: 6c1539d4356ac4ed68fef419beb0e99f, type: 3}
   fireRate: 2
+  playerObj: {fileID: 0}
 --- !u!65 &8413188722214082673
 BoxCollider:
   m_ObjectHideFlags: 0

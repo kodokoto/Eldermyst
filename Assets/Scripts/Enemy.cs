@@ -6,7 +6,7 @@ public class Enemy : MonoBehaviour, ITakeDamage
 {
 
     public int health = 20;
-    public int xp = 50;
+    public int Xp;
 
     public float fovRadius = 10f;
 
@@ -64,7 +64,7 @@ public class Enemy : MonoBehaviour, ITakeDamage
             playerObj = GameObject.FindGameObjectWithTag("Player");
             Player player = (Player)playerObj.GetComponent(typeof(Player));
             Destroy(gameObject);
-            player.GainXP(xp);
+            player.GainXP(Xp);
         }
     }
 
