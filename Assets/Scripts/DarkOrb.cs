@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DarkOrd : MonoBehaviour, IAutoMove
+public class DarkOrb : MonoBehaviour, IAutoMove
 {
     // Start is called before the first frame update
 
@@ -31,9 +31,10 @@ public class DarkOrd : MonoBehaviour, IAutoMove
 
     }
 
+
     void Start()
     {
-        AutoMoveType = AutoMoveType.Loop;
+        AutoMoveType = AutoMoveType.PingPong;
         Speed = 5f;
         ((IAutoMove)this).AdvanceTarget();
         IsMoving = true;
@@ -49,7 +50,7 @@ public class DarkOrd : MonoBehaviour, IAutoMove
             }
             else
             {
-                MoveToTarget();
+                MoveToTarget(); 
             }
         }
     }
@@ -62,4 +63,5 @@ public class DarkOrd : MonoBehaviour, IAutoMove
             player.ConsumeMana(manaDamage);
         }
     }
+
 }
