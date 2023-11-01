@@ -1544,6 +1544,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DarkOrb
       objectReference: {fileID: 0}
+    - target: {fileID: 5881041046049237603, guid: 70a96adf4af5d9542ab0fcf0abd9f76f, type: 3}
+      propertyPath: damage
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7752596074156222359, guid: 70a96adf4af5d9542ab0fcf0abd9f76f, type: 3}
       propertyPath: m_LocalPosition.x
       value: -5

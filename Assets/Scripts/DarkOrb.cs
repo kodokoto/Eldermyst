@@ -12,7 +12,7 @@ public class DarkOrb : MonoBehaviour, IAutoMove
     public bool IsMoving { get; set; }
     public float Speed { get; set; }
 
-    public int manaDamage;
+    public int Damage;
     void MoveToTarget()
     {
         transform.position = Vector3.MoveTowards(transform.position, Path[TargetPointIndex], Time.deltaTime * Speed);
@@ -60,7 +60,8 @@ public class DarkOrb : MonoBehaviour, IAutoMove
         if (other.gameObject.CompareTag("Player"))
         {
             Player player = other.gameObject.GetComponent<Player>();
-            player.ConsumeMana(manaDamage);
+            player.ConsumeMana(Damage);
+            player.TakeDamage(Damage);
         }
     }
 
