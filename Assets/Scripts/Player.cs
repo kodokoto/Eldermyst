@@ -19,12 +19,14 @@ public class Player : MonoBehaviour , ITakeDamage
     // UI
     public HealthBar healthBar;
     public ManaBar manaBar;
+    public XPBar xpBar;
 
     void Start()
     {
         data.Reset();
         healthBar.SetMaxHealth(data.maxHealth);
         manaBar.SetMaxMana(data.maxMana);
+        xpBar.SetMaxXP(data.maxXP);
     }
 
     void Update()
@@ -88,6 +90,11 @@ public class Player : MonoBehaviour , ITakeDamage
         return data.health;
     }
 
+    public int GetXP()
+    {
+        return data.xp;
+    }
+
     public bool IsShielded()
     {
         return data.isShielded;
@@ -120,6 +127,11 @@ public class Player : MonoBehaviour , ITakeDamage
     {
         AddMana(mana);
     }
+
+    public void GainXP(int amount)
+    {
+        AddXP(amount);
+    }
     public Transform GetProjectileSpawnPoint()
     {
         return projectileSpawnPoint;
@@ -139,6 +151,13 @@ public class Player : MonoBehaviour , ITakeDamage
         data.maxMana = amount;
         data.mana = Mathf.Min(data.mana, data.maxMana);
         manaBar.SetMaxMana(data.maxMana);
+    }
+
+    private void SetMaxXP(int amount)
+    {
+        data.maxXP = amount;
+        data.xp = Mathf.Min(data.xp, data.maxXP);
+        xpBar.SetMaxXP(data.maxXP);
     }
 
     private void AddHealth(int amount)
@@ -185,6 +204,16 @@ public class Player : MonoBehaviour , ITakeDamage
         }
         data.mana = Mathf.Max(data.mana - amount, 0);
         manaBar.SetMana(data.mana);
+    }
+
+    private void AddXP(int amount)
+    {
+        if(state.Equals(PlayerState.Dead))
+        {
+            return;
+        }
+        data.xp = Mathf.Min(data.xp + amount, data.maxXP);
+        xpBar.SetXP(data.xp);
     }
 
 }
