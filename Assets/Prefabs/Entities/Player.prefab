@@ -154,7 +154,10 @@ GameObject:
   - component: {fileID: 6353702105028046855}
   - component: {fileID: 4526905827100872085}
   - component: {fileID: 4971603857996838606}
+  - component: {fileID: 4964658739575519006}
   - component: {fileID: 1711475387719681092}
+  - component: {fileID: 4477486868661477039}
+  - component: {fileID: 7029967651967122045}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -209,7 +212,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 307d92526378d4beb90e5c1a670efed2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -296,8 +299,8 @@ MonoBehaviour:
   data: {fileID: 11400000, guid: 18715116c749f48f68ea9ae1ab0843ad, type: 2}
   state: 0
   projectileSpawnPoint: {fileID: 2342938152192159547}
-  healthBar: {fileID: 1930009361080571407, guid: 1c01784fe09c6488c9dbff50d5e7994a, type: 3}
-  manaBar: {fileID: 1156438496628344150, guid: 34eb98fc723cc4289b9418b190a5539e, type: 3}
+  healthBar: {fileID: 0}
+  manaBar: {fileID: 0}
 --- !u!114 &6353702105028046855
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -311,21 +314,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 0}
-  fallSpeedYDampingChangeThreshold: 0
-  jumpBufferTime: 0.1
-  runSpeed: 5
-  maxFallSpeed: 7
-  dVelocity: {x: 0, y: 0, z: 0}
-  gravity: 30
-  jumpSpeed: 7
-  maxJumpSpeed: 7
-  midAirSpeed: 5
-  jumpMaxDuration: 0.25
-  jumpTimer: 0
-  hasDoubleJump: 1
-  wallJumpDirection: 0
-  wallFallSpeed: 2
-  wallJumpForce: {x: 5, y: 7}
+  col: {fileID: 0}
+  input: 0
+  gravityScale: 0
+  doubleJumpAvailable: 1
+  grounded: 0
+  wasGrounded: 0
+  falling: 0
+  running: 0
+  jumping: 0
+  doubleJumping: 0
+  wallJumping: 0
+  wallJumpedRight: 0
+  dashing: 0
+  touchingWall: 0
+  touchingWallR: 0
+  touchingWallL: 0
+  wallSliding: 0
+  wallSlidingR: 0
+  wallSlidingL: 0
 --- !u!114 &4526905827100872085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -354,6 +361,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spell: {fileID: 11400000, guid: ed4ab643e454b4b66a171f601e49460f, type: 2}
   key: 113
+--- !u!114 &4964658739575519006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6477427282348597017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf7a97e5d84d649e5b69a1ce5caf9c11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spell: {fileID: 11400000, guid: e514316db1dd04d899641440b5e5b296, type: 2}
+  key: 102
 --- !u!114 &1711475387719681092
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -367,6 +388,91 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameState: 0
+--- !u!108 &4477486868661477039
+Light:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6477427282348597017}
+  m_Enabled: 1
+  serializedVersion: 10
+  m_Type: 2
+  m_Shape: 0
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 1
+  m_Range: 10
+  m_SpotAngle: 30
+  m_InnerSpotAngle: 21.80208
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+    m_CullingMatrixOverride:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    m_UseCullingMatrixOverride: 0
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingLayerMask: 1
+  m_Lightmapping: 4
+  m_LightShadowCasterMode: 0
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+--- !u!114 &7029967651967122045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6477427282348597017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_RenderingLayers: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_ShadowRenderingLayers: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
 --- !u!1 &7146058025064805320
 GameObject:
   m_ObjectHideFlags: 0

@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 4184733320147221404}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 25.0165, y: 1.8101, z: 0}
+  m_LocalPosition: {x: 25.0165, y: 0.09, z: 0}
   m_LocalScale: {x: 1.1514, y: 1.1514, z: 1.1514}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -107,7 +107,7 @@ MonoBehaviour:
   obstructionMask:
     serializedVersion: 2
     m_Bits: 128
-  projectile: {fileID: 9087610323165539508, guid: 6c1539d4356ac4ed68fef419beb0e99f, type: 3}
+  projectile: {fileID: 1847172924239988109, guid: 51e6a1c0ce4dd4ac2a3d01c1353c5875, type: 3}
   fireRate: 2
 --- !u!65 &8413188722214082673
 BoxCollider:
