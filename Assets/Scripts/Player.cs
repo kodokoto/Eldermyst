@@ -21,6 +21,7 @@ public class Player : MonoBehaviour , ITakeDamage
     public HealthBar healthBar;
     public ManaBar manaBar;
     public XPBar xpBar;
+    public LevelUpUI levelUpText;
 
     public SpellHandler shield;
     public SpellHandler projectile;
@@ -278,10 +279,21 @@ public class Player : MonoBehaviour , ITakeDamage
         }
     }
 
-    private void EnableSpell(SpellHandler spell)
+    private void EnableSpell(SpellHandler spells)
     {
-        spell.enabled = true;
-        // UI 
+        spells.enabled = true;
+        Spell spell = spells.GetSpell();
+        string levelUpMessage;
+        if (spell.GetName() == "Teleport")
+        {
+            levelUpMessage = "You have unlocked teleport!! To use this spell, press the F key.";
+            StartCoroutine(levelUpText.ShowText(levelUpMessage, GetCurrentXPLevel()));
+        }
+        else if (spell.GetName() == "Shield")
+        {
+            levelUpMessage = "You have unlocked shield!! To use this spell, press the E key.";
+            StartCoroutine(levelUpText.ShowText(levelUpMessage, GetCurrentXPLevel()));
+        }
     }
 
     private void DisableSpell(SpellHandler spell)
