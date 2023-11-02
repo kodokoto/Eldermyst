@@ -298,6 +298,10 @@ MonoBehaviour:
   projectileSpawnPoint: {fileID: 2342938152192159547}
   healthBar: {fileID: 1930009361080571407, guid: 1c01784fe09c6488c9dbff50d5e7994a, type: 3}
   manaBar: {fileID: 1156438496628344150, guid: 34eb98fc723cc4289b9418b190a5539e, type: 3}
+  xpBar: {fileID: 0}
+  shield: {fileID: 0}
+  projectile: {fileID: 0}
+  teleport: {fileID: 0}
 --- !u!114 &6353702105028046855
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -311,21 +315,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 0}
-  fallSpeedYDampingChangeThreshold: 0
-  jumpBufferTime: 0.1
-  runSpeed: 5
-  maxFallSpeed: 7
-  dVelocity: {x: 0, y: 0, z: 0}
-  gravity: 30
-  jumpSpeed: 7
-  maxJumpSpeed: 7
-  midAirSpeed: 5
-  jumpMaxDuration: 0.25
-  jumpTimer: 0
-  hasDoubleJump: 1
-  wallJumpDirection: 0
-  wallFallSpeed: 2
-  wallJumpForce: {x: 5, y: 7}
+  col: {fileID: 0}
+  input: 0
+  gravityScale: 0
+  doubleJumpAvailable: 1
+  grounded: 0
+  wasGrounded: 0
+  falling: 0
+  running: 1
+  jumping: 0
+  doubleJumping: 0
+  wallJumping: 0
+  wallJumpedRight: 0
+  dashing: 0
+  touchingWall: 0
+  touchingWallR: 0
+  touchingWallL: 0
+  wallSliding: 0
+  wallSlidingR: 0
+  wallSlidingL: 0
 --- !u!114 &4526905827100872085
 MonoBehaviour:
   m_ObjectHideFlags: 0

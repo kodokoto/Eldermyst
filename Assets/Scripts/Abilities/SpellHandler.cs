@@ -55,4 +55,8 @@ public class SpellHandler : MonoBehaviour
                 break;
         }
     }
+
+    public Spell GetSpell(){
+        return spell;
+    }
 }

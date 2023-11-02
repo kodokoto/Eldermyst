@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public enum PlayerState
@@ -21,12 +22,44 @@ public class Player : MonoBehaviour , ITakeDamage
     public ManaBar manaBar;
     public XPBar xpBar;
 
+    public SpellHandler shield;
+    public SpellHandler projectile;
+    public SpellHandler teleport;
+    public GameObject SpellObj;
+
+    public SpellHandler[] spells;
+
+
+
     void Start()
     {
         data.Reset();
         healthBar.SetMaxHealth(data.maxHealth);
         manaBar.SetMaxMana(data.maxMana);
         xpBar.SetMaxXP(data.xpLevels[data.currentXPLevel]);
+
+        // set up spells
+        spells = SpellObj.GetComponents<SpellHandler>();
+        for (int i=0;i<3;i++) {
+            Spell spell = spells[i].GetSpell();
+            if (spell.GetName() == "Shield")
+            {
+                shield = spells[i];
+            }
+            else if (spell.GetName() == "Teleport")
+            {
+                teleport = spells[i];
+            }
+            else
+            {
+                projectile = spells[i];
+            }
+        }
+
+        DisableSpell(teleport);
+        DisableSpell(shield);
+        EnableSpell(projectile);
+     
     }
 
     void Update()
@@ -221,10 +254,7 @@ public class Player : MonoBehaviour , ITakeDamage
         if ((amount + data.xp >= GetXPLevel())&& (GetCurrentXPLevel()<4))
         {
             int leftover = amount + data.xp - GetXPLevel();
-            data.xp = leftover;
-            data.currentXPLevel = GetCurrentXPLevel() + 1;
-            xpBar.SetXP(data.xp);
-            xpBar.SetMaxXP(GetXPLevel());
+            LevelUp(leftover);            
         }
         else
         {
@@ -232,5 +262,30 @@ public class Player : MonoBehaviour , ITakeDamage
             xpBar.SetXP(data.xp);
         }
     }
+    private void LevelUp(int leftover) {
+        data.xp = leftover;
+        data.currentXPLevel = GetCurrentXPLevel() + 1;
+        xpBar.SetXP(data.xp);
+        xpBar.SetMaxXP(GetXPLevel());
 
+        switch (GetCurrentXPLevel())
+        {
+            case 1: EnableSpell(teleport);
+            break;
+
+            case 2: EnableSpell(shield);
+               break;
+        }
+    }
+
+    private void EnableSpell(SpellHandler spell)
+    {
+        spell.enabled = true;
+        // UI 
+    }
+
+    private void DisableSpell(SpellHandler spell)
+    {
+        spell.enabled = false;
+    }
 }

@@ -801,9 +801,9 @@ RectTransform:
   m_Children:
   - {fileID: 1692411330}
   - {fileID: 1096511226}
+  - {fileID: 1452255727}
   - {fileID: 1574696111}
   - {fileID: 593618940}
-  - {fileID: 1452255727}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1846,9 +1846,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4971603857996838606, guid: e5d2f166402824465b9860fe65b5525f, type: 3}
+    - target: {fileID: 1711475387719681092, guid: e5d2f166402824465b9860fe65b5525f, type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4526905827100872085, guid: e5d2f166402824465b9860fe65b5525f, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4971603857996838606, guid: e5d2f166402824465b9860fe65b5525f, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5541694652321761149, guid: e5d2f166402824465b9860fe65b5525f, type: 3}
       propertyPath: xpBar
@@ -1859,9 +1867,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1096511227}
     - target: {fileID: 5541694652321761149, guid: e5d2f166402824465b9860fe65b5525f, type: 3}
+      propertyPath: SpellObj
+      value: 
+      objectReference: {fileID: 1735952756}
+    - target: {fileID: 5541694652321761149, guid: e5d2f166402824465b9860fe65b5525f, type: 3}
       propertyPath: healthBar
       value: 
       objectReference: {fileID: 1692411331}
+    - target: {fileID: 6353702105028046855, guid: e5d2f166402824465b9860fe65b5525f, type: 3}
+      propertyPath: wasGrounded
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6353702105028046855, guid: e5d2f166402824465b9860fe65b5525f, type: 3}
+      propertyPath: wallSlidingL
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6477427282348597017, guid: e5d2f166402824465b9860fe65b5525f, type: 3}
       propertyPath: m_Name
       value: Player
@@ -1911,8 +1931,8 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 6477427282348597017, guid: e5d2f166402824465b9860fe65b5525f, type: 3}
-      insertIndex: 9
-      addedObject: {fileID: 9099206164284670740}
+      insertIndex: -1
+      addedObject: {fileID: 9099206164284670749}
   m_SourcePrefab: {fileID: 100100000, guid: e5d2f166402824465b9860fe65b5525f, type: 3}
 --- !u!1001 &4931814607278723730
 PrefabInstance:
@@ -2400,14 +2420,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26d3bfc473b3148ef9601865763fc1dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &9099206164284670740
+--- !u!114 &9099206164284670749
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1735952756}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cf7a97e5d84d649e5b69a1ce5caf9c11, type: 3}
   m_Name: 

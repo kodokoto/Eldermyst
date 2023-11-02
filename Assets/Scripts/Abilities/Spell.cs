@@ -29,4 +29,9 @@ public class Spell : ScriptableObject
             return false;
         }
     }
+
+    public string GetName()
+    {
+        return name;
+    }
 }
