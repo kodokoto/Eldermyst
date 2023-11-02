@@ -134,7 +134,7 @@ public class Player : MonoBehaviour , ITakeDamage
         return data.currentXPLevel;
     }
 
-    public int GetXPLevel()
+    public int GetMaxXP()
     {
         return data.xpLevels[GetCurrentXPLevel()];
     }
@@ -252,9 +252,9 @@ public class Player : MonoBehaviour , ITakeDamage
             return;
         }
         
-        if ((amount + data.xp >= GetXPLevel())&& (GetCurrentXPLevel()<4))
+        if ((amount + data.xp >= GetMaxXP())&& (GetCurrentXPLevel()<4))
         {
-            int leftover = amount + data.xp - GetXPLevel();
+            int leftover = amount + data.xp - GetMaxXP();
             LevelUp(leftover);            
         }
         else
@@ -267,15 +267,15 @@ public class Player : MonoBehaviour , ITakeDamage
         data.xp = leftover;
         data.currentXPLevel = GetCurrentXPLevel() + 1;
         xpBar.SetXP(data.xp);
-        xpBar.SetMaxXP(GetXPLevel());
+        xpBar.SetMaxXP(GetMaxXP());
 
         switch (GetCurrentXPLevel())
         {
             case 1: EnableSpell(teleport);
-            break;
+                break;
 
             case 2: EnableSpell(shield);
-               break;
+                break;
         }
     }
 
