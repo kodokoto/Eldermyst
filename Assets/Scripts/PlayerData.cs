@@ -9,7 +9,7 @@ public class PlayerData : ScriptableObject
     [Header("Stats")]
     public int maxHealth;
     public int maxMana;
-    public int maxXP;
+    public int[] xpLevels = new int[] { 10, 20, 30, 40, 50 };
 
     public int healthRegen;
     public float healthRegenRate;
@@ -21,12 +21,14 @@ public class PlayerData : ScriptableObject
     [HideInInspector] public int mana;
     [HideInInspector] public bool isShielded;
     [HideInInspector] public int xp;
+    [HideInInspector] public int currentXPLevel;
 
     void OnValidate() 
     {
         health = maxHealth;
         mana = maxMana;
         xp = 0;
+        currentXPLevel = 0;
     }
 
     public void Reset()
@@ -34,5 +36,6 @@ public class PlayerData : ScriptableObject
         health = maxHealth;
         mana = maxMana;
         xp = 0;
+        currentXPLevel = 0;
     }
 }

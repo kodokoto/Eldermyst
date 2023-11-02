@@ -26,7 +26,7 @@ public class Player : MonoBehaviour , ITakeDamage
         data.Reset();
         healthBar.SetMaxHealth(data.maxHealth);
         manaBar.SetMaxMana(data.maxMana);
-        xpBar.SetMaxXP(data.maxXP);
+        xpBar.SetMaxXP(data.xpLevels[data.currentXPLevel]);
     }
 
     void Update()
@@ -95,6 +95,16 @@ public class Player : MonoBehaviour , ITakeDamage
         return data.xp;
     }
 
+    public int GetCurrentXPLevel()
+    {
+        return data.currentXPLevel;
+    }
+
+    public int GetXPLevel()
+    {
+        return data.xpLevels[GetCurrentXPLevel()];
+    }
+
     public bool IsShielded()
     {
         return data.isShielded;
@@ -132,6 +142,8 @@ public class Player : MonoBehaviour , ITakeDamage
     {
         AddXP(amount);
     }
+
+   
     public Transform GetProjectileSpawnPoint()
     {
         return projectileSpawnPoint;
@@ -151,13 +163,6 @@ public class Player : MonoBehaviour , ITakeDamage
         data.maxMana = amount;
         data.mana = Mathf.Min(data.mana, data.maxMana);
         manaBar.SetMaxMana(data.maxMana);
-    }
-
-    private void SetMaxXP(int amount)
-    {
-        data.maxXP = amount;
-        data.xp = Mathf.Min(data.xp, data.maxXP);
-        xpBar.SetMaxXP(data.maxXP);
     }
 
     private void AddHealth(int amount)
@@ -212,8 +217,20 @@ public class Player : MonoBehaviour , ITakeDamage
         {
             return;
         }
-        data.xp = Mathf.Min(data.xp + amount, data.maxXP);
-        xpBar.SetXP(data.xp);
+        
+        if ((amount + data.xp >= GetXPLevel())&& (GetCurrentXPLevel()<4))
+        {
+            int leftover = amount + data.xp - GetXPLevel();
+            data.xp = leftover;
+            data.currentXPLevel = GetCurrentXPLevel() + 1;
+            xpBar.SetXP(data.xp);
+            xpBar.SetMaxXP(GetXPLevel());
+        }
+        else
+        {
+            data.xp +=amount;
+            xpBar.SetXP(data.xp);
+        }
     }
 
 }

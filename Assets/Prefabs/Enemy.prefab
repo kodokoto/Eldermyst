@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 20
-  Xp: 10
+  Xp: 8
   fovRadius: 10
   projectileSpawnPoint: {fileID: 3077763852619369437}
   targetMask:
