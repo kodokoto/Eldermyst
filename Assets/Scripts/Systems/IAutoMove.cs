@@ -60,7 +60,9 @@ public interface IAutoMove
     {
         if (TargetPointIndex == Path.Length - 1)
         {
-            IsMoving = false;
+            // reverse the path array and set index to 0
+            System.Array.Reverse(Path);
+            TargetPointIndex = 0;
         }
         else
         {
@@ -72,7 +74,7 @@ public interface IAutoMove
     {
         if (TargetPointIndex == Path.Length - 1)
         {
-            TargetPointIndex = 0;
+            IsMoving = false;
         }
         else
         {
