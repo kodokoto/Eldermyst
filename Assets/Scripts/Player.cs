@@ -88,6 +88,16 @@ public class Player : MonoBehaviour , ITakeDamage
         return data.health;
     }
 
+    public int GetMaxHealth()
+    {
+        return data.maxHealth;
+    }
+
+    public int GetMaxMana()
+    {
+        return data.maxMana;
+    }
+
     public bool IsShielded()
     {
         return data.isShielded;
@@ -123,6 +133,26 @@ public class Player : MonoBehaviour , ITakeDamage
     public Transform GetProjectileSpawnPoint()
     {
         return projectileSpawnPoint;
+    }
+
+    public void IncreaseMaxHealth(int amount)
+    {
+        SetMaxHealth(GetMaxHealth() + amount);
+    }
+
+    public void IncreaseMaxMana(int amount)
+    {
+        SetMaxHealth(GetMaxMana() + amount);
+    }
+
+    public void DecreaseMaxHealth(int amount)
+    {
+        SetMaxHealth(GetMaxHealth() - amount); 
+    }
+
+    public void DecreaseMaxMana(int amount)
+    {
+        SetMaxHealth(GetMaxMana() - amount);
     }
 
     // private data modifiers

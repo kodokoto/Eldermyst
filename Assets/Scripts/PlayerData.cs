@@ -9,7 +9,6 @@ public class PlayerData : ScriptableObject
     [Header("Stats")]
     public int maxHealth;
     public int maxMana;
-
     public int healthRegen;
     public float healthRegenRate;
     public int manaRegen;
