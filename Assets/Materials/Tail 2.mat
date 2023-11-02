@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Tail
+  m_Name: Tail 2
   m_Shader: {fileID: -6465566751694194690, guid: 37676e3815daf43509a42939daadc22f, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -45,8 +45,8 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:
-    - _Color01: {r: 2.6270704, g: 1.0093471, b: 9.639268, a: 1}
-    - _Color02: {r: 0, g: 1, b: 0.28057456, a: 0}
+    - _Color01: {r: 38.55707, g: 1.3494985, b: 3.259615, a: 1}
+    - _Color02: {r: 0, g: 0.1551485, b: 1, a: 0}
     - _DissolveSpeed: {r: -0.5, g: 0, b: 0, a: 0}
     - _MainTrailSpeed: {r: -0.1, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
