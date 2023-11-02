@@ -16,4 +16,4 @@ MonoBehaviour:
   cooldownTime: 0
   activeTime: 0
   manaCost: 10
-  projectilePrefab: {fileID: 4619283876682261130, guid: cbdf4f43b7cbd4eaab869696693d71bf, type: 3}
+  projectilePrefab: {fileID: 6539326632289364038, guid: 4063f456b3a8441f18b268b410dac2c6, type: 3}
