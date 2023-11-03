@@ -44,6 +44,7 @@ public class GameManager : MonoBehaviour
 
     public void RestartGame()
     {
+        Debug.Log("Restarting game");
         SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
     }
 
