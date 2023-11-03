@@ -13,7 +13,7 @@ public class MovingPlatform : Platform, IAutoMove
     public bool IsMoving { get; set; }
     public Color color;
     public float Speed { get; set; }
-    
+
     void MoveToTarget()
     {
         transform.position = Vector3.MoveTowards(transform.position, Path[TargetPointIndex], Time.deltaTime * Speed);
@@ -23,14 +23,31 @@ public class MovingPlatform : Platform, IAutoMove
     {
         Debug.Log("Awake");
         gameObject.layer = LayerMask.NameToLayer("Ground");
-        Path = new Vector3[transform.childCount];
+
+        int numberOfWaypoints = 0;
+
         for (int i = 0; i < transform.childCount; i++)
         {
-            Path[i] = transform.GetChild(i).position;
+            if (transform.GetChild(i).gameObject.layer == LayerMask.NameToLayer("Waypoint"))
+            {
+                numberOfWaypoints++;
+            }
         }
+
+        Path = new Vector3[numberOfWaypoints];
+
+        
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            if (transform.GetChild(i).gameObject.layer == LayerMask.NameToLayer("Waypoint"))
+            {
+                Path[i] = transform.GetChild(i).position;
+            }
+        }
+
+        Debug.Log("Path Length: " + Path.Length);
         ((IAutoMove)this).CheckPath();
         transform.position = Path[0];
-
     }
 
     void Start()

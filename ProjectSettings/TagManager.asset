@@ -11,6 +11,7 @@ TagManager:
   - Ground
   - StickyWall
   - Lava
+  - Waypoint
   layers:
   - Default
   - TransparentFX
@@ -21,7 +22,7 @@ TagManager:
   - Ground
   - StickyWall
   - Potions
-  - 
+  - Waypoint
   - 
   - 
   - 
