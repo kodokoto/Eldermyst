@@ -1072,9 +1072,9 @@ GameObject:
   - component: {fileID: 1647239992}
   - component: {fileID: 1647239991}
   - component: {fileID: 1647239994}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Wall (1)
-  m_TagString: Ground
+  m_TagString: StickyWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
