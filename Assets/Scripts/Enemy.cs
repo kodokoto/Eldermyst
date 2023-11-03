@@ -19,6 +19,7 @@ public class Enemy : MonoBehaviour, ITakeDamage
 
     void Start()
     {
+        obstructionMask = LayerMask.GetMask("Ground") | LayerMask.GetMask("StickyWall");
         StartCoroutine(Routine());
     }
 

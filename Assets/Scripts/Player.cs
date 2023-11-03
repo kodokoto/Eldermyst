@@ -36,11 +36,11 @@ public class Player : MonoBehaviour , ITakeDamage
 
     public void CheckIfOutOfBounds()
     {
-        if (transform.position.y < -30)
-        {
-            GameManager.instance.SetGameState(GameState.Lost);
-            state = PlayerState.Dead;
-        }
+        // if (transform.position.y < -30)
+        // {
+        //     GameManager.instance.SetGameState(GameState.Lost);
+        //     state = PlayerState.Dead;
+        // }
     }
 
     public void HealthRegen()
