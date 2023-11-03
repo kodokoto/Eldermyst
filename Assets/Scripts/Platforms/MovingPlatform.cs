@@ -13,7 +13,7 @@ public class MovingPlatform : Platform, IAutoMove
     public bool IsMoving { get; set; }
     public Color color;
     public float Speed { get; set; }
-
+    
     void MoveToTarget()
     {
         transform.position = Vector3.MoveTowards(transform.position, Path[TargetPointIndex], Time.deltaTime * Speed);
@@ -41,7 +41,7 @@ public class MovingPlatform : Platform, IAutoMove
         IsMoving = true;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (IsMoving)
         {
