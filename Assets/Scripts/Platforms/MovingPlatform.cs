@@ -21,7 +21,6 @@ public class MovingPlatform : Platform, IAutoMove
 
     void Awake()
     {
-        Debug.Log("Awake");
         gameObject.layer = LayerMask.NameToLayer("Ground");
 
         int numberOfWaypoints = 0;
@@ -45,7 +44,6 @@ public class MovingPlatform : Platform, IAutoMove
             }
         }
 
-        Debug.Log("Path Length: " + Path.Length);
         ((IAutoMove)this).CheckPath();
         transform.position = Path[0];
     }

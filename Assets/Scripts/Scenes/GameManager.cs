@@ -44,15 +44,15 @@ public class GameManager : MonoBehaviour
 
     public void RestartGame()
     {
-        Debug.Log("Restarting game");
         SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void MainMenu()
     {
+        // reset spawn point
+        PlayerSpawnPoint.instance.SetSpawnPoint(Vector3.zero);
         SceneManager.LoadSceneAsync("MainMenu");
     }
-
 
     public GameState GetGameState()
     {

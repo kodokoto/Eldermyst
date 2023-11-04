@@ -15,6 +15,8 @@ public class Player : MonoBehaviour , ITakeDamage
     [SerializeField] private Transform projectileSpawnPoint;
     private float healthRegenTimer;
     private float manaRegenTimer;
+    
+    private Vector3 spawnPoint;
 
     // UI
     public HealthBar healthBar;
@@ -23,6 +25,17 @@ public class Player : MonoBehaviour , ITakeDamage
     void Start()
     {
         data.Reset();
+        
+        // if spawn point is not the default value, set player position to spawn point
+        if (PlayerSpawnPoint.instance.GetSpawnPoint() != Vector3.zero)
+        {
+            transform.position = PlayerSpawnPoint.instance.GetSpawnPoint();
+        }
+        else
+        {
+            PlayerSpawnPoint.instance.SetSpawnPoint(transform.position);
+        }
+
         healthBar.SetMaxHealth(data.maxHealth);
         manaBar.SetMaxMana(data.maxMana);
     }
@@ -162,8 +175,7 @@ public class Player : MonoBehaviour , ITakeDamage
         if (data.health <= 0)
         {
             Debug.Log("Health is 0");
-            GameManager.instance.SetGameState(GameState.Lost);
-            state = PlayerState.Dead;
+            HandleDeath();
         }
     }
 
@@ -185,6 +197,12 @@ public class Player : MonoBehaviour , ITakeDamage
         }
         data.mana = Mathf.Max(data.mana - amount, 0);
         manaBar.SetMana(data.mana);
+    }
+
+    private void HandleDeath()
+    {
+        GameManager.instance.SetGameState(GameState.Lost);
+        state = PlayerState.Dead;
     }
 
 }
