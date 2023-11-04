@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SpellHandler : MonoBehaviour
@@ -7,6 +8,7 @@ public class SpellHandler : MonoBehaviour
     public Spell spell;
     float cooldownTime;
     float activeTime;
+    public int levelRequirement;
 
     enum SpellState
     {
@@ -18,6 +20,14 @@ public class SpellHandler : MonoBehaviour
     private SpellState state;
 
     public KeyCode key;
+
+    public void Start() {
+        this.enabled = false;
+    }
+
+    public void Unlock() {
+        this.enabled = true;
+    }
 
     // Update is called once per frame
     void Update()

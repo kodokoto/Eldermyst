@@ -60,7 +60,7 @@ public class DarkOrb : MonoBehaviour, IAutoMove
         {
             Player player = other.gameObject.GetComponent<Player>();
             player.ConsumeMana(Damage);
-            player.TakeDamage(Damage);
+            player.TakeDamage(Damage, this.gameObject);
         }
     }
 

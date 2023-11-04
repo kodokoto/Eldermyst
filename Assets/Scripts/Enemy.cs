@@ -5,17 +5,17 @@ using UnityEngine;
 public class Enemy : MonoBehaviour, ITakeDamage
 {
 
-    public int health = 20;
 
-    public float fovRadius = 10f;
 
     public Transform projectileSpawnPoint;
     public LayerMask targetMask;
     public LayerMask obstructionMask;
-
     public Projectile projectile;
 
-    public float fireRate = 2f;
+    public int health = 20;
+    public float fovRadius = 10f;
+    public float fireRate = 0.2f;
+    public int xpValue = 10;
 
     void Start()
     {
@@ -28,7 +28,7 @@ public class Enemy : MonoBehaviour, ITakeDamage
         // while the enem
         while (true)
         {
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(fireRate);
             CheckIfPlayerInFOV();
         }
     }
@@ -54,12 +54,16 @@ public class Enemy : MonoBehaviour, ITakeDamage
         }
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, GameObject instigator)
     {
         // Destroy the enemy if it takes damage
         health -= damage;
         if (health <= 0)
         {
+            if (instigator.GetComponent<Player>() != null)
+            {
+                instigator.GetComponent<Player>().AddXP(xpValue);
+            }
             Destroy(gameObject);
         }
     }

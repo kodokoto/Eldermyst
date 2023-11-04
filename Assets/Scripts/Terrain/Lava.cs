@@ -14,7 +14,7 @@ public class Lava : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             Player player = other.gameObject.GetComponent<Player>();
-            player.TakeDamage(damage);
+            player.TakeDamage(damage, this.gameObject);
         }
     }
 
@@ -25,7 +25,7 @@ public class Lava : MonoBehaviour
             if (damageTimer > damageRate)
             {
                 Player player = other.gameObject.GetComponent<Player>();
-                player.TakeDamage(damage);
+                player.TakeDamage(damage, this.gameObject);
                 damageTimer = 0;
             }
             else
