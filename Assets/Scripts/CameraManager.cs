@@ -31,9 +31,11 @@ public class CameraManager : MonoBehaviour
                 currentVirtualCamera = virtualCameras[i];
                 framingTransposer = currentVirtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>();
             }
-
         }
-        normYPanAmount = framingTransposer.m_YDamping;
+        if (framingTransposer != null)
+        {
+            normYPanAmount = framingTransposer.m_YDamping;
+        }
     }
 
     public void LerpYDamping(bool isPlayerFalling)

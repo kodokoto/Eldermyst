@@ -20,7 +20,6 @@ public class DarkOrb : MonoBehaviour, IAutoMove
 
     void Awake()
     {
-        Debug.Log("Awake");
         Path = new Vector3[transform.childCount];
         for (int i = 0; i < transform.childCount; i++)
         {

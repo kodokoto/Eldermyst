@@ -9,7 +9,11 @@ public class Chckpoint : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            GameManager.instance.SetGameState(GameState.Won);
+            Debug.Log("Player entered checkpoint");
+            PlayerSpawnPoint.instance.spawnPoint = transform.position;
+            Debug.Log("Player spawn point set to " + PlayerSpawnPoint.instance.spawnPoint);
+            gameObject.SetActive(false);
+            // GameManager.instance.SetGameState(GameState.Won);
         }
     }
 }

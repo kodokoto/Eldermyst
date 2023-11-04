@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 6297712759261526088}
   - component: {fileID: 2404782012402241094}
   - component: {fileID: 3684597238568359870}
-  - component: {fileID: 8413188722214082673}
+  - component: {fileID: -4926048709342815694}
+  - component: {fileID: -942989798569000045}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -109,8 +110,35 @@ MonoBehaviour:
     m_Bits: 128
   projectile: {fileID: 1847172924239988109, guid: 51e6a1c0ce4dd4ac2a3d01c1353c5875, type: 3}
   fireRate: 2
---- !u!65 &8413188722214082673
-BoxCollider:
+--- !u!54 &-4926048709342815694
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4184733320147221404}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 120
+  m_CollisionDetection: 0
+--- !u!136 &-942989798569000045
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -124,11 +152,13 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 2.2, y: 3.7, z: 0.2}
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &9109160433272137778
 GameObject:

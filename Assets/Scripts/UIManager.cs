@@ -14,7 +14,6 @@ public class UIManager : MonoBehaviour
 
     public void ShowGameOverScreen()
     {
-        Debug.Log("Showing game over screen");
         gameObject.transform.Find("GameOverScreen").gameObject.SetActive(true);
     }
 

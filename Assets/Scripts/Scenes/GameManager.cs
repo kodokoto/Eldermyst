@@ -14,8 +14,11 @@ public class GameManager : MonoBehaviour
     public GameState gameState;
     private void Awake()
     {
-        if (instance == null)
+        if (instance == null) {
             instance = this;
+        } else {
+            Destroy(gameObject);
+        }
     }
 
     private void Start()
@@ -39,16 +42,24 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void RestartGame()
+    public void Retry()
     {
         SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
     }
 
-    public void MainMenu()
+    public void RestartGame()
     {
-        SceneManager.LoadSceneAsync("MainMenu");
+        Destroy(gameObject);
+        instance = null;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
+    public void MainMenu()
+    {
+        // reset spawn point
+        PlayerSpawnPoint.instance.SetSpawnPoint(Vector3.zero);
+        SceneManager.LoadSceneAsync("MainMenu");
+    }
 
     public GameState GetGameState()
     {

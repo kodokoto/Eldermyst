@@ -598,7 +598,8 @@ public class PlayerMovement : MonoBehaviour
 	private void OnCollisionEnter(Collision collision)
 	{
 		CollisionSide collisionSide = FindCollisionDirection(collision);
-		if (IsCollidingWithWall(collision) || IsCollidingWithGround(collision))
+		bool collidedWithGround = IsCollidingWithGround(collision);
+		if (IsCollidingWithWall(collision) || collidedWithGround)
 		{
 			if (collisionSide == CollisionSide.top)
 			{
@@ -614,6 +615,16 @@ public class PlayerMovement : MonoBehaviour
 				HandleGrounded();
 			}
 		}
+		if (collidedWithGround)
+		{
+			// check if object is MovingPlatform
+			if (collision.gameObject.GetComponent<MovingPlatform>() != null)
+			{
+				// if so, set player's parent to the MovingPlatform
+				transform.parent = collision.gameObject.transform;
+			}
+		}
+
 	}
 
 	private void OnCollisionStay(Collision collision)
@@ -670,6 +681,15 @@ public class PlayerMovement : MonoBehaviour
 			if (wasGrounded)
 			{
 				HandleLedgeBuffer();
+			}
+		}
+		if (IsCollidingWithGround(collision))
+		{
+			// check if object is MovingPlatform
+			if (collision.gameObject.GetComponent<MovingPlatform>() != null)
+			{
+				// if so, set player's parent to the MovingPlatform
+				transform.parent = null;
 			}
 		}
 	}

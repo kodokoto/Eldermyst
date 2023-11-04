@@ -21,16 +21,31 @@ public class MovingPlatform : Platform, IAutoMove
 
     void Awake()
     {
-        Debug.Log("Awake");
         gameObject.layer = LayerMask.NameToLayer("Ground");
-        Path = new Vector3[transform.childCount];
+
+        int numberOfWaypoints = 0;
+
         for (int i = 0; i < transform.childCount; i++)
         {
-            Path[i] = transform.GetChild(i).position;
+            if (transform.GetChild(i).gameObject.layer == LayerMask.NameToLayer("Waypoint"))
+            {
+                numberOfWaypoints++;
+            }
         }
+
+        Path = new Vector3[numberOfWaypoints];
+
+        
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            if (transform.GetChild(i).gameObject.layer == LayerMask.NameToLayer("Waypoint"))
+            {
+                Path[i] = transform.GetChild(i).position;
+            }
+        }
+
         ((IAutoMove)this).CheckPath();
         transform.position = Path[0];
-
     }
 
     void Start()
@@ -41,7 +56,7 @@ public class MovingPlatform : Platform, IAutoMove
         IsMoving = true;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (IsMoving)
         {

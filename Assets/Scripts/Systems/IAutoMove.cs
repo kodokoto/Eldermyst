@@ -106,8 +106,6 @@ public interface IAutoMove
     {
         if (Path != null && Path.Length > 0)
         {
-            Debug.Log("Drawing Gizmos");
-            Debug.Log(Path.Length);
             Gizmos.color = c;
             Gizmos.DrawLineList(Path);
             if (AutoMoveType == AutoMoveType.Loop)
