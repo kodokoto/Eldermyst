@@ -42,9 +42,16 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void RestartGame()
+    public void Retry()
     {
         SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void RestartGame()
+    {
+        Destroy(gameObject);
+        instance = null;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void MainMenu()
