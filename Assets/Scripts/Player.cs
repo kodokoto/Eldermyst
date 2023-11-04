@@ -16,8 +16,6 @@ public class Player : MonoBehaviour , ITakeDamage
     private float healthRegenTimer;
     private float manaRegenTimer;
     
-    private Vector3 spawnPoint;
-
     // UI
     public HealthBar healthBar;
     public ManaBar manaBar;

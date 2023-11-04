@@ -12,16 +12,17 @@ public enum CollisionSide
 
 public class PlayerMovement : MonoBehaviour
 {
-	public Rigidbody rb;
-	public CapsuleCollider col;
+	private Rigidbody rb;
+	private CapsuleCollider col;
 
 	// ingame variables
-	public float input;
-	public float gravityScale;
-	public bool doubleJumpAvailable = true;
+	private float input;
+	private float gravityScale;
+	private bool doubleJumpAvailable = true;
 	private float currentWalljumpSpeed;
 	private float walljumpSpeedDecel;
 	private bool dashAvailable = true;
+	private float currentSpeed { get; set; }
 
 
 	[Space(5)]
@@ -86,6 +87,7 @@ public class PlayerMovement : MonoBehaviour
 		rb = GetComponent<Rigidbody>();
 		col = GetComponent<CapsuleCollider>();
 		gravityScale = DEFAULT_GRAVITY_SCALE;
+		currentSpeed = RUN_SPEED;
 	}
 
 	private void Update()
@@ -322,7 +324,7 @@ public class PlayerMovement : MonoBehaviour
 		}
 		if (!wallSliding)
 		{
-			rb.velocity = new Vector2(move_direction * RUN_SPEED, rb.velocity.y);
+			rb.velocity = new Vector2(move_direction * currentSpeed, rb.velocity.y);
 		}
 	}
 
@@ -421,7 +423,7 @@ public class PlayerMovement : MonoBehaviour
 		touchingWallR = false;
 		doubleJumpAvailable = true;
 		currentWalljumpSpeed = WALL_JUMP_SPEED;
-		walljumpSpeedDecel = (WALL_JUMP_SPEED - RUN_SPEED) / WALL_JUMP_TIME;
+		walljumpSpeedDecel = (WALL_JUMP_SPEED - currentSpeed) / WALL_JUMP_TIME;
 		StartJump();
 
 		wallJumping = true;
@@ -726,7 +728,7 @@ public class PlayerMovement : MonoBehaviour
 		return CollisionSide.bottom;
 	}
 
-	public bool TouchingGround()
+	private bool TouchingGround()
 	{
 		LayerMask groundLayer = LayerMask.GetMask("Ground");
 		float z = col.bounds.center.z;
@@ -811,7 +813,7 @@ public class PlayerMovement : MonoBehaviour
 		return false;
 	}
 
-	public bool CheckForBump(CollisionSide side)
+	private bool CheckForBump(CollisionSide side)
 	{
 		float num = 0.025f;
 		float num2 = 0.2f;
@@ -870,7 +872,7 @@ public class PlayerMovement : MonoBehaviour
 		return false;
 	}
 
-	public bool CheckNearRoof()
+	private bool CheckNearRoof()
 	{
 		LayerMask wallLayerMask = LayerMask.GetMask("StickyWall");
 		Vector2 vector = col.bounds.max;
@@ -923,17 +925,17 @@ public class PlayerMovement : MonoBehaviour
 
 	// ======== HELPER METHODS ========
 
-	public void FaceRight()
+	private void FaceRight()
 	{
 		transform.right = Vector3.right;
 	}
 
-	public void FaceLeft()
+	private void FaceLeft()
 	{
 		transform.right = Vector3.left;
 	}
 
-	public void Flip()
+	private void Flip()
 	{
 		transform.right *= -1f;
 	}
@@ -1131,4 +1133,16 @@ public class PlayerMovement : MonoBehaviour
 		headBumpBuffered = false;
 	}
 
+
+	// ======== Public interface ========
+
+	public float GetCurrentSpeed()
+	{
+		return currentSpeed;
+	}
+
+	public void SetCurrentSpeed(float speed)
+	{
+		currentSpeed = speed;
+	}
 }
