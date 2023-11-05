@@ -50,7 +50,7 @@ public class Player : MonoBehaviour , ITakeDamage
     {
         HealthRegen();
         ManaRegen();
-        Debug.Log("Current level " + data.currentXpLevel);
+        // Debug.Log("Current level " + data.currentXpLevel);
     }
 
     private void HealthRegen()

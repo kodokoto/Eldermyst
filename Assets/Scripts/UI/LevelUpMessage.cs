@@ -8,7 +8,7 @@ public class LevelUpMessage : MonoBehaviour
 {
     TextMeshProUGUI LevelUp;
 
-    void Start()
+    void Awake()
     {
         LevelUp = gameObject.GetComponent<TextMeshProUGUI>();
         LevelUp.enabled = false;
@@ -16,6 +16,8 @@ public class LevelUpMessage : MonoBehaviour
 
     private IEnumerator ShowMessageCoroutine(int level, string levelInstructions)
     {
+        Debug.Log("Coroutine started");
+        Debug.Log("Level: " + LevelUp);
         LevelUp.enabled = true;
         LevelUp.text = "Level Up!!";
         yield return new WaitForSeconds(1f);
