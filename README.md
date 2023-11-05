@@ -3,6 +3,16 @@
 
 ## Project Plan
 
+## Instructions for prototype 
+•	A goes left.
+•	D goes right.
+•	Space bar does jump and double jump.
+•	E key is projectile (shoot) spell.
+•	F key is teleport spell.
+•	R key is shield spell.
+•	Shift + direction key(A or D) is dash.
+
+
 ### Prototype
 
 
