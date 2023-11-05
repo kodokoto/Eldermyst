@@ -50,6 +50,7 @@ public class Player : MonoBehaviour , ITakeDamage
     {
         HealthRegen();
         ManaRegen();
+        Debug.Log("Current level " + data.currentXpLevel);
     }
 
     private void HealthRegen()
@@ -120,7 +121,7 @@ public class Player : MonoBehaviour , ITakeDamage
         data.isShielded = isShielded;
     }
 
-    public void TakeDamage(int damage, GameObject instigator)
+    public void TakeDamage(int damage)
     {
         if (!data.isShielded)
         {
@@ -146,11 +147,15 @@ public class Player : MonoBehaviour , ITakeDamage
 
     public void AddXP(int xp)
     {
+        Debug.Log("Xp before: " + data.currentXp);
+        Debug.Log("Adding " + xp + " xp");
         data.currentXp += xp;
+        Debug.Log("Xp after: " + data.currentXp);
         if (data.currentXp >= data.xpLevels[data.currentXpLevel])
         {
             LevelUp();
         }
+        xpBar.SetXP(data.currentXp);
     }
 
     public Transform GetProjectileSpawnPoint()
@@ -179,10 +184,13 @@ public class Player : MonoBehaviour , ITakeDamage
                 UnlockSpell(spells[i]);
             }
         }
+
+        xpBar.SetMaxXP(data.xpLevels[data.currentXpLevel]);
     }
 
     private void UnlockSpell(SpellHandler spell)
     {
+        Debug.Log("Unlocking " + spell.spell.name);
         spell.Unlock();
         string message = "You have unlocked " + spell.spell.name + "! \n Press " + spell.key + " to use it.";
         levelUpUI.ShowMessage(data.currentXpLevel, message);

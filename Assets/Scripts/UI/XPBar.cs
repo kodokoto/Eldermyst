@@ -7,6 +7,11 @@ public class XPBar : MonoBehaviour
 {
     public Slider slider;
 
+    public void Start()
+    {
+        slider = gameObject.GetComponent<Slider>();
+    }
+
     public void SetMaxXP(int xp)
     {
         slider.maxValue = xp;
@@ -14,6 +19,7 @@ public class XPBar : MonoBehaviour
 
     public void SetXP(int xp)
     {
+        Debug.Log("Setting XP to " + xp);
         slider.value = xp;
     }
 }

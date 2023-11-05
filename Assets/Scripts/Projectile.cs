@@ -32,7 +32,7 @@ public class Projectile : MonoBehaviour
     {        
         if (other.gameObject.CompareTag(targetTag) )
         {
-            other.gameObject.GetComponent<ITakeDamage>().TakeDamage(10, this.gameObject);
+            other.gameObject.GetComponent<ITakeDamage>().TakeDamage(10);
             Destroy(gameObject);
         } else if (other.gameObject.CompareTag("StickyWall"))
         {

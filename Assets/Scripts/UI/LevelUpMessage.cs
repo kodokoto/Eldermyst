@@ -10,7 +10,7 @@ public class LevelUpMessage : MonoBehaviour
 
     void Start()
     {
-        LevelUp = GetComponentInChildren<TextMeshProUGUI>();
+        LevelUp = gameObject.GetComponent<TextMeshProUGUI>();
         LevelUp.enabled = false;
     }
 
@@ -18,14 +18,15 @@ public class LevelUpMessage : MonoBehaviour
     {
         LevelUp.enabled = true;
         LevelUp.text = "Level Up!!";
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1f);
         LevelUp.text = "You are now level " + level + ". " + levelInstructions;
-        yield return new WaitForSeconds(3.0f);
+        yield return new WaitForSeconds(5.0f);
         LevelUp.enabled = false;
     }
 
     public void ShowMessage(int level, string levelInstructions = "")
     {
+        Debug.Log("Showing level up message");
         StartCoroutine(ShowMessageCoroutine(level, levelInstructions));
     }
 }

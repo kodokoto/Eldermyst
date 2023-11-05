@@ -35,5 +35,7 @@ public class PlayerData : ScriptableObject
     {
         health = maxHealth;
         mana = maxMana;
+        currentXp = 0;
+        currentXpLevel = 0;
     }
 }
