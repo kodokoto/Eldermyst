@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Dynamic;
 using UnityEngine;
 
 public enum PlayerState
@@ -19,11 +21,17 @@ public class Player : MonoBehaviour , ITakeDamage
     // UI
     public HealthBar healthBar;
     public ManaBar manaBar;
+    public XPBar xpBar;
+    public LevelUpMessage levelUpUI;
+
+    // Spells
+    private SpellHandler[] spells;
 
     void Start()
     {
         data.Reset();
-        
+        SetUpSpells();
+
         // if spawn point is not the default value, set player position to spawn point
         if (PlayerSpawnPoint.instance.GetSpawnPoint() != Vector3.zero)
         {
@@ -42,19 +50,10 @@ public class Player : MonoBehaviour , ITakeDamage
     {
         HealthRegen();
         ManaRegen();
-        CheckIfOutOfBounds();
+        // Debug.Log("Current level " + data.currentXpLevel);
     }
 
-    public void CheckIfOutOfBounds()
-    {
-        // if (transform.position.y < -30)
-        // {
-        //     GameManager.instance.SetGameState(GameState.Lost);
-        //     state = PlayerState.Dead;
-        // }
-    }
-
-    public void HealthRegen()
+    private void HealthRegen()
     {
         if (data.health < data.maxHealth)
         {
@@ -70,7 +69,7 @@ public class Player : MonoBehaviour , ITakeDamage
         }
     }
 
-    public void ManaRegen()
+    private void ManaRegen()
     {
         if (data.mana < data.maxMana)
         {
@@ -86,6 +85,19 @@ public class Player : MonoBehaviour , ITakeDamage
         }
     }
 
+    private void SetUpSpells()
+    {
+        spells = gameObject.GetComponents<SpellHandler>();
+
+        // if spell.levelRequirement == 0, unlock spell
+        for (int i = 0; i < spells.Length; i++)
+        {
+            if (spells[i].levelRequirement == 0)
+            {
+                UnlockSpell(spells[i]);
+            }
+        }   
+    }
 
     // Helpers
 
@@ -131,12 +143,58 @@ public class Player : MonoBehaviour , ITakeDamage
     {
         AddMana(mana);
     }
+
+
+    public void AddXP(int xp)
+    {
+        Debug.Log("Xp before: " + data.currentXp);
+        Debug.Log("Adding " + xp + " xp");
+        data.currentXp += xp;
+        Debug.Log("Xp after: " + data.currentXp);
+        if (data.currentXp >= data.xpLevels[data.currentXpLevel])
+        {
+            LevelUp();
+        }
+        xpBar.SetXP(data.currentXp);
+    }
+
     public Transform GetProjectileSpawnPoint()
     {
         return projectileSpawnPoint;
     }
 
     // private data modifiers
+    private void LevelUp()
+    {
+        // if current level is max level, do nothing
+        if (data.currentXpLevel >= data.xpLevels.Length)
+        {
+            return;
+        }
+
+        data.currentXp -= data.xpLevels[data.currentXpLevel];
+        data.currentXpLevel++;
+        SetMaxHealth(data.maxHealth + data.levelUpHealthRate);
+        SetMaxMana(data.maxMana + data.levelUpManaRate);
+
+        for (int i = 0; i < spells.Length; i++)
+        {
+            if (spells[i].levelRequirement == data.currentXpLevel)
+            {
+                UnlockSpell(spells[i]);
+            }
+        }
+
+        xpBar.SetMaxXP(data.xpLevels[data.currentXpLevel]);
+    }
+
+    private void UnlockSpell(SpellHandler spell)
+    {
+        Debug.Log("Unlocking " + spell.spell.name);
+        spell.Unlock();
+        string message = "You have unlocked " + spell.spell.name + "! \n Press " + spell.key + " to use it.";
+        levelUpUI.ShowMessage(data.currentXpLevel, message);
+    }
 
     private void SetMaxHealth(int amount)
     {

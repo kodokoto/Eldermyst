@@ -8,9 +8,7 @@ using UnityEngine;
 public class Teleport : Spell
 {
     public float teleportDistance;
-
     public Vector2 preCalcPosition;
-
 
     public override bool IsValid(GameObject parent)
     {

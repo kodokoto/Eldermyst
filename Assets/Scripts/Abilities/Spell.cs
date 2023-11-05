@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Spell : ScriptableObject
 {
-    public new string name;
     public float cooldownTime;
     public float activeTime;
     public int manaCost;
@@ -28,5 +27,5 @@ public class Spell : ScriptableObject
         {
             return false;
         }
-    }
+    }  
 }

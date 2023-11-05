@@ -4,7 +4,7 @@ public class MainMenuManager : MonoBehaviour
 {
     public void StartGame()
     {
-        SceneManager.LoadScene("Level 2");
+        SceneManager.LoadSceneAsync("Level 2");
     }
 
     public void QuitGame()
