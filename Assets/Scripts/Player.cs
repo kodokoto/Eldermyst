@@ -163,6 +163,18 @@ public class Player : MonoBehaviour , ITakeDamage
         return projectileSpawnPoint;
     }
 
+    public int GetMaxHealth()
+    {
+        return data.maxHealth;
+    }
+
+    public void setMaxHealth(int maxHealth)
+    {
+        data.maxHealth = maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
+    }
+
+
     // private data modifiers
     private void LevelUp()
     {
