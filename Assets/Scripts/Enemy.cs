@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,6 +17,7 @@ public class Enemy : MonoBehaviour, ITakeDamage
     public float fovRadius = 10f;
     private float fireRate = 0.2f;
     public int xpValue = 10;
+    public Boolean isFrozen = false;
 
     void Start()
     {
@@ -45,7 +47,7 @@ public class Enemy : MonoBehaviour, ITakeDamage
 
             float distanceToTarget = Vector3.Distance(projectileSpawnPoint.position, target.position);
 
-            if (!Physics.Raycast(projectileSpawnPoint.position, directionToTarget, distanceToTarget, obstructionMask))
+            if ((!Physics.Raycast(projectileSpawnPoint.position, directionToTarget, distanceToTarget, obstructionMask))&& !isFrozen)
             {
                 projectileSpawnPoint.right = directionToTarget;
                 Projectile p = Instantiate(projectile, projectileSpawnPoint.position, projectileSpawnPoint.rotation);
@@ -69,6 +71,11 @@ public class Enemy : MonoBehaviour, ITakeDamage
             
             Destroy(gameObject);
         }
+    }
+
+    public void setFrozen(Boolean frozen)
+    {
+        isFrozen = frozen;
     }
 
 }
