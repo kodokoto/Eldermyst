@@ -5,28 +5,22 @@ using UnityEngine;
 [CreateAssetMenu]
 public class Health : Spell
 {
-    private int originalMaxHealth;
-
+    private int OriginalHealth;
     public override void Activate(GameObject parent)
     {
         Player player = parent.GetComponent<Player>();
-
-        if (player != null)
-        {
-            originalMaxHealth = player.GetMaxHealth();
-            player.setMaxHealth(originalMaxHealth+originalMaxHealth);
-            player.RestoreHealth(originalMaxHealth);
+        OriginalHealth = player.GetHealth();
+        if ((player.GetHealth() + 20 > player.GetMaxHealth())){
+            player.setExcess(player.GetMaxHealth() - (player.GetHealth() + 20));
         }
+        player.RestoreHealth(50);
+        
     }
 
     public override void Deactivate(GameObject parent)
     {
         Player player = parent.GetComponent<Player>();
-
-        if (player != null)
-        {
-            player.setMaxHealth(originalMaxHealth);
-            player.TakeDamage(originalMaxHealth);
-        }
+        player.setHealth(OriginalHealth);
+        
     }
 }
