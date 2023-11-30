@@ -15885,7 +15885,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spell: {fileID: 11400000, guid: e11337db2e1b8f840ba28fe61c3dfdee, type: 2}
-  levelRequirement: 0
+  levelRequirement: 1
   key: 99
 --- !u!1001 &2071435896
 PrefabInstance:
