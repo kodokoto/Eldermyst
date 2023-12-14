@@ -24,7 +24,8 @@ public class PlayerData : ScriptableObject
     [HideInInspector] public bool isShielded;
     [HideInInspector] public int currentXp;
     [HideInInspector] public int currentXpLevel;
-    
+    [HideInInspector] public int excessHealth;
+
     void OnValidate() 
     {
         health = maxHealth;
@@ -37,5 +38,6 @@ public class PlayerData : ScriptableObject
         mana = maxMana;
         currentXp = 0;
         currentXpLevel = 0;
+        excessHealth = 0;
     }
 }
