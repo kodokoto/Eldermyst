@@ -9920,6 +9920,10 @@ PrefabInstance:
       propertyPath: key
       value: 114
       objectReference: {fileID: 0}
+    - target: {fileID: 4964658739575519006, guid: e5d2f166402824465b9860fe65b5525f, type: 3}
+      propertyPath: levelRequirement
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 4971603857996838606, guid: e5d2f166402824465b9860fe65b5525f, type: 3}
       propertyPath: key
       value: 101
@@ -15889,7 +15893,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spell: {fileID: 11400000, guid: a72269a8b0c0bde49abdcb716414354f, type: 2}
-  levelRequirement: 5
+  levelRequirement: 4
   key: 113
 --- !u!1001 &2071435896
 PrefabInstance:
