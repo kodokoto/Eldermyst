@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using NUnit.Framework;
 using UnityEngine;
 
-public class DarkOrb : MonoBehaviour, IAutoMove
+public class DarkOrb : MonoBehaviour, IAutoMove, IFreezable
 {
     // Start is called before the first frame update
 
@@ -11,6 +12,7 @@ public class DarkOrb : MonoBehaviour, IAutoMove
     public int TargetPointIndex { get; set; }
     public bool IsMoving { get; set; }
     public float Speed { get; set; }
+    public bool IsFrozen { get; set; } 
 
     public int Damage;
     void MoveToTarget()
@@ -37,11 +39,12 @@ public class DarkOrb : MonoBehaviour, IAutoMove
         Speed = 5f;
         ((IAutoMove)this).AdvanceTarget();
         IsMoving = true;
+        IsFrozen = false;
     }
 
     void Update()
     {
-        if (IsMoving)
+        if (IsMoving && !IsFrozen)
         {
             if (transform.position == ((IAutoMove)this).GetCurrentPoint())
             {

@@ -1,11 +1,11 @@
+using JetBrains.Annotations;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour, ITakeDamage
+public class Enemy : MonoBehaviour, ITakeDamage, IFreezable
 {
-
-
 
     public Transform projectileSpawnPoint;
     public LayerMask targetMask;
@@ -18,6 +18,7 @@ public class Enemy : MonoBehaviour, ITakeDamage
     public float fovRadius = 10f;
     private float fireRate = 0.2f;
     public int xpValue = 10;
+    public bool IsFrozen { get; set; }
 
     void Start()
     {
@@ -53,7 +54,7 @@ public class Enemy : MonoBehaviour, ITakeDamage
 
             float distanceToTarget = Vector3.Distance(projectileSpawnPoint.position, target.position);
 
-            if (!Physics.Raycast(projectileSpawnPoint.position, directionToTarget, distanceToTarget, obstructionMask))
+            if ((!Physics.Raycast(projectileSpawnPoint.position, directionToTarget, distanceToTarget, obstructionMask))&& !IsFrozen)
             {
                 Attack(directionToTarget);
             }
@@ -65,6 +66,12 @@ public class Enemy : MonoBehaviour, ITakeDamage
         projectileSpawnPoint.right = direction;
         Projectile p = Instantiate(projectile, projectileSpawnPoint.position, projectileSpawnPoint.rotation);
         Debug.Log(p.transform.position);
+    }
+
+    public void Freeze(int damage)
+    {
+        IsFrozen = true;
+        TakeDamage(damage);
     }
 
     public void TakeDamage(int damage)
@@ -82,6 +89,8 @@ public class Enemy : MonoBehaviour, ITakeDamage
             
             Destroy(gameObject);
         }
+
     }
 
+    
 }

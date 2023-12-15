@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3684597238568359870}
   - component: {fileID: -4926048709342815694}
   - component: {fileID: -942989798569000045}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -99,8 +99,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed8eea4f09dc645339110398d95771c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 20
-  fovRadius: 10
   projectileSpawnPoint: {fileID: 3077763852619369437}
   targetMask:
     serializedVersion: 2
@@ -109,7 +107,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   projectile: {fileID: 1847172924239988109, guid: 51e6a1c0ce4dd4ac2a3d01c1353c5875, type: 3}
-  fireRate: 2
+  health: 20
+  fovRadius: 10
+  xpValue: 10
+  isFrozen: 0
 --- !u!54 &-4926048709342815694
 Rigidbody:
   m_ObjectHideFlags: 0

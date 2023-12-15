@@ -47,7 +47,7 @@ GameObject:
   - component: {fileID: 5197131379024155692}
   - component: {fileID: 5488018287639435620}
   - component: {fileID: 9001463276382765229}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: DarkOrb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -154,7 +154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1a3c465c69989b488214e2d85e35cab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Damage: 10
+  Damage: 30
 --- !u!96 &5197131379024155692
 TrailRenderer:
   serializedVersion: 3
