@@ -101,7 +101,6 @@ public class PlayerMovement : MonoBehaviour
 		{
 			HandleWallSliding();
 		}
-		HandleImmaterial();
 	}
 
 	private void FixedUpdate()
@@ -310,29 +309,6 @@ public class PlayerMovement : MonoBehaviour
 		}
 		grounded = true;
 		doubleJumpAvailable = true;
-	}
-
-
-	void HandleImmaterial()
-	{
-		// player component should be cached on awake
-		if (player.IsImmaterial && !col.isTrigger)
-		{
-			if (grounded) 
-			{
-				AffectedByGravity(false);
-			}
-			col.isTrigger = true;
-		} 
-		else if (player.IsImmaterial && !grounded) 
-		{
-			AffectedByGravity(true);
-		} 
-		else if (!player.IsImmaterial && col.isTrigger) 
-		{
-			col.isTrigger = false;
-			AffectedByGravity(true);
-		}
 	}
 
 
