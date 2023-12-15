@@ -10,7 +10,7 @@ public enum PlayerState
     Dead
 }
 
-public class Player : MonoBehaviour , ITakeDamage
+public class Player : MonoBehaviour , ITakeDamage, IGhost
 {
     public PlayerData data;
     public PlayerState state;
@@ -26,6 +26,10 @@ public class Player : MonoBehaviour , ITakeDamage
 
     // Spells
     private SpellHandler[] spells;
+
+
+    // State
+    public bool IsImmaterial { get; set; }
 
     void Start()
     {
