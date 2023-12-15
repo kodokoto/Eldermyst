@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 605c33c7b1bc9df4aabafd5b3bc25850, type: 3}
   m_Name: Ghost
   m_EditorClassIdentifier: 
-  cooldownTime: 0
-  activeTime: 0
-  manaCost: 0
+  cooldownTime: 3
+  activeTime: 5
+  manaCost: 10

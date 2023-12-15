@@ -9,14 +9,15 @@ public class Ghost : Spell
     public override void Activate(GameObject parent)
     {
         Debug.Log("Ghost spell activated");
-        parent.GetComponent<IInvisible>().Invisible();
-        parent.GetComponent<Renderer>().material.color = Color.black;
+        parent.GetComponent<IGhost>().Ghost();
+        // make player transparent
+        parent.GetComponent<Renderer>().material.color = new Color(1, 1, 1, 0.5f);
     }
 
     public override void Deactivate(GameObject parent)
     {
         Debug.Log("Ghost spell deactivated");
-        parent.GetComponent<IInvisible>().Visible();
+        parent.GetComponent<IGhost>().UnGhost();
         parent.GetComponent<Renderer>().material.color = Color.white;
     }
     // public LayerMask StickyTarget;

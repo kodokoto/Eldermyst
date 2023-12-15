@@ -38,7 +38,7 @@ public class Enemy : MonoBehaviour, ITakeDamage
 
     void CheckIfPlayerInFOV()
     {
-        if (player.IsInvisible)
+        if (player.IsGhost)
         {
             return;
         }

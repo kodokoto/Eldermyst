@@ -14,8 +14,6 @@ public class PlayerMovement : MonoBehaviour
 {
 	private Rigidbody rb;
 	private CapsuleCollider col;
-	private Player player;
-
 	// ingame variables
 	private float input;
 	private float gravityScale;
@@ -87,7 +85,6 @@ public class PlayerMovement : MonoBehaviour
 	{
 		rb = GetComponent<Rigidbody>();
 		col = GetComponent<CapsuleCollider>();
-		player = GetComponent<Player>();
 		gravityScale = DEFAULT_GRAVITY_SCALE;
 		currentSpeed = RUN_SPEED;
 	}
