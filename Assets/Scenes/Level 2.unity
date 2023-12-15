@@ -7875,11 +7875,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1047172883615923270, guid: 9e7737d487a19457da3966f7a8bdb424, type: 3}
   m_PrefabInstance: {fileID: 947311259}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &956923959 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6477427282348597017, guid: e5d2f166402824465b9860fe65b5525f, type: 3}
-  m_PrefabInstance: {fileID: 1280397231}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &960645151
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10005,6 +10000,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 2070671901}
   m_SourcePrefab: {fileID: 100100000, guid: e5d2f166402824465b9860fe65b5525f, type: 3}
+--- !u!1 &1280397232 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6477427282348597017, guid: e5d2f166402824465b9860fe65b5525f, type: 3}
+  m_PrefabInstance: {fileID: 1280397231}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1292322458 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1419948772925537236, guid: e848ec94dfa6946b8baf39499877734b, type: 3}
@@ -13813,10 +13813,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1270901471}
     m_Modifications:
-    - target: {fileID: 4707821337922174338, guid: a51ccd36ce45448a9a2ecc437f48e46f, type: 3}
-      propertyPath: Damage
-      value: 30
-      objectReference: {fileID: 0}
     - target: {fileID: 5270346675767333170, guid: a51ccd36ce45448a9a2ecc437f48e46f, type: 3}
       propertyPath: m_Name
       value: DarkOrb
@@ -15866,7 +15862,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1711475387719681092, guid: e5d2f166402824465b9860fe65b5525f, type: 3}
   m_PrefabInstance: {fileID: 1280397231}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 956923959}
+  m_GameObject: {fileID: 1280397232}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 26d3bfc473b3148ef9601865763fc1dc, type: 3}
@@ -15878,15 +15874,15 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 956923959}
+  m_GameObject: {fileID: 1280397232}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cf7a97e5d84d649e5b69a1ce5caf9c11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spell: {fileID: 11400000, guid: 75ae984c91597fc4a904a7e0f52729db, type: 2}
-  levelRequirement: 3
-  key: 120
+  spell: {fileID: 11400000, guid: e11337db2e1b8f840ba28fe61c3dfdee, type: 2}
+  levelRequirement: 1
+  key: 99
 --- !u!1001 &2071435896
 PrefabInstance:
   m_ObjectHideFlags: 0
