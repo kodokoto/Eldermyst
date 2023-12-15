@@ -67,4 +67,14 @@ public class DarkOrb : MonoBehaviour, IAutoMove, IFreezable
         }
     }
 
+    void OnCollisionStay(Collision other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            Player player = other.gameObject.GetComponent<Player>();
+            player.ConsumeMana(Damage);
+            player.TakeDamage(Damage);
+        }
+    }
+
 }

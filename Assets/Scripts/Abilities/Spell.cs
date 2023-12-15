@@ -12,6 +12,10 @@ public class Spell : ScriptableObject
 
     public virtual bool IsValid(GameObject parent)
     {
+        Player player = parent.GetComponent<Player>();
+        if (player.IsGhost) {
+            return false;
+        }
         return true;
     }
 

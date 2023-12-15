@@ -14,7 +14,6 @@ public class PlayerMovement : MonoBehaviour
 {
 	private Rigidbody rb;
 	private CapsuleCollider col;
-
 	// ingame variables
 	private float input;
 	private float gravityScale;
@@ -308,6 +307,7 @@ public class PlayerMovement : MonoBehaviour
 		grounded = true;
 		doubleJumpAvailable = true;
 	}
+
 
 
 	// ======== MOVEMENT FUNCTIONS ========
