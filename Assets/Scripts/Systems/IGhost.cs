@@ -1,4 +1,4 @@
-interface IGhost
+public interface IGhost
 {
     bool IsGhost { get; set; }
     
