@@ -4,13 +4,13 @@ using UnityEngine;
 
 public interface IFreezable
 {
-    public bool IsFrozen { get; set; }
-    public void Freeze()
+    bool IsFrozen { get; set; }
+    void Freeze(int damage)
     {
         IsFrozen = true;
     }
 
-    public void Unfreeze()
+    void Unfreeze()
     {
         IsFrozen = false;
     }

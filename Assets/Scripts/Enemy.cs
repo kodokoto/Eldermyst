@@ -55,6 +55,12 @@ public class Enemy : MonoBehaviour, ITakeDamage, IFreezable
         }
     }
 
+    public void Freeze(int damage)
+    {
+        IsFrozen = true;
+        TakeDamage(damage);
+    }
+
     public void TakeDamage(int damage)
     {
         // Destroy the enemy if it takes damage

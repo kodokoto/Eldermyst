@@ -7,43 +7,35 @@ using static UnityEngine.EventSystems.EventTrigger;
 [CreateAssetMenu]
 public class Freeze : Spell
 {
-
-    private float radius = 10f;
-    private Enemy enemy;
-    public LayerMask targetMask;
+    [SerializeField] private int damage = 2;
+    [SerializeField] private float radius = 10f;
+    [SerializeField] private LayerMask targetMask;
+    
     private Collider[] collisionChecks;
-    private IFreezable FreezeEnemy;
-
 
     public override void Activate(GameObject parent)
     {
         Player player = parent.GetComponent<Player>();
         collisionChecks = Physics.OverlapSphere(player.transform.position, radius, targetMask);
-        if (collisionChecks.Length != 0)
+        foreach (Collider c in collisionChecks)
         {
-            for (int i=0;i<collisionChecks.Length; i++)
+            if (c.TryGetComponent(out IFreezable enemy))
             {
-                if (collisionChecks[i].GetComponent<Enemy>() == null)
-                {
-                    Debug.LogError($"{enemy} has the enemy tag but does not have the enemy component");
-                }
-                else
-                {
-                    enemy = collisionChecks[i].GetComponent<Enemy>();
-                    FreezeEnemy = collisionChecks[i].GetComponent<Enemy>();
-                    FreezeEnemy.Freeze();
-                    enemy.TakeDamage(2);
-                }
+                enemy.Freeze(damage);
             }
         }
     }
 
     public override void Deactivate(GameObject parent)
     {
-        for (int i = 0; i < collisionChecks.Length; i++)
+        Player player = parent.GetComponent<Player>();
+        collisionChecks = Physics.OverlapSphere(player.transform.position, radius, targetMask);
+        foreach (Collider c in collisionChecks)
         {
-            FreezeEnemy = collisionChecks[i].GetComponent<Enemy>();
-            FreezeEnemy.Unfreeze();
+            if (c.TryGetComponent(out IFreezable enemy))
+            {
+                enemy.Unfreeze();
+            }
         }
     }
 
