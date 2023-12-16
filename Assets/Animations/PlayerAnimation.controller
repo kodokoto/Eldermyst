@@ -9,19 +9,19 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 2
-    m_ConditionEvent: isRunning
+    m_ConditionEvent: Running
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isJumping
+    m_ConditionEvent: Jumping
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isMagic
+    m_ConditionEvent: SpellCasting
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isGrappling
+    m_ConditionEvent: Grappling
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isFalling
+    m_ConditionEvent: Falling
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -6953823194540138245}
@@ -46,19 +46,19 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 2
-    m_ConditionEvent: isRunning
+    m_ConditionEvent: Running
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isJumping
+    m_ConditionEvent: Jumping
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isMagic
+    m_ConditionEvent: SpellCasting
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isGrappling
+    m_ConditionEvent: Grappling
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: isFalling
+    m_ConditionEvent: Falling
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -2911752384818218026}
@@ -83,19 +83,19 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 2
-    m_ConditionEvent: isRunning
+    m_ConditionEvent: Running
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isJumping
+    m_ConditionEvent: Jumping
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isMagic
+    m_ConditionEvent: SpellCasting
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isGrappling
+    m_ConditionEvent: Grappling
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isFalling
+    m_ConditionEvent: Falling
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -6953823194540138245}
@@ -120,19 +120,19 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: isRunning
+    m_ConditionEvent: Running
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isJumping
+    m_ConditionEvent: Jumping
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isMagic
+    m_ConditionEvent: SpellCasting
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isGrappling
+    m_ConditionEvent: Grappling
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isFalling
+    m_ConditionEvent: Falling
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 2415803828429683712}
@@ -188,19 +188,19 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 2
-    m_ConditionEvent: isRunning
+    m_ConditionEvent: Running
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isJumping
+    m_ConditionEvent: Jumping
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: isMagic
+    m_ConditionEvent: SpellCasting
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isGrappling
+    m_ConditionEvent: Grappling
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isFalling
+    m_ConditionEvent: Falling
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 8609750161016818866}
@@ -256,19 +256,19 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: isRunning
+    m_ConditionEvent: Running
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isJumping
+    m_ConditionEvent: Jumping
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isMagic
+    m_ConditionEvent: SpellCasting
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isGrappling
+    m_ConditionEvent: Grappling
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isFalling
+    m_ConditionEvent: Falling
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 2415803828429683712}
@@ -293,19 +293,19 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: isRunning
+    m_ConditionEvent: Running
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isJumping
+    m_ConditionEvent: Jumping
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isMagic
+    m_ConditionEvent: SpellCasting
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isGrappling
+    m_ConditionEvent: Grappling
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isFalling
+    m_ConditionEvent: Falling
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 2415803828429683712}
@@ -330,19 +330,19 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 2
-    m_ConditionEvent: isJumping
+    m_ConditionEvent: Jumping
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isRunning
+    m_ConditionEvent: Running
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: isMagic
+    m_ConditionEvent: SpellCasting
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isGrappling
+    m_ConditionEvent: Grappling
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isFalling
+    m_ConditionEvent: Falling
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 8609750161016818866}
@@ -367,19 +367,19 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 2
-    m_ConditionEvent: isRunning
+    m_ConditionEvent: Running
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isJumping
+    m_ConditionEvent: Jumping
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isMagic
+    m_ConditionEvent: SpellCasting
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: isGrappling
+    m_ConditionEvent: Grappling
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isRunning
+    m_ConditionEvent: Running
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 7486339365738710313}
@@ -404,19 +404,19 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 2
-    m_ConditionEvent: isRunning
+    m_ConditionEvent: Running
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isJumping
+    m_ConditionEvent: Jumping
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isMagic
+    m_ConditionEvent: SpellCasting
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isGrappling
+    m_ConditionEvent: Grappling
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isFalling
+    m_ConditionEvent: Falling
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -6953823194540138245}
@@ -441,19 +441,19 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 2
-    m_ConditionEvent: isRunning
+    m_ConditionEvent: Running
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isJumping
+    m_ConditionEvent: Jumping
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isMagic
+    m_ConditionEvent: SpellCasting
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isGrappling
+    m_ConditionEvent: Grappling
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isFalling
+    m_ConditionEvent: Falling
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -6953823194540138245}
@@ -478,19 +478,19 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 2
-    m_ConditionEvent: isRunning
+    m_ConditionEvent: Running
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isJumping
+    m_ConditionEvent: Jumping
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isMagic
+    m_ConditionEvent: SpellCasting
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isGrappling
+    m_ConditionEvent: Grappling
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: isFalling
+    m_ConditionEvent: Falling
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -2911752384818218026}
@@ -515,19 +515,19 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 2
-    m_ConditionEvent: isRunning
+    m_ConditionEvent: Running
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isJumping
+    m_ConditionEvent: Jumping
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isMagic
+    m_ConditionEvent: SpellCasting
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: isGrappling
+    m_ConditionEvent: Grappling
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isFalling
+    m_ConditionEvent: Falling
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 7486339365738710313}
@@ -583,19 +583,19 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 2
-    m_ConditionEvent: isRunning
+    m_ConditionEvent: Running
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isJumping
+    m_ConditionEvent: Jumping
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isMagic
+    m_ConditionEvent: SpellCasting
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isGrappling
+    m_ConditionEvent: Grappling
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isFalling
+    m_ConditionEvent: Falling
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -6953823194540138245}
@@ -620,19 +620,19 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: isJumping
+    m_ConditionEvent: Jumping
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isRunning
+    m_ConditionEvent: Running
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isMagic
+    m_ConditionEvent: SpellCasting
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isGrappling
+    m_ConditionEvent: Grappling
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isFalling
+    m_ConditionEvent: Falling
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -6633971577048326184}
@@ -657,19 +657,19 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 2
-    m_ConditionEvent: isRunning
+    m_ConditionEvent: Running
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: isJumping
+    m_ConditionEvent: Jumping
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isMagic
+    m_ConditionEvent: SpellCasting
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isGrappling
+    m_ConditionEvent: Grappling
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isFalling
+    m_ConditionEvent: Falling
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -6633971577048326184}
@@ -694,19 +694,19 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 2
-    m_ConditionEvent: isRunning
+    m_ConditionEvent: Running
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isJumping
+    m_ConditionEvent: Jumping
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: isMagic
+    m_ConditionEvent: SpellCasting
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isGrappling
+    m_ConditionEvent: Grappling
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isFalling
+    m_ConditionEvent: Falling
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 8609750161016818866}
@@ -731,19 +731,19 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 2
-    m_ConditionEvent: isRunning
+    m_ConditionEvent: Running
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isJumping
+    m_ConditionEvent: Jumping
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isMagic
+    m_ConditionEvent: SpellCasting
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: isGrappling
+    m_ConditionEvent: Grappling
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isFalling
+    m_ConditionEvent: Falling
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 7486339365738710313}
@@ -768,31 +768,37 @@ AnimatorController:
   m_Name: PlayerAnimation
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: isRunning
+  - m_Name: Running
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
-  - m_Name: isJumping
+  - m_Name: Jumping
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
-  - m_Name: isMagic
+  - m_Name: SpellCasting
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
-  - m_Name: isGrappling
+  - m_Name: Grappling
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
-  - m_Name: isFalling
+  - m_Name: Falling
+    m_Type: 4
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
+  - m_Name: Idle
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -820,19 +826,19 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: isRunning
+    m_ConditionEvent: Running
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isJumping
+    m_ConditionEvent: Jumping
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isMagic
+    m_ConditionEvent: SpellCasting
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isGrappling
+    m_ConditionEvent: Grappling
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isFalling
+    m_ConditionEvent: Falling
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 2415803828429683712}
@@ -857,19 +863,19 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 2
-    m_ConditionEvent: isRunning
+    m_ConditionEvent: Running
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isJumping
+    m_ConditionEvent: Jumping
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isMagic
+    m_ConditionEvent: SpellCasting
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: isGrappling
+    m_ConditionEvent: Grappling
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isFalling
+    m_ConditionEvent: Falling
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 7486339365738710313}
@@ -894,19 +900,19 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 2
-    m_ConditionEvent: isRunning
+    m_ConditionEvent: Running
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isJumping
+    m_ConditionEvent: Jumping
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isMagic
+    m_ConditionEvent: SpellCasting
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isGrappling
+    m_ConditionEvent: Grappling
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: isFalling
+    m_ConditionEvent: Falling
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -2911752384818218026}
@@ -931,19 +937,19 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 2
-    m_ConditionEvent: isRunning
+    m_ConditionEvent: Running
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isJumping
+    m_ConditionEvent: Jumping
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: isMagic
+    m_ConditionEvent: SpellCasting
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isGrappling
+    m_ConditionEvent: Grappling
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isFalling
+    m_ConditionEvent: Falling
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 8609750161016818866}
@@ -1004,7 +1010,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Running_A
-  m_Speed: 1
+  m_Speed: 2
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -5701908118412041867}
@@ -1036,19 +1042,19 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 2
-    m_ConditionEvent: isRunning
+    m_ConditionEvent: Running
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isJumping
+    m_ConditionEvent: Jumping
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: isMagic
+    m_ConditionEvent: SpellCasting
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isGrappling
+    m_ConditionEvent: Grappling
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isFalling
+    m_ConditionEvent: Falling
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 8609750161016818866}
@@ -1073,19 +1079,19 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: isRunning
+    m_ConditionEvent: Running
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isJumping
+    m_ConditionEvent: Jumping
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isMagic
+    m_ConditionEvent: SpellCasting
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isGrappling
+    m_ConditionEvent: Grappling
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isFalling
+    m_ConditionEvent: Falling
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 2415803828429683712}
@@ -1093,9 +1099,9 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.25
+  m_TransitionDuration: 0
   m_TransitionOffset: 0
-  m_ExitTime: 0.765625
+  m_ExitTime: 0.7615729
   m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
@@ -1110,19 +1116,19 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 2
-    m_ConditionEvent: isRunning
+    m_ConditionEvent: Running
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isJumping
+    m_ConditionEvent: Jumping
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isMagic
+    m_ConditionEvent: SpellCasting
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isGrappling
+    m_ConditionEvent: Grappling
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: isFalling
+    m_ConditionEvent: Falling
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -2911752384818218026}
@@ -1147,19 +1153,19 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 2
-    m_ConditionEvent: isRunning
+    m_ConditionEvent: Running
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isJumping
+    m_ConditionEvent: Jumping
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isMagic
+    m_ConditionEvent: SpellCasting
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: isGrappling
+    m_ConditionEvent: Grappling
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isFalling
+    m_ConditionEvent: Falling
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 7486339365738710313}
@@ -1184,19 +1190,19 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 2
-    m_ConditionEvent: isRunning
+    m_ConditionEvent: Running
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: isJumping
+    m_ConditionEvent: Jumping
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isMagic
+    m_ConditionEvent: SpellCasting
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isGrappling
+    m_ConditionEvent: Grappling
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isFalling
+    m_ConditionEvent: Falling
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -6633971577048326184}
@@ -1221,19 +1227,19 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 2
-    m_ConditionEvent: isRunning
+    m_ConditionEvent: Running
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isJumping
+    m_ConditionEvent: Jumping
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isMagic
+    m_ConditionEvent: SpellCasting
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isGrappling
+    m_ConditionEvent: Grappling
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: isFalling
+    m_ConditionEvent: Falling
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -2911752384818218026}
@@ -1258,19 +1264,19 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 2
-    m_ConditionEvent: isRunning
+    m_ConditionEvent: Running
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: isJumping
+    m_ConditionEvent: Jumping
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isMagic
+    m_ConditionEvent: SpellCasting
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isGrappling
+    m_ConditionEvent: Grappling
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isFalling
+    m_ConditionEvent: Falling
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -6633971577048326184}
@@ -1295,19 +1301,19 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: isJumping
+    m_ConditionEvent: Jumping
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isRunning
+    m_ConditionEvent: Running
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isMagic
+    m_ConditionEvent: SpellCasting
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isGrappling
+    m_ConditionEvent: Grappling
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isFalling
+    m_ConditionEvent: Falling
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -6633971577048326184}
