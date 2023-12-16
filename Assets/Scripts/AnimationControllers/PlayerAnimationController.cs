@@ -90,7 +90,7 @@ public class PlayerAnimationController : MonoBehaviour
         }
 
         // falling
-        if(movement.falling && !Input.GetKey("space") &&!(movement.wallJumping|movement.wallJumping))
+        if(movement.falling && !Input.GetKey("space") &&!(movement.wallJumping||movement.wallJumping))
         {
             animator.SetBool(isRunningHash, false);
             animator.SetBool(isJumpingHash, false);
