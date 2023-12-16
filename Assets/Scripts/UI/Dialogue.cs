@@ -8,9 +8,13 @@ public class Dialogue : MonoBehaviour
 {
     public TextMeshProUGUI line;
     public GameObject panel;
+    public GameObject button;
+    private int index;
+    private string[] story; 
 
     void Awake()
     {
+        button.SetActive(false);
         panel.SetActive(false);
     }
 
@@ -32,21 +36,29 @@ public class Dialogue : MonoBehaviour
         StartCoroutine(ShowMessageCoroutine(level, levelInstructions));
     }
 
-    public void ShowStory(string[] story)
+    public void ShowStory(string[] Lines)
     {
         Debug.Log("Showing story message");
+        StopAllCoroutines();
         panel.SetActive(true);
-        StartCoroutine(ShowStoryCoroutine(story));
+        button.SetActive(true);
+        story = Lines;
+        index = 0;
+        printNextLine();
     }
 
-    private IEnumerator ShowStoryCoroutine(string[] story)
+    public void printNextLine()
     {
-        Debug.Log("Coroutine started");
-        for (int i=0; i<story.Length; i++)
+        if (index < story.Length)
         {
-            line.text = story[i];
-            yield return new WaitForSeconds(2f);
+            line.text = story[index];
+            index++;
         }
-        panel.SetActive(false);
+        else
+        {
+            button.SetActive(false);
+            panel.SetActive(false);
+        }
     }
+
 }
