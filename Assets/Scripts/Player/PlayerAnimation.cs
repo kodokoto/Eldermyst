@@ -12,7 +12,7 @@ enum AnimationState {
     Idle
 }
 
-public class PlayerAnimationController : MonoBehaviour
+public class PlayerAnimation : MonoBehaviour
 {
     Animator animator;
     PlayerMovement movement;
