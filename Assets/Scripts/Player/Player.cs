@@ -10,7 +10,7 @@ public enum PlayerState
     Dead
 }
 
-public class Player : MonoBehaviour , ITakeDamage
+public class Player : MonoBehaviour , ITakeDamage, IGhost
 {
     public PlayerData data;
     public PlayerState state;
@@ -26,6 +26,10 @@ public class Player : MonoBehaviour , ITakeDamage
 
     // Spells
     private SpellHandler[] spells;
+
+
+    // State
+    public bool IsGhost{ get; set; } = false;
 
     void Start()
     {
@@ -163,7 +167,45 @@ public class Player : MonoBehaviour , ITakeDamage
         return projectileSpawnPoint;
     }
 
+    public int GetMaxHealth()
+    {
+        return data.maxHealth;
+    }
+
+    public int getExcess()
+    {
+        return data.excessHealth;
+    }
+
+    public void setExcess(int amount)
+    {
+        SetExcess(amount);
+    }
+
+    public void setMaxHealth(int maxHealth)
+    {
+        data.maxHealth = maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
+    }
+
+    public void setHealth(int health)
+    {
+        SetHealth(health);
+    }
+
+
     // private data modifiers
+
+    private void SetHealth(int health)
+    {
+        data.health = Mathf.Min(health, data.maxHealth);
+    }
+
+    private void SetExcess(int amount)
+    {
+        data.excessHealth = amount;
+    }
+
     private void LevelUp()
     {
         // if current level is max level, do nothing
@@ -214,6 +256,16 @@ public class Player : MonoBehaviour , ITakeDamage
     {
         if (state.Equals(PlayerState.Dead))
         {
+            return;
+        }
+        if(getExcess()!=0 && amount > getExcess())
+        {
+            amount = amount - getExcess();
+            setExcess(0);
+        }
+        else if(getExcess() != 0)
+        {
+            setExcess(getExcess()-amount);
             return;
         }
         data.health = Mathf.Min(data.health + amount, data.maxHealth);

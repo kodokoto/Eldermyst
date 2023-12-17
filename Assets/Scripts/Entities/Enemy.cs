@@ -1,24 +1,28 @@
+using JetBrains.Annotations;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour, ITakeDamage
+public class Enemy : MonoBehaviour, ITakeDamage, IFreezable
 {
-
-
 
     public Transform projectileSpawnPoint;
     public LayerMask targetMask;
     public LayerMask obstructionMask;
     public Projectile projectile;
 
+    public Player player;
+
     public int health = 20;
     public float fovRadius = 10f;
     private float fireRate = 0.2f;
     public int xpValue = 10;
+    public bool IsFrozen { get; set; }
 
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         obstructionMask = LayerMask.GetMask("Ground") | LayerMask.GetMask("StickyWall");
         StartCoroutine(Routine());
     }
@@ -35,6 +39,11 @@ public class Enemy : MonoBehaviour, ITakeDamage
 
     void CheckIfPlayerInFOV()
     {
+        if (player.IsGhost)
+        {
+            return;
+        }
+        
         Collider[] collisionChecks = Physics.OverlapSphere(projectileSpawnPoint.position, fovRadius, targetMask);
         
         if (collisionChecks.Length != 0)
@@ -45,13 +54,24 @@ public class Enemy : MonoBehaviour, ITakeDamage
 
             float distanceToTarget = Vector3.Distance(projectileSpawnPoint.position, target.position);
 
-            if (!Physics.Raycast(projectileSpawnPoint.position, directionToTarget, distanceToTarget, obstructionMask))
+            if ((!Physics.Raycast(projectileSpawnPoint.position, directionToTarget, distanceToTarget, obstructionMask))&& !IsFrozen)
             {
-                projectileSpawnPoint.right = directionToTarget;
-                Projectile p = Instantiate(projectile, projectileSpawnPoint.position, projectileSpawnPoint.rotation);
-                Debug.Log(p.transform.position);
+                Attack(directionToTarget);
             }
         }
+    }
+
+    private void Attack(Vector3 direction)
+    {
+        projectileSpawnPoint.right = direction;
+        Projectile p = Instantiate(projectile, projectileSpawnPoint.position, projectileSpawnPoint.rotation);
+        Debug.Log(p.transform.position);
+    }
+
+    public void Freeze(int damage)
+    {
+        IsFrozen = true;
+        TakeDamage(damage);
     }
 
     public void TakeDamage(int damage)
@@ -69,6 +89,8 @@ public class Enemy : MonoBehaviour, ITakeDamage
             
             Destroy(gameObject);
         }
+
     }
 
+    
 }
