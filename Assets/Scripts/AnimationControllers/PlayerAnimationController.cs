@@ -17,9 +17,7 @@ public class PlayerAnimationController : MonoBehaviour
     Animator animator;
     PlayerMovement movement;
 
-    // need to do this because there is a bug in C# regarding enum properties recursivelly calling set
-    // causing the stack to overflow and the program to crash
-    private AnimationState _animationState { get; set;}
+    [SerializeField] private AnimationState _animationState;
 
     AnimationState animationState {
         get { return _animationState; }
@@ -39,8 +37,6 @@ public class PlayerAnimationController : MonoBehaviour
         }
     }
 
-
-
     // Start is called before the first frame update
     void Start()
     {
@@ -51,46 +47,42 @@ public class PlayerAnimationController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // if running and jumping, jump
-        if ((Input.GetKey("a") || Input.GetKey("d")) && (Input.GetKey("space")))
-        {
-            animationState = AnimationState.Jumping;
-        }
-
-        // running
-        if ((Input.GetKey("a") || Input.GetKey("d")) && (!Input.GetKey("space")) && !(Input.GetKey("e") || Input.GetKey("c") | Input.GetKey("r") || Input.GetKey("x") || Input.GetKey("q")))
-        {
-            animationState = AnimationState.Running;
-        }
 
         // idle
-        if ((!Input.GetKey("a")) && (!Input.GetKey("d")) && (!Input.GetKey("space")) && !(Input.GetKey("e") || Input.GetKey("c") | Input.GetKey("r") || Input.GetKey("x") || Input.GetKey("q")))
+        if (movement.grounded)
         {
             animationState = AnimationState.Idle;
         }
 
+        // running
+        if (movement.running)
+        {
+            animationState = AnimationState.Running;
+        }
+
         // jumping
-        if ((!Input.GetKey("a")) && (!Input.GetKey("d"))&& (Input.GetKey("space")) && !(Input.GetKey("e") || Input.GetKey("c") | Input.GetKey("r") || Input.GetKey("x") || Input.GetKey("q")))
+        if (movement.jumping)
         {
             animationState = AnimationState.Jumping;
         }
 
-        // spellcasting
+        // spellcasting TODO: add a way to check if a spell is being cast
         if(Input.GetKey("e")|| Input.GetKey("c")| Input.GetKey("r")|| Input.GetKey("x")|| Input.GetKey("q"))
         {
             animationState = AnimationState.SpellCasting;
         }
 
-        // Wall jumping
-        if ((movement.wallSliding || movement.wallJumping)||(Input.GetKey("space") && (movement.touchingWallL||movement.touchingWallR)))
+        // falling
+        if (movement.falling && !movement.touchingWall)
+        {
+            animationState = AnimationState.Falling;
+        }
+
+        // holding on a wall
+        if (movement.touchingWallL && !movement.grounded)
         {
             animationState = AnimationState.Grappling;
         }
 
-        // falling
-        if(movement.falling && !Input.GetKey("space") &&!(movement.wallJumping||movement.wallJumping))
-        {
-            animationState = AnimationState.Falling;
-        }
     }
 }
