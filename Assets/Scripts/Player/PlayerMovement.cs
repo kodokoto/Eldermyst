@@ -927,12 +927,12 @@ public class PlayerMovement : MonoBehaviour
 
 	private void FaceRight()
 	{
-		transform.right = Vector3.right;
+		transform.right = transform.right;
 	}
 
 	private void FaceLeft()
 	{
-		transform.right = Vector3.left;
+		transform.right = -transform.right;
 	}
 
 	private void Flip()

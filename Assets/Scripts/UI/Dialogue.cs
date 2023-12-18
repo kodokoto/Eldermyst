@@ -33,6 +33,7 @@ public class Dialogue : MonoBehaviour
     {
         Debug.Log("Showing level up message");
         panel.SetActive(true);
+        button.SetActive(false);
         StartCoroutine(ShowMessageCoroutine(level, levelInstructions));
     }
 
