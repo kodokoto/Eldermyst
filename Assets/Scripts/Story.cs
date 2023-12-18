@@ -14,7 +14,7 @@ public class Story : MonoBehaviour
         {
             Debug.Log("Story interacted");
             story.ShowStory(Lines);
+            Destroy(gameObject);
         }
-        Destroy(gameObject);
     }
 }
