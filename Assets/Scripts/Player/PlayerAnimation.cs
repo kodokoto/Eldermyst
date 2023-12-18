@@ -79,7 +79,7 @@ public class PlayerAnimation : MonoBehaviour
         }
 
         // holding on a wall
-        if (movement.touchingWallL && !movement.grounded)
+        if (movement.touchingWall && !movement.grounded)
         {
             animationState = AnimationState.Grappling;
         }
