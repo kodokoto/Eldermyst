@@ -6556,6 +6556,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 886149553545712743, guid: c70baacc7d01a4ba783f51dbe7065de1, type: 3}
+      propertyPath: m_Intensity
+      value: 0.05
+      objectReference: {fileID: 0}
     - target: {fileID: 5142617825021828063, guid: c70baacc7d01a4ba783f51dbe7065de1, type: 3}
       propertyPath: m_Name
       value: Directional Light
