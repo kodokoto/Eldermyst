@@ -6,21 +6,24 @@ using UnityEngine;
 public class Shield : Spell
 {
 
-    public Color32 sheildTint = new(60, 240, 240, 240);
-
+    ParticleSystem particleSystem;
+    
     public override void Activate(GameObject parent)
     {
         Player player = parent.GetComponent<Player>();
+        particleSystem = player.GetComponentInChildren<ParticleSystem>();
         player.SetIsShielded(true);
-        // make the player capsule tinted
-        player.GetComponent<Renderer>().material.color = sheildTint;
+        // enable shield particle graphics
+        var emission = particleSystem.emission;
+        emission.enabled = true;
     }
 
     public override void Deactivate(GameObject parent)
     {
         Player player = parent.GetComponent<Player>();
+        // disable shield particles
+        var emission = particleSystem.emission;
+        emission.enabled = false;
         player.SetIsShielded(false);
-        // set the player capsule to white
-        player.GetComponent<Renderer>().material.color = Color.white;
     }
 }
