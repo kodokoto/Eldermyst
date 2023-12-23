@@ -20,3 +20,5 @@ MonoBehaviour:
   targetMask:
     serializedVersion: 2
     m_Bits: 3072
+  ice: {fileID: 2100000, guid: a73c6b347db7513408eb94f91a0e92ed, type: 2}
+  lava: {fileID: 2100000, guid: 66bd3a9ca5e1c3342bd2bcc92de2570d, type: 2}

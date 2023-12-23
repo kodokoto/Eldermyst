@@ -10,6 +10,8 @@ public class Freeze : Spell
     [SerializeField] private int damage = 2;
     [SerializeField] private float radius = 10f;
     [SerializeField] private LayerMask targetMask;
+    public Material ice;
+    public Material lava;
     
     private Collider[] collisionChecks;
 
@@ -22,6 +24,9 @@ public class Freeze : Spell
             if (c.TryGetComponent(out IFreezable enemy))
             {
                 enemy.Freeze(damage);
+
+                Renderer renderer = c.GetComponent<Renderer>();
+                renderer.material = ice;
             }
         }
     }
@@ -35,6 +40,8 @@ public class Freeze : Spell
             if (c.TryGetComponent(out IFreezable enemy))
             {
                 enemy.Unfreeze();
+                Renderer renderer = c.GetComponent<Renderer>();
+                renderer.material = lava;
             }
         }
     }
