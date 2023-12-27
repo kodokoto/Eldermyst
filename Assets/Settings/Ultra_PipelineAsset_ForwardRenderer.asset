@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Active: 1
   settings:
-    renderPassEvent: 600
+    renderPassEvent: 550
     normalThreshold: 0.4
     depthThreshold: 0.4
-    pixelationMaterial: {fileID: 2100000, guid: 11edad26668074193835eed77801f034, type: 2}
+    pixelationShader: {fileID: -6465566751694194690, guid: e36174c999eff4e08b14526fa7e00a4f, type: 3}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -79,7 +79,7 @@ MonoBehaviour:
     zFailOperation: 0
   m_ShadowTransparentReceive: 1
   m_RenderingMode: 0
-  m_DepthPrimingMode: 1
-  m_CopyDepthMode: 2
+  m_DepthPrimingMode: 2
+  m_CopyDepthMode: 0
   m_AccurateGbufferNormals: 0
   m_IntermediateTextureMode: 1
