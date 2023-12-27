@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-2854957099316859970
+--- !u!114 &-6231512350753586433
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,14 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e9a89f65ebc6407fb36ff2c77709e6c, type: 3}
-  m_Name: PixelationRenderFeature
+  m_Script: {fileID: 11500000, guid: b97d3f264784f4561ba7c2bd30fefb96, type: 3}
+  m_Name: PixelOutlineRenderFeature
   m_EditorClassIdentifier: 
-  m_Active: 0
+  m_Active: 1
   settings:
-    renderPassEvent: 1000
-    screenHeight: 360
-    pixelationMaterial: {fileID: 2100000, guid: 1bf7a03b0c72a4573bf68afd93dd811c, type: 2}
+    renderPassEvent: 550
+    normalThreshold: 0.4
+    depthThreshold: 0.4
+    pixelationShader: {fileID: -6465566751694194690, guid: e36174c999eff4e08b14526fa7e00a4f, type: 3}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41,9 +42,8 @@ MonoBehaviour:
     probeSamplingDebugMesh: {fileID: -3555484719484374845, guid: 57d7c4c16e2765b47a4d2069b311bffe, type: 3}
     probeSamplingDebugTexture: {fileID: 2800000, guid: 24ec0e140fb444a44ab96ee80844e18e, type: 3}
   m_RendererFeatures:
-  - {fileID: 0}
-  - {fileID: 6376820866463949318}
-  m_RendererFeatureMap: be2b3df6a42761d806e2e1cdca047f58
+  - {fileID: -6231512350753586433}
+  m_RendererFeatureMap: ff82df6f883885a9
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
@@ -79,8 +79,8 @@ MonoBehaviour:
     zFailOperation: 0
   m_ShadowTransparentReceive: 1
   m_RenderingMode: 0
-  m_DepthPrimingMode: 0
-  m_CopyDepthMode: 1
+  m_DepthPrimingMode: 2
+  m_CopyDepthMode: 0
   m_AccurateGbufferNormals: 0
   m_IntermediateTextureMode: 1
 --- !u!114 &6376820866463949318
