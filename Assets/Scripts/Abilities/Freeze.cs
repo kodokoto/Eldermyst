@@ -22,8 +22,6 @@ public class Freeze : Spell
     public override void Activate(GameObject parent)
     {
         Player player = parent.GetComponent<Player>();
-        Vector3 pos = new Vector3(player.transform.position.x, player.transform.position.y+2, player.transform.position.z);
-        ObjectToSpawn.transform.position = pos;
         explosion = Instantiate(ObjectToSpawn);
         collisionChecks = Physics.OverlapSphere(player.transform.position, radius, targetMask);
         foreach (Collider c in collisionChecks)

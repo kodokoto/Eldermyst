@@ -5,25 +5,20 @@ using UnityEngine;
 [CreateAssetMenu]
 public class Shield : Spell
 {
+    public GameObject ObjectToSpawn;
+    private GameObject shieldParticles;
 
-    ParticleSystem particleSystem;
-    
     public override void Activate(GameObject parent)
     {
         Player player = parent.GetComponent<Player>();
-        particleSystem = player.GetComponentInChildren<ParticleSystem>();
         player.SetIsShielded(true);
-        // enable shield particle graphics
-        var emission = particleSystem.emission;
-        emission.enabled = true;
+        shieldParticles = Instantiate(ObjectToSpawn);
     }
 
     public override void Deactivate(GameObject parent)
     {
+        Destroy(shieldParticles);
         Player player = parent.GetComponent<Player>();
-        // disable shield particles
-        var emission = particleSystem.emission;
-        emission.enabled = false;
         player.SetIsShielded(false);
     }
 }
