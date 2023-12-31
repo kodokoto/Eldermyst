@@ -5,7 +5,10 @@ using UnityEngine;
 public class SpellCircle : MonoBehaviour
 {
     public GameObject circle;
-    // Start is called before the first frame update
+    public Player player;
+    SpellHandler spell;
+    public GameObject[] Buttons;
+    public bool isActive = false;
     void Awake()
     {
         circle.SetActive(false);
@@ -17,9 +20,21 @@ public class SpellCircle : MonoBehaviour
         if (Input.GetKey(KeyCode.M))
         {
             circle.SetActive(true);
+            isActive = true;
+            for (int i =0; i<Buttons.Length; i++)
+            {
+                SpellButton spells = Buttons[i].GetComponent<SpellButton>();
+                string SpellName = spells.getName();
+                spell = player.searchSpells(SpellName);
+                if (spell.enabled==true)
+                {
+                    spells.ActivateButton();
+                }
+            }
         }
         else
         {
+            isActive = false;
             circle.SetActive(false);
         }
     }
