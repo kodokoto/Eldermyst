@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Dynamic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public enum PlayerState
@@ -23,6 +24,8 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost
     public ManaBar manaBar;
     public XPBar xpBar;
     public LevelUpMessage levelUpUI;
+    public bool isRightEnabled=false;
+    public bool isLeftEnabled=false;
 
     // Spells
     private SpellHandler[] spells;
@@ -31,11 +34,12 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost
     // State
     public bool IsGhost{ get; set; } = false;
 
+
     void Start()
     {
         data.Reset();
-        SetUpSpells();
-
+        //SetUpSpells();
+        setUpSpells();
         // if spawn point is not the default value, set player position to spawn point
         if (PlayerSpawnPoint.instance.GetSpawnPoint() != Vector3.zero)
         {
@@ -50,12 +54,66 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost
         manaBar.SetMaxMana(data.maxMana);
     }
 
+    
+
     void Update()
     {
         HealthRegen();
         ManaRegen();
         // Debug.Log("Current level " + data.currentXpLevel);
     }
+
+    private void setUpSpells()
+    {
+        spells = GetComponents<SpellHandler>();
+        Debug.Log("Player gets projectile spell on start");
+        for (int i = 0; i < spells.Length; i++)
+        {
+            if (spells[i].spell.name == "ProjectileSpell")
+            {
+                spells[i].setIsAquired();
+                spells[i].Unlock();
+                spells[i].setKey(KeyCode.Mouse1);
+                isRightEnabled = true;
+                Debug.Log("Projectile Spell aquired");
+            }
+            
+        }
+    }
+
+    public SpellHandler searchSpells(string spellName)
+    {
+        return FindSpell(spellName);
+    }
+
+    private SpellHandler FindSpell(string spellName)
+    {
+        for (int i = 0; i < spells.Length; i++)
+        {
+            if (spellName == spells[i].spell.name)
+            {
+                return spells[i];
+            }
+        }
+        return null;
+    }
+
+    public void AquireSpells(string spellName)
+    {
+        AquireSpellsFromList(spellName);
+    }
+
+    private void AquireSpellsFromList(string spellName)
+    {
+        for (int i = 0; i < spells.Length; i++)
+        {
+            if (spellName == spells[i].spell.name)
+            {
+                spells[i].setIsAquired();
+            }
+        }
+    }
+
 
     private void HealthRegen()
     {
@@ -89,19 +147,19 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost
         }
     }
 
-    private void SetUpSpells()
-    {
-        spells = gameObject.GetComponents<SpellHandler>();
-
+    //private void SetUpSpells()
+    //{
+    //    spells = gameObject.GetComponents<SpellHandler>();
+    //
         // if spell.levelRequirement == 0, unlock spell
-        for (int i = 0; i < spells.Length; i++)
-        {
-            if (spells[i].levelRequirement == 0)
-            {
-                UnlockSpell(spells[i]);
-            }
-        }   
-    }
+    //    for (int i = 0; i < spells.Length; i++)
+    //    {
+    //        if (spells[i].levelRequirement == 0)
+    //        {
+    //            UnlockSpell(spells[i]);
+    //        }
+    //    }   
+    //}
 
     // Helpers
 
@@ -219,13 +277,12 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost
         SetMaxHealth(data.maxHealth + data.levelUpHealthRate);
         SetMaxMana(data.maxMana + data.levelUpManaRate);
 
-        for (int i = 0; i < spells.Length; i++)
-        {
-            if (spells[i].levelRequirement == data.currentXpLevel)
-            {
-                UnlockSpell(spells[i]);
-            }
-        }
+    //    for (int i = 0; i < spells.Length; i++)
+    //    {
+    //        if (spells[i].levelRequirement == data.currentXpLevel)
+    //        {
+    //            UnlockSpell(spells[i]);
+    //        }
 
         xpBar.SetMaxXP(data.xpLevels[data.currentXpLevel]);
     }

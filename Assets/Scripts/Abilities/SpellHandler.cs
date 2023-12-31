@@ -8,7 +8,8 @@ public class SpellHandler : MonoBehaviour
     public Spell spell;
     float cooldownTime;
     float activeTime;
-    public int levelRequirement;
+    public bool isAquired = false;
+    //public int levelRequirement;
 
     enum SpellState
     {
@@ -27,6 +28,36 @@ public class SpellHandler : MonoBehaviour
 
     public void Unlock() {
         this.enabled = true;
+    }
+
+    public void Lock()
+    {
+        this.enabled = false;
+    }
+
+    public string GetSpell()
+    {
+        return this.spell.name;
+    }
+
+    public void setKey(KeyCode Key)
+    {
+        key = Key;
+    }
+
+    public KeyCode getKey()
+    {
+        return key;
+    }
+
+    public bool GetIsAquired()
+    {
+        return isAquired;
+    }
+
+    public void setIsAquired()
+    {
+        isAquired = true;
     }
 
     // Update is called once per frame
