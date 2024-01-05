@@ -1,17 +1,21 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
-public struct PathfinderNode
+public class PathfinderNode
 {
-    public Vector3 position;
-    public bool isWalkable;
+    public Vector3 worldPosition;
+    public bool isFlyable;
+    public Vector2Int gridPosition;
     public int gCost;
     public int hCost;
-    public int fCost;
+    public int FCost
+    {
+        get { return gCost + hCost; }
+    }
 
-    public PathfinderNode(Vector3 position, bool isWalkable)
+    public PathfinderNode? parent;
+
+    public PathfinderNode(Vector2Int gridPosition, Vector3 worldPosition, bool isFlyable, PathfinderNode? parent = null)
     {
         // // create a gameobject at the position of the node
         // GameObject nodeObject = new GameObject("Node");
@@ -19,24 +23,17 @@ public struct PathfinderNode
         // nodeObject.transform.parent = GameObject.Find("caves").transform;
         // // set the position of the node
         // nodeObject.transform.position = position;
-
-        this.position = position;
-        this.isWalkable = isWalkable;
-        gCost = 0;
-        hCost = 0;
-        fCost = 0;
-    }
-
-    public void CalculateFCost()
-    {
-        fCost = gCost + hCost;
+        this.gridPosition = gridPosition;
+        this.worldPosition = worldPosition;
+        this.isFlyable = isFlyable;
+        this.parent = parent;
     }
 
     // dispay single dot for gizmo
     public void DisplayGizmo()
     {
         // red if not walkable
-        if (!isWalkable)
+        if (!isFlyable)
         {
             Gizmos.color = Color.red;
         }
@@ -45,57 +42,47 @@ public struct PathfinderNode
         {
             Gizmos.color = Color.green;
         }
-        Gizmos.DrawSphere(position, 0.1f);
+        Gizmos.DrawSphere(worldPosition, 0.1f);
     }
 }
 
-[InitializeOnLoad]
 public class PathfinderGrid : MonoBehaviour
 {
-    private List<PathfinderNode> nodes;
-    private Mesh mesh;
+    // grid size
+    private int gridSizeX = 200;
+    private int gridSizeY = 150;
+    private float nodeRadius = 1.2f;
 
-    void Awake()
+    // grid offset transform matrix
+    // - negate the y value and shift the grid up by 1
+
+    private Vector3 gridOffset = new Vector3(-11, 13, 0);
+    
+    public PathfinderNode[,] nodes;
+
+    // Start is called before the first frame update
+    void Start()
     {
-        nodes = new List<PathfinderNode>();
-        mesh = GetComponent<MeshFilter>().mesh;
-        GenerateGrid();
-        Debug.Log("PathfinderGrid awake");
-        Debug.Log("Number of nodes: " + nodes.Count);
+        // create the grid
+        CreateGrid();
     }
 
-    static PathfinderGrid()
+    void CreateGrid()
     {
-        Debug.Log("PathfinderGrid loaded");
-    }
+        // initialize the nodes array
+        nodes = new PathfinderNode[gridSizeX, gridSizeY];
 
-    private void GenerateGrid()
-    {
-        // get size of grid based on mesh bounds
-        Vector3 size = mesh.bounds.size;
-        Debug.Log("Grid size: " + size);
-        // get center of grid based on mesh bounds
-        Vector3 center = mesh.bounds.center;
-
-        // get the number of nodes in each direction
-        int xNodes = Mathf.RoundToInt(size.x);
-        int yNodes = Mathf.RoundToInt(size.y);
-
-        Debug.Log("Number of nodes in each direction: " + xNodes + " " + yNodes);
-        
-
-        for (int x = 0; x < xNodes; x++)
+        // loop through the grid
+        for (int x = 0; x < gridSizeX; x++)
         {
-            for (int y = 0; y < yNodes; y++)
+            for (int y = 0; y < gridSizeY; y++)
             {
-                // get the position of the node
-                Vector3 nodePosition = new Vector3(x, y, 0) + center;
+                // calculate the position of the node
+                Vector3 nodePosition = new Vector3(x * nodeRadius, y * nodeRadius * -1, 0) + gridOffset;
                 // check if the node is walkable
-                bool isWalkable = IsNodeWalkable(nodePosition);
+                bool isFlyable = IsNodeWalkable(nodePosition + new Vector3(0, 0, -2));
                 // create the node
-                PathfinderNode node = new PathfinderNode(nodePosition, isWalkable);
-                // add the node to the list
-                nodes.Add(node);
+                nodes[x, y] = new PathfinderNode(new Vector2Int(x, y), nodePosition, isFlyable);
             }
         }
     }
@@ -106,7 +93,7 @@ public class PathfinderGrid : MonoBehaviour
         Vector3 worldPosition = transform.TransformPoint(nodePosition);
         // overlap sphere at the position of the node
         
-        Collider[] colliders = Physics.OverlapSphere(worldPosition, 0.1f, LayerMask.GetMask("Ground", "StickyWall"));
+        Collider[] colliders = Physics.OverlapSphere(worldPosition, .9f, LayerMask.GetMask("Ground", "StickyWall"));
 
         if (colliders.Length > 0)
         {
@@ -121,15 +108,200 @@ public class PathfinderGrid : MonoBehaviour
     //     - draw the grid  
     void OnDrawGizmos()
     {
-        if (nodes != null)
+        // draw the grid
+        // DrawGrid();
+    }
+
+    void DrawGrid()
+    {
+        if (nodes == null)
         {
-            foreach (PathfinderNode node in nodes)
+            return;
+        }
+        // loop through the grid
+        for (int x = 0; x < gridSizeX; x++)
+        {
+            for (int z = 0; z < gridSizeY; z++)
             {
-                node.DisplayGizmo();
+                // display the node
+                nodes[x, z].DisplayGizmo();
             }
         }
     }
 
+    private int GetDistance(PathfinderNode nodeA, PathfinderNode nodeB)
+    {
+        int distanceX = Mathf.Abs(nodeA.gridPosition.x - nodeB.gridPosition.x);
+        int distanceY = Mathf.Abs(nodeA.gridPosition.y - nodeB.gridPosition.y);
+
+        int remaining = Mathf.Abs(distanceX - distanceY);
+
+        return Mathf.Min(distanceX, distanceY) * 14 + remaining * 10;
+    }
+
+    private List<Vector3> RetracePath(PathfinderNode startNode, PathfinderNode endNode)
+    {
+        List<Vector3> path = new List<Vector3>();
+        PathfinderNode currentNode = endNode;
+
+        while (currentNode.gridPosition != startNode.gridPosition)
+        {
+            path.Add(currentNode.worldPosition);
+            currentNode = currentNode.parent;
+        }
+        path.Reverse();
+
+        return path;
+    }
+
+    private PathfinderNode GetNearestNode(Vector3 position)
+    {
+        // convert the position to node indices
+        Vector2Int nodeIndices = PositionToNodeIndex(position);
+        // return the node at the node indices
+        return nodes[nodeIndices.x, nodeIndices.y];
+    }
+
+    private Vector3 NodeIndexToPosition(int x, int y)
+    {
+        return new Vector3(x * nodeRadius, y * nodeRadius * -1) + gridOffset;
+    }
+
+    // inverse of NodeIndexToPosition
+    private Vector2Int PositionToNodeIndex(Vector3 position)
+    {
+        // subtract the grid offset
+        position -= gridOffset;
+
+        // divide by the node radius
+        position /= nodeRadius;
+
+        // round the x and y values
+        int x = Mathf.RoundToInt(position.x);
+        int y = Mathf.RoundToInt(position.y) * -1;
+
+
+        // ensure the x and y values are within the grid incase of rounding errors
+        if (x == gridSizeX)
+            x--;
+        else if (x > gridSizeX)
+            Debug.LogError("Position.x value is greater than grid size");
+        if (y == gridSizeY)
+            y--;
+        else if (y > gridSizeY)
+            Debug.LogError("Position.y value is greater than grid size");
+
+        return new Vector2Int(x, y);
+    }
+    private List<PathfinderNode> GetNeighboringNodes(PathfinderNode node)
+    {
+        // create a list of neighboring nodes
+        List<PathfinderNode> neighboringNodes = new List<PathfinderNode>();
+        // get the x and y index of the node
+        int xIndex = node.gridPosition.x;
+        int yIndex = node.gridPosition.y;
+        // loop through the neighboring nodes
+        for (int x = xIndex - 1; x <= xIndex + 1; x++)
+        {
+            for (int y = yIndex - 1; y <= yIndex + 1; y++)
+            {
+                // check if the node is within the grid
+                if (x >= 0 && x < gridSizeX && y >= 0 && y < gridSizeY)
+                {
+                    // check if the node is not the current node
+                    if (x != xIndex || y != yIndex)
+                    {
+                        // add the node to the list
+                        neighboringNodes.Add(nodes[x, y]);
+                    }
+                }
+            }
+        }
+        // return the list of neighboring nodes
+        return neighboringNodes;
+    }
+
+    // A* Pathfinding
+
+    public void ResetGrid()
+    {
+        foreach (PathfinderNode node in nodes)
+        {
+            node.gCost = int.MaxValue;
+            node.parent = null;
+        }
+    }
+
+    public PathfinderNode GetLowestFCostNode(List<PathfinderNode> nodes)
+    {
+        PathfinderNode lowestFCostNode = nodes[0];
+
+        foreach (PathfinderNode node in nodes)
+        {
+            if (node.FCost < lowestFCostNode.FCost)
+            {
+                lowestFCostNode = node;
+            }
+        }
+
+        return lowestFCostNode;
+    }
+    
+    public List<Vector3> GetPath(Vector3 startPosition, Vector3 endPosition)
+    {
+        PathfinderNode startNode = GetNearestNode(startPosition);
+        PathfinderNode endNode = GetNearestNode(endPosition);
+
+        Debug.Log("Start Node: " + endNode.isFlyable);
+
+
+        List<PathfinderNode> openNodes = new List<PathfinderNode>();
+        HashSet<PathfinderNode> closedNodes = new HashSet<PathfinderNode>();
+
+        openNodes.Add(startNode);
+
+        ResetGrid();
+
+        startNode.gCost = 0;
+        startNode.hCost = GetDistance(startNode, endNode);
+
+        while (openNodes.Count > 0)
+        {
+            PathfinderNode currentNode = GetLowestFCostNode(openNodes);
+
+            if (currentNode.gridPosition == endNode.gridPosition)
+            {
+                var res = RetracePath(startNode, endNode);
+                res.Add(endNode.worldPosition);
+                return res;
+            }
+
+            openNodes.Remove(currentNode);
+            closedNodes.Add(currentNode);
+
+            foreach (PathfinderNode neighbor in GetNeighboringNodes(currentNode))
+            {
+                if (!neighbor.isFlyable || closedNodes.Contains(neighbor))
+                {
+                    continue;
+                }
+
+                int newMovementCostToNeighbor = currentNode.gCost + GetDistance(currentNode, neighbor);
+
+                if (newMovementCostToNeighbor < neighbor.gCost)
+                {
+                    neighbor.gCost = newMovementCostToNeighbor;
+                    neighbor.hCost = GetDistance(neighbor, endNode);
+                    neighbor.parent = currentNode;
+
+                    if (!openNodes.Contains(neighbor))
+                    {
+                        openNodes.Add(neighbor);
+                    }
+                }
+            }
+        }
+
+        return null;
+    }
 }
-
-

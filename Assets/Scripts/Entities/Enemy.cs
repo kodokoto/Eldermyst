@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -7,14 +8,14 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage, IFreezable
 {
 
     [SerializeField] protected LayerMask targetMask;
-    [SerializeField] protected LayerMask obstructionMask = LayerMask.GetMask("Ground") | LayerMask.GetMask("StickyWall");
+    [SerializeField] protected LayerMask obstructionMask = LayerMask.GetMask("Ground");
     protected Player Player { get; private set; }
-    private int XpValue { get; set; }
+    protected abstract int XpValue { get; set; }
     public bool IsFrozen { get; set; }
     protected int Health { get; set; }
-    protected int SearchRate { get; }
-    protected float SearchRange { get; set; }
-    protected float AttackRange { get; set; }
+    protected int SearchRate { get; } 
+    protected abstract float SearchRange { get; set; }
+    protected abstract float AttackRange { get; set; }
 
     protected enum EnemyState
     {
@@ -30,16 +31,17 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage, IFreezable
     void Awake()
     {
         // cache player
-        Player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
     }
 
     void Start()
     {
+        Player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         obstructionMask = LayerMask.GetMask("Ground") | LayerMask.GetMask("StickyWall");
     }
 
     void Update()
     {
+        // Debug.Log("Current State: " + CurrentState);
         switch (CurrentState)
         {
             case EnemyState.Alert:
@@ -52,6 +54,7 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage, IFreezable
                 OnAttack();
                 break;
         }
+        Debug.Log("Current State: " + CurrentState);
     }
 
     protected virtual void OnAlert()
@@ -67,44 +70,70 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage, IFreezable
     protected virtual void OnChase()
     {
         // search for player 
-        if (PlayerInLOS())
+        // Debug.Log("OnChase");
+        if (Vector3.Distance(transform.position, Player.transform.position) <= AttackRange)
         {
-            // if player is within attack range, set state to attacking
-            if (Vector3.Distance(transform.position, Player.transform.position) <= AttackRange)
-            {
-                CurrentState = EnemyState.Attacking;
-            }
-            // else move towards player
-            else
-            {
-                transform.position = Vector3.MoveTowards(transform.position, Player.transform.position, Time.deltaTime * 5f);
-            }
+            // Debug.Log("Player In Attack Range");
+            CurrentState = EnemyState.Attacking;
+            Attack(); 
         }
         else
         {
-            // if player is not found, move towards last known position
-            transform.position = Vector3.MoveTowards(transform.position, LastKnownPlayerPosition, Time.deltaTime * 5f);
+            Chase();
         }
     }
 
-    protected abstract void OnAttack();
-    
-    private bool PlayerInLOS()
+    protected virtual void OnAttack()
     {
-        // get direction to player
-        Vector3 directionToTarget = (Player.transform.position - transform.position).normalized;
-
-        // raycast to player by FOV radius
-        Physics.Raycast(transform.position, directionToTarget, out RaycastHit hit, SearchRange, obstructionMask);
-
-        // if player is found, set state to chasing
-        if (hit.collider != null && hit.collider.CompareTag("Player"))
+        // attack player
+        // if player is not in attack range, chase
+        if (Vector3.Distance(transform.position, Player.transform.position) <= AttackRange)
         {
-            LastKnownPlayerPosition = Player.transform.position;
-            return true;
+            Attack();
+        }
+        else
+        {
+            CurrentState = EnemyState.Chasing;
+        }
+    }
+
+    protected abstract void Attack();
+
+    protected abstract void Chase();
+    
+    protected bool PlayerInLOS()
+    {
+        // Debug.Log("Checking for Player in LOS");
+
+        Vector3 playerPosition = Player.GetComponent<Collider>().bounds.center;
+
+        float distanceToPlayer = Vector3.Distance(transform.position, playerPosition);
+        // if player is within search range, check for line of sight
+        if (distanceToPlayer <= SearchRange)
+        {
+            // get direction to player
+            Vector3 directionToTarget = (playerPosition - transform.position).normalized;
+
+            // draw raycast to player
+            // Debug.DrawRay(transform.position, directionToTarget * distanceToPlayer, Color.red);
+
+            // raycast to player by FOV radius
+            Physics.Raycast(transform.position, directionToTarget, out RaycastHit hit, distanceToPlayer, obstructionMask);
+
+            // Debug.Log("Raycast Hit: " + hit.collider);
+            // if player is found, set state to chasing
+            if (hit.collider == null)
+            {
+                LastKnownPlayerPosition = playerPosition;
+                // draw line to player
+                Debug.DrawLine(transform.position, playerPosition, Color.red);
+                return true;
+            }
+
         }
 
         return false;
+
     }
 
     public void Freeze(int damage)
