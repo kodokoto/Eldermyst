@@ -7,6 +7,16 @@ public class MainMenuManager : MonoBehaviour
         SceneManager.LoadSceneAsync("Level 2");
     }
 
+    public void GoToSettingsMenu()
+    {
+        SceneManager.LoadScene("SettingsMenu");
+    }
+
+    public void GoToMainMenu()
+    {
+        SceneManager.LoadScene("Main");
+    }
+
     public void QuitGame()
     {
         Application.Quit();
