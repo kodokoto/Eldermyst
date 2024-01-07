@@ -91,6 +91,7 @@ public class PlayerMovement : MonoBehaviour
 
 	private void Update()
 	{
+		Debug.Log("Touching Ground " + TouchingGround());
 		HandleFalling();
 		HandleInput();
 		HandleBufferedInput();

@@ -13,7 +13,6 @@ public enum PlayerState
 public class Player : MonoBehaviour , ITakeDamage, IGhost
 {
     public PlayerData data;
-    [HideInInspector] public Collider col;
     public PlayerState state;
     [SerializeField] private Transform projectileSpawnPoint;
     private float healthRegenTimer;
@@ -34,9 +33,22 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost
 
     void Start()
     {
+        Debug.Log("Ping");
         data.Reset();
+        Debug.Log("Pong");
         SetUpSpells();
+        Debug.Log("Pang");
+        healthBar.SetMaxHealth(data.maxHealth);
+        manaBar.SetMaxMana(data.maxMana);
+        Debug.Log("Pung");
 
+        // WARNING: ANYTHING BELOW THIS IF STATEMENT WILL NOT RUN IF THE PLAYER SPAWN POINT IS NOT SET
+        // TODO: FIX THIS
+
+        if (PlayerSpawnPoint.instance == null)
+        {
+            Debug.LogError("Player spawn point is null, please add one to the scene");
+        }
         // if spawn point is not the default value, set player position to spawn point
         if (PlayerSpawnPoint.instance.GetSpawnPoint() != Vector3.zero)
         {
@@ -47,10 +59,6 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost
             PlayerSpawnPoint.instance.SetSpawnPoint(transform.position);
         }
 
-        healthBar.SetMaxHealth(data.maxHealth);
-        manaBar.SetMaxMana(data.maxMana);
-
-        col = GetComponent<CapsuleCollider>();
     }
 
     void Update()

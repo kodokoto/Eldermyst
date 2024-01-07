@@ -10,7 +10,7 @@ public class LevelUpMessage : MonoBehaviour
 
     void Awake()
     {
-        LevelUp = gameObject.GetComponent<TextMeshProUGUI>();
+        LevelUp = GetComponent<TextMeshProUGUI>();
         LevelUp.enabled = false;
     }
 
