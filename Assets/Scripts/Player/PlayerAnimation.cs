@@ -78,11 +78,11 @@ public class PlayerAnimation : MonoBehaviour
             animationState = AnimationState.Falling;
         }
 
-        // holding on a wall
-        if (movement.touchingWall && !movement.grounded)
-        {
-            animationState = AnimationState.Grappling;
-        }
+        // // holding on a wall
+        // if (movement.touchingWall && !movement.grounded)
+        // {
+        //     animationState = AnimationState.Grappling;
+        // }
 
     }
 }
