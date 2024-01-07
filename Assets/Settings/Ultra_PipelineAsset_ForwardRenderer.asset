@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b97d3f264784f4561ba7c2bd30fefb96, type: 3}
   m_Name: PixelOutlineRenderFeature
   m_EditorClassIdentifier: 
-  m_Active: 1
+  m_Active: 0
   settings:
     renderPassEvent: 550
     normalThreshold: 0.4
