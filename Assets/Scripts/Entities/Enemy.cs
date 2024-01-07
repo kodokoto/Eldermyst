@@ -14,7 +14,7 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage, IFreezable
     protected Player Player { get; private set; }
     protected abstract int XpValue { get; set; }
     public bool IsFrozen { get; set; }
-    protected int Health { get; set; }
+    protected abstract int Health { get; set; }
     protected float SearchRate { get; } = 0.1f;
     protected abstract float SearchRange { get; set; }
     protected abstract float AttackRate { get; set; }

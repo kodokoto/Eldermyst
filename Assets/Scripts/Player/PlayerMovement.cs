@@ -738,9 +738,13 @@ public class PlayerMovement : MonoBehaviour
 		Vector3 midRight = new(col.bounds.max.x, col.bounds.center.y, z);
 		float distance = col.bounds.extents.y + 0.16f;
 
-		Debug.DrawRay(midLeft, Vector2.down, Color.yellow);
-		Debug.DrawRay(mid, Vector2.down, Color.yellow);
-		Debug.DrawRay(midRight, Vector2.down, Color.yellow);
+		// Debug.DrawRay(midLeft, Vector2.down, Color.yellow);
+		// Debug.DrawRay(mid, Vector2.down, Color.yellow);
+		// Debug.DrawRay(midRight, Vector2.down, Color.yellow);
+
+		Debug.DrawLine(midLeft, midLeft + Vector3.down * distance, Color.yellow);
+		Debug.DrawLine(mid, mid + Vector3.down * distance, Color.yellow);
+		Debug.DrawLine(midRight, midRight + Vector3.down * distance, Color.yellow);
 
 		return Physics.Raycast(mid, Vector2.down, distance, groundLayer) || Physics.Raycast(midLeft, Vector2.down, distance, groundLayer) || Physics.Raycast(midRight, Vector2.down, distance, groundLayer);
 	}

@@ -9,13 +9,15 @@ public class FlyingEnemy : Enemy, IPathable
     public PathfinderGrid Grid { get; set;}
     public List<Vector3> CurrentPath { get; set; }
 
+    [SerializeField] private Transform AttackPosition;
+    [SerializeField] protected override int Health { get; set; } = 10;
     [field: SerializeField] protected override int XpValue { get; set; } = 10;
     [field: SerializeField] protected override float SearchRange { get; set; } = 20f;
     [field: SerializeField] protected override float AttackRate { get; set; } = 1f;
     [field: SerializeField] protected override float AttackRange { get; set; } = 3f;
     protected override int AttackDamage { get; set; } = 10;
 
-    protected float flyingSpeed = 8f;
+    [SerializeField] protected float flyingSpeed = 5f;
 
     void Awake()
     {
@@ -113,12 +115,11 @@ public class FlyingEnemy : Enemy, IPathable
 
                 // draw search range
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, SearchRange);
+        Gizmos.DrawWireSphere(this.transform.localPosition, SearchRange);
 
         // draw attack range
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, AttackRange);
-
+        Gizmos.color = Color.black;
+        Gizmos.DrawWireSphere(this.transform.position, AttackRange);
 
         // draw the path
         if (CurrentPath != null)

@@ -11,6 +11,8 @@ public class BossWitch : Enemy, IPathable
     public List<Vector3> CurrentPath { get; set; }
 
     protected override int XpValue { get; set; } = 10;
+
+    [SerializeField] protected override int Health { get; set; } = 100;
     [SerializeField] protected override float SearchRange { get; set; } = 30f;
     [SerializeField] protected override float AttackRate { get; set; } = 1f;
     [SerializeField] protected override float AttackRange { get; set; } = 10f;
