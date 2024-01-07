@@ -62,6 +62,7 @@ public class RangedEnemy : MonoBehaviour, ITakeDamage, IFreezable
 
     private void Attack(Vector3 direction)
     {
+        
         projectileSpawnPoint.right = direction;
         Projectile p = Instantiate(projectile, projectileSpawnPoint.position, projectileSpawnPoint.rotation);
         Debug.Log(p.transform.position);

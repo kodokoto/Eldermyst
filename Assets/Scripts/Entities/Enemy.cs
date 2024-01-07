@@ -8,14 +8,25 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage, IFreezable
 {
 
     [SerializeField] protected LayerMask targetMask;
-    [SerializeField] protected LayerMask obstructionMask = LayerMask.GetMask("Ground");
+    [SerializeField] protected LayerMask obstructionMask;
+
+    protected Animator Animator;
     protected Player Player { get; private set; }
     protected abstract int XpValue { get; set; }
     public bool IsFrozen { get; set; }
     protected int Health { get; set; }
-    protected int SearchRate { get; } 
+    protected float SearchRate { get; } = 0.1f;
     protected abstract float SearchRange { get; set; }
+    protected abstract float AttackRate { get; set; }
     protected abstract float AttackRange { get; set; }
+    protected abstract int AttackDamage { get; set; }
+
+    private float searchTimer = 0f;
+    private float attackTimer = 0f;
+
+    protected bool CanSearch { get {return searchTimer >= SearchRate; } }
+    protected bool CanAttack { get {return attackTimer >= AttackRate; } }
+    
 
     protected enum EnemyState
     {
@@ -28,15 +39,11 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage, IFreezable
 
     protected Vector3 LastKnownPlayerPosition { get; set; }
 
-    void Awake()
-    {
-        // cache player
-    }
-
     void Start()
     {
         Player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         obstructionMask = LayerMask.GetMask("Ground") | LayerMask.GetMask("StickyWall");
+        Animator = GetComponent<Animator>();
     }
 
     void Update()
@@ -54,7 +61,21 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage, IFreezable
                 OnAttack();
                 break;
         }
-        Debug.Log("Current State: " + CurrentState);
+        HandleTimers();
+    }
+
+    private void HandleTimers()
+    {
+        if (CanAttack)
+        {
+            attackTimer = 0f;
+        }
+        if (CanSearch)
+        {
+            searchTimer = 0f;
+        }
+        searchTimer += Time.deltaTime;
+        attackTimer += Time.deltaTime;
     }
 
     protected virtual void OnAlert()
@@ -63,6 +84,7 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage, IFreezable
         if (PlayerInLOS())
         {
             // if player is found, set state to chasing
+            Debug.Log("Player found, chasing");
             CurrentState = EnemyState.Chasing;
         }
     }
@@ -70,12 +92,10 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage, IFreezable
     protected virtual void OnChase()
     {
         // search for player 
-        // Debug.Log("OnChase");
         if (Vector3.Distance(transform.position, Player.transform.position) <= AttackRange)
         {
-            // Debug.Log("Player In Attack Range");
+            Debug.Log("Player in attack range, attacking");
             CurrentState = EnemyState.Attacking;
-            Attack(); 
         }
         else
         {
@@ -87,12 +107,17 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage, IFreezable
     {
         // attack player
         // if player is not in attack range, chase
-        if (Vector3.Distance(transform.position, Player.transform.position) <= AttackRange)
+        if (Vector3.Distance(transform.position, Player.GetComponent<Collider>().bounds.center) <= AttackRange)
         {
-            Attack();
+            if (CanAttack)
+            {
+                Debug.Log("Attacking");
+                Attack();
+            }
         }
         else
         {
+            Debug.Log("Player not in attack range, chasing");
             CurrentState = EnemyState.Chasing;
         }
     }
@@ -149,9 +174,9 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage, IFreezable
         if (Health <= 0)
         {
             Player.AddXP(XpValue);
+            Animator.SetTrigger("Death");
             Destroy(gameObject);
         }
+        Animator.SetTrigger("Hit");
     }
-
-    
 }

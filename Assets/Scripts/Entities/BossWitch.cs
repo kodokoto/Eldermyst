@@ -1,21 +1,21 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class FlyingEnemy : Enemy, IPathable
+public class BossWitch : Enemy, IPathable
 {
 
     private Collider Col;
     public PathfinderGrid Grid { get; set;}
     public List<Vector3> CurrentPath { get; set; }
 
-    [field: SerializeField] protected override int XpValue { get; set; } = 10;
-    [field: SerializeField] protected override float SearchRange { get; set; } = 20f;
-    [field: SerializeField] protected override float AttackRate { get; set; } = 1f;
-    [field: SerializeField] protected override float AttackRange { get; set; } = 3f;
-    protected override int AttackDamage { get; set; } = 10;
-
-    protected float flyingSpeed = 8f;
+    protected override int XpValue { get; set; } = 10;
+    [SerializeField] protected override float SearchRange { get; set; } = 30f;
+    [SerializeField] protected override float AttackRate { get; set; } = 1f;
+    [SerializeField] protected override float AttackRange { get; set; } = 10f;
+    [SerializeField] protected override int AttackDamage { get; set; } = 10;
+    [SerializeField] protected float movementSpeed = 3f;
 
     void Awake()
     {
@@ -26,23 +26,30 @@ public class FlyingEnemy : Enemy, IPathable
 
     protected override void Attack()
     {
-        Player.TakeDamage(AttackDamage);
-        Animator.SetTrigger("Attack");
+        return;
     }
 
     protected void Move()
     {
         // while we have a path, move along it
-        if (CurrentPath != null) {
+        if (CurrentPath != null ) {
+            Debug.Log("Moving along path");
             if (CurrentPath.Count > 0) {
-                if (CurrentPath[0] != Vector3.zero) {
-                    Quaternion targetRotation = Quaternion.LookRotation(CurrentPath[0] - transform.position).normalized;
-                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 10f * Time.deltaTime);
+                Debug.Log("Moving along path 2");
+                if (CurrentPath.Count > 1) {
+                        // angle between current node and next node
+                    float angle = Mathf.Rad2Deg * Mathf.Atan2(CurrentPath[1].y - CurrentPath[0].y, CurrentPath[1].x - CurrentPath[0].x);
+                    Debug.Log("Angle between current node and next node: " + angle);
+                    // if the angle is too steep, teleport to the next node
+                    while (angle != 0f && angle != 180f && CurrentPath.Count > 1) {
+                        transform.position = CurrentPath[1];
+                        CurrentPath.RemoveAt(0);
+                    }
                 }
-                Vector3 direction = CurrentPath[0];
-                // direction.y += Random.Range(-0.5f, 0.5f); // add some randomness to the y axis for a more natural flight path
-                transform.position = Vector3.MoveTowards(transform.position, direction, flyingSpeed * Time.deltaTime);
-                if (Vector3.Distance(transform.position, direction) < 0.1f) {
+                Debug.Log("Moving to: " + CurrentPath[0]);
+                Debug.Log("Distance to next node: " + Vector3.Distance(transform.position, CurrentPath[0]));
+                transform.position = Vector3.MoveTowards(transform.position, new Vector3(CurrentPath[0].x, transform.position.y), movementSpeed * Time.deltaTime);
+                if (Vector3.Distance(transform.position, CurrentPath[0]) < 0.5f) {
                     CurrentPath.RemoveAt(0);   
                 }
             } else {
@@ -56,6 +63,7 @@ public class FlyingEnemy : Enemy, IPathable
         // if the search rate has been reached, search for the player
         if (CanSearch)
         {
+            Debug.Log("Searching...");
             // if the player is in line of sight
             if (PlayerInLOS())
             {
@@ -63,11 +71,13 @@ public class FlyingEnemy : Enemy, IPathable
                 // if the player is within attack range, attack
                 if (Vector3.Distance(transform.position, Player.GetComponent<Collider>().bounds.center) < AttackRange)
                 {
+                    Debug.Log("Player in LOS, within attack range, attacking");
                     CurrentState = EnemyState.Attacking;
                 }
                 // get the path to the player
+                Debug.Log("Player in LOS, pathing to player");
 
-                List<Vector3> newPath = Grid.GetPath(transform.position, Player.GetComponent<Collider>().bounds.center);
+                List<Vector3> newPath = Grid.GetPath(transform.position, Player.GetComponent<Collider>().bounds.center, PathfindingMode.Walking);
 
                 if (newPath == null)
                 {
@@ -81,19 +91,23 @@ public class FlyingEnemy : Enemy, IPathable
             }
             else
             {
+                Debug.Log("Player not in LOS");
                 // if we have a path, move along it
                 if (CurrentPath != null)
                 {
+                    Debug.Log("Moving along path");
                     Move();
                 }
                 // if we don't have a path, and we are not near the last known player position, change state to alert
                 else if (Vector3.Distance(transform.position, LastKnownPlayerPosition) < 1f)
                 {
+                    Debug.Log("Player not in LOS, near last known player position, changing state to alert");
                     CurrentState = EnemyState.Alert;
                 }
                 // else get the path to the last known player position
                 else
                 {
+                    Debug.Log("Player not in LOS, pathing to last known player position");
                     CurrentPath = Grid.GetPath(transform.position, LastKnownPlayerPosition);
                 }
             }

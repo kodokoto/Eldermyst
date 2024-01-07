@@ -13,6 +13,7 @@ public enum PlayerState
 public class Player : MonoBehaviour , ITakeDamage, IGhost
 {
     public PlayerData data;
+    [HideInInspector] public Collider col;
     public PlayerState state;
     [SerializeField] private Transform projectileSpawnPoint;
     private float healthRegenTimer;
@@ -48,6 +49,8 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost
 
         healthBar.SetMaxHealth(data.maxHealth);
         manaBar.SetMaxMana(data.maxMana);
+
+        col = GetComponent<CapsuleCollider>();
     }
 
     void Update()

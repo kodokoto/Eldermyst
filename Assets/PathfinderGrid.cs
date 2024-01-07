@@ -1,10 +1,18 @@
 using System.Collections.Generic;
+using System.IO;
+using UnityEditor.ShaderGraph;
 using UnityEngine;
 
+public enum PathfindingMode
+{
+    Walking,
+    Flying
+}
 public class PathfinderNode
 {
     public Vector3 worldPosition;
     public bool isFlyable;
+    public bool isWalkable;
     public Vector2Int gridPosition;
     public int gCost;
     public int hCost;
@@ -15,7 +23,7 @@ public class PathfinderNode
 
     public PathfinderNode? parent;
 
-    public PathfinderNode(Vector2Int gridPosition, Vector3 worldPosition, bool isFlyable, PathfinderNode? parent = null)
+    public PathfinderNode(Vector2Int gridPosition, Vector3 worldPosition, bool isWalkable, bool isFlyable, PathfinderNode? parent = null)
     {
         // // create a gameobject at the position of the node
         // GameObject nodeObject = new GameObject("Node");
@@ -26,23 +34,8 @@ public class PathfinderNode
         this.gridPosition = gridPosition;
         this.worldPosition = worldPosition;
         this.isFlyable = isFlyable;
+        this.isWalkable = isWalkable;
         this.parent = parent;
-    }
-
-    // dispay single dot for gizmo
-    public void DisplayGizmo()
-    {
-        // red if not walkable
-        if (!isFlyable)
-        {
-            Gizmos.color = Color.red;
-        }
-        // green if walkable
-        else
-        {
-            Gizmos.color = Color.green;
-        }
-        Gizmos.DrawSphere(worldPosition, 0.1f);
     }
 }
 
@@ -52,6 +45,8 @@ public class PathfinderGrid : MonoBehaviour
     private int gridSizeX = 200;
     private int gridSizeY = 150;
     private float nodeRadius = 1.2f;
+    [SerializeField] private LayerMask SolidLayer;
+
 
     // grid offset transform matrix
     // - negate the y value and shift the grid up by 1
@@ -63,6 +58,7 @@ public class PathfinderGrid : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        SolidLayer = LayerMask.GetMask("Ground", "StickyWall");
         // create the grid
         CreateGrid();
     }
@@ -80,20 +76,43 @@ public class PathfinderGrid : MonoBehaviour
                 // calculate the position of the node
                 Vector3 nodePosition = new Vector3(x * nodeRadius, y * nodeRadius * -1, 0) + gridOffset;
                 // check if the node is walkable
-                bool isFlyable = IsNodeWalkable(nodePosition + new Vector3(0, 0, -2));
+                bool isFlyable = IsNodeFlyable(nodePosition + new Vector3(0, 0, -2));
+                // bool isWalkable = isFlyable && IsNodeWalkable(nodePosition);
                 // create the node
-                nodes[x, y] = new PathfinderNode(new Vector2Int(x, y), nodePosition, isFlyable);
+                nodes[x, y] = new PathfinderNode(new Vector2Int(x, y), nodePosition, false, isFlyable);
+            }
+        }
+
+        // this is ugly but time is forcing my hand
+        for (int x = 1; x < gridSizeX -1; x++)
+        {
+            for (int y = 1; y < gridSizeY-1; y++)
+            {
+                CheckIfWalkable(nodes[x, y]);
             }
         }
     }
 
-    private bool IsNodeWalkable(Vector3 nodePosition)
+    // This method naively assumes that there will be no index out of bounds errors,
+    // ugly but it is an evil that must be dealth with for now
+    private void CheckIfWalkable(PathfinderNode node)
+    {
+        PathfinderNode nodeBellow = nodes[node.gridPosition.x, node.gridPosition.y + 1];
+        PathfinderNode nodeLeft = nodes[node.gridPosition.x - 1, node.gridPosition.y];
+        PathfinderNode nodeRight = nodes[node.gridPosition.x + 1, node.gridPosition.y];
+        if (node.isFlyable && (!nodeBellow.isFlyable | (!nodeLeft.isFlyable ^ !nodeRight.isFlyable)))
+        {
+            node.isWalkable = true;
+        }
+    }
+
+    private bool IsNodeFlyable(Vector3 nodePosition)
     {
         // get the position of the node in world space
         Vector3 worldPosition = transform.TransformPoint(nodePosition);
         // overlap sphere at the position of the node
         
-        Collider[] colliders = Physics.OverlapSphere(worldPosition, .9f, LayerMask.GetMask("Ground", "StickyWall"));
+        Collider[] colliders = Physics.OverlapSphere(worldPosition, .9f, SolidLayer);
 
         if (colliders.Length > 0)
         {
@@ -104,27 +123,42 @@ public class PathfinderGrid : MonoBehaviour
         return true;
     }
 
+    private bool IsNodeWalkable(Vector3 nodePosition)
+    {
+        Collider[] c = Physics.OverlapBox(new Vector3(nodePosition.x + (nodeRadius*2), nodePosition.y), new Vector3(0.1f, nodeRadius, 0));
+        if (c.Length > 0)
+        {
+            return true;
+        }
+        // bool isTouchingGround = Physics.Raycast(nodePosition, Vector2.down, 0.00001f, SolidLayer);
+        // bool isTouchingWall = Physics.Raycast(nodePosition, Vector2.left, nodeRadius, SolidLayer) || Physics.Raycast(nodePosition, Vector2.right, nodeRadius, SolidLayer);
+
+        // if (isTouchingGround || isTouchingWall)
+        // {
+        //     return true;
+        // }
+        return false;
+    }
+
     // OnDrawGizmos
     //     - draw the grid  
     void OnDrawGizmos()
     {
-        // draw the grid
-        // DrawGrid();
-    }
+        if (nodes == null) return;
 
-    void DrawGrid()
-    {
-        if (nodes == null)
+        foreach (PathfinderNode node in nodes)
         {
-            return;
-        }
-        // loop through the grid
-        for (int x = 0; x < gridSizeX; x++)
-        {
-            for (int z = 0; z < gridSizeY; z++)
+            Gizmos.color = Color.red;
+            // if (node.isFlyable)
+            // {
+            //     Gizmos.color = Color.green;
+            //     Gizmos.DrawSphere(node.worldPosition, 0.1f);
+            // }
+
+            if (node.isWalkable)
             {
-                // display the node
-                nodes[x, z].DisplayGizmo();
+                Gizmos.color = Color.blue;
+                Gizmos.DrawSphere(node.worldPosition, 0.1f);
             }
         }
     }
@@ -247,13 +281,10 @@ public class PathfinderGrid : MonoBehaviour
         return lowestFCostNode;
     }
     
-    public List<Vector3> GetPath(Vector3 startPosition, Vector3 endPosition)
+    public List<Vector3> GetPath(Vector3 startPosition, Vector3 endPosition, PathfindingMode mode = PathfindingMode.Flying)
     {
         PathfinderNode startNode = GetNearestNode(startPosition);
         PathfinderNode endNode = GetNearestNode(endPosition);
-
-        Debug.Log("Start Node: " + endNode.isFlyable);
-
 
         List<PathfinderNode> openNodes = new List<PathfinderNode>();
         HashSet<PathfinderNode> closedNodes = new HashSet<PathfinderNode>();
@@ -281,10 +312,9 @@ public class PathfinderGrid : MonoBehaviour
 
             foreach (PathfinderNode neighbor in GetNeighboringNodes(currentNode))
             {
-                if (!neighbor.isFlyable || closedNodes.Contains(neighbor))
-                {
-                    continue;
-                }
+                if (mode == PathfindingMode.Flying && !neighbor.isFlyable) continue;
+                if (mode == PathfindingMode.Walking && !neighbor.isWalkable) continue;
+                if (closedNodes.Contains(neighbor)) continue;
 
                 int newMovementCostToNeighbor = currentNode.gCost + GetDistance(currentNode, neighbor);
 
@@ -301,7 +331,6 @@ public class PathfinderGrid : MonoBehaviour
                 }
             }
         }
-
         return null;
     }
 }
