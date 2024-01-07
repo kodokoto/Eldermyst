@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 7869532547622085225}
   - component: {fileID: 7802164892693082343}
   - component: {fileID: 505949908247377057}
-  - component: {fileID: 1258938289422817012}
   - component: {fileID: 4856700826033435271}
   - component: {fileID: 596541972394311030}
+  - component: {fileID: -3308871860903577552}
   m_Layer: 0
   m_Name: Mana Potion
   m_TagString: Untagged
@@ -108,20 +108,6 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1258938289422817012
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5189285335809227907}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 537e07d508ffa43958a8e626d2c77faa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 1
-  amount: 20
 --- !u!2083052967 &4856700826033435271
 VisualEffect:
   m_ObjectHideFlags: 0
@@ -203,3 +189,16 @@ VFXRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &-3308871860903577552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5189285335809227907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e334ae7149c638e4a9df9400ba7d9416, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ManaBoost: 20

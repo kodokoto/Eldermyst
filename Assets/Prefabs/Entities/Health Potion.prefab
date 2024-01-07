@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 5618522926815545909}
   - component: {fileID: 6442354787396727720}
   - component: {fileID: 5632874688997469565}
-  - component: {fileID: 1353322646393936581}
   - component: {fileID: 8362709099895684608}
   - component: {fileID: 4074159308062246744}
+  - component: {fileID: 142206715064612618}
   m_Layer: 0
   m_Name: Health Potion
   m_TagString: Untagged
@@ -108,20 +108,6 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1353322646393936581
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4857691583362144941}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 537e07d508ffa43958a8e626d2c77faa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 0
-  amount: 20
 --- !u!2083052967 &8362709099895684608
 VisualEffect:
   m_ObjectHideFlags: 0
@@ -203,3 +189,16 @@ VFXRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &142206715064612618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4857691583362144941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b707bd791bca70418a322edfac53b71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HealthBoost: 20
