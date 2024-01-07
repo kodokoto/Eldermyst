@@ -23,9 +23,10 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost
     public HealthBar healthBar;
     public ManaBar manaBar;
     public XPBar xpBar;
-    public LevelUpMessage levelUpUI;
     public bool isRightEnabled=false;
     public bool isLeftEnabled=false;
+
+    public Dialogue levelUpUI;
 
     // Spells
     private SpellHandler[] spells;
@@ -53,9 +54,7 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost
         healthBar.SetMaxHealth(data.maxHealth);
         manaBar.SetMaxMana(data.maxMana);
     }
-
-    
-
+   
     void Update()
     {
         HealthRegen();

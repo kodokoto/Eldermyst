@@ -20,3 +20,6 @@ MonoBehaviour:
   targetMask:
     serializedVersion: 2
     m_Bits: 3072
+  ObjectToSpawn: {fileID: 3607226259590179397, guid: 95e35cf0301dd124ca387705f29fddc7, type: 3}
+  ice: {fileID: 2100000, guid: b86adcaaab8974e0e81e93e2339df5ae, type: 2}
+  lava: {fileID: 2100000, guid: 66bd3a9ca5e1c3342bd2bcc92de2570d, type: 2}

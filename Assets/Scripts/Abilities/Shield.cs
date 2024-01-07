@@ -5,22 +5,20 @@ using UnityEngine;
 [CreateAssetMenu]
 public class Shield : Spell
 {
-
-    public Color32 sheildTint = new(60, 240, 240, 240);
+    public GameObject ObjectToSpawn;
+    private GameObject shieldParticles;
 
     public override void Activate(GameObject parent)
     {
         Player player = parent.GetComponent<Player>();
         player.SetIsShielded(true);
-        // make the player capsule tinted
-        player.GetComponent<Renderer>().material.color = sheildTint;
+        shieldParticles = Instantiate(ObjectToSpawn);
     }
 
     public override void Deactivate(GameObject parent)
     {
+        Destroy(shieldParticles);
         Player player = parent.GetComponent<Player>();
         player.SetIsShielded(false);
-        // set the player capsule to white
-        player.GetComponent<Renderer>().material.color = Color.white;
     }
 }
