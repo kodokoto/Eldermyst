@@ -9,11 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77447240d3f52432a860a0e9941ff1b6, type: 3}
-  m_Name: MagicBall
+  m_Script: {fileID: 11500000, guid: 444a8de81e00740fe9c42797b34887bf, type: 3}
+  m_Name: PlayerLoadout
   m_EditorClassIdentifier: 
-  name: 
-  cooldownTime: 0
-  activeTime: 0
-  manaCost: 0
-  projectilePrefab: {fileID: 0}
+  Spells:
+  - {fileID: 11400000, guid: ed4ab643e454b4b66a171f601e49460f, type: 2}
+  SpellHandlers: []

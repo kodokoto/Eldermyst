@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using System;
+using UnityEngine.UIElements;
 
 public enum CollisionSide
 {
@@ -14,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
 {
 	private Rigidbody rb;
 	private CapsuleCollider col;
+	[SerializeField] private BoxCollider FootCollider;
 	// ingame variables
 	private float input;
 	private float gravityScale;
@@ -57,7 +59,7 @@ public class PlayerMovement : MonoBehaviour
 	private readonly float FLOATING_BUFFER_TIME = 0.18f;
 	private readonly int LEDGE_BUFFER_TIME = 2;
 	private readonly int WALL_STICK_TIME = 3;
-	private readonly float DASH_SPEED = 20f;
+	private readonly float DASH_SPEED = 40f;
 	private readonly float DASH_TIME = 4;
 	private readonly int DASH_BUFFER_TIME = 10;
 	private readonly float DASH_COOLDOWN = 0.6f;
@@ -730,18 +732,27 @@ public class PlayerMovement : MonoBehaviour
 
 	private bool TouchingGround()
 	{
-		LayerMask groundLayer = LayerMask.GetMask("Ground");
-		float z = col.bounds.center.z;
-		Vector3 midLeft = new(col.bounds.min.x, col.bounds.center.y, z);
-		Vector3 mid = col.bounds.center;
-		Vector3 midRight = new(col.bounds.max.x, col.bounds.center.y, z);
-		float distance = col.bounds.extents.y + 0.16f;
+		// create new box collider at the bottom of the player
+		
+		// check if the box collider is touching the ground
+		return Physics.CheckBox(FootCollider.bounds.center, FootCollider.bounds.extents, Quaternion.identity, LayerMask.GetMask("Ground"));
 
-		Debug.DrawRay(midLeft, Vector2.down, Color.yellow);
-		Debug.DrawRay(mid, Vector2.down, Color.yellow);
-		Debug.DrawRay(midRight, Vector2.down, Color.yellow);
+		// LayerMask groundLayer = LayerMask.GetMask("Ground");
+		// float z = col.bounds.center.z;
+		// Vector3 midLeft = new(col.bounds.min.x, col.bounds.center.y, z);
+		// Vector3 mid = col.bounds.center;
+		// Vector3 midRight = new(col.bounds.max.x, col.bounds.center.y, z);
+		// float distance = col.bounds.extents.y + 0.16f;
 
-		return Physics.Raycast(mid, Vector2.down, distance, groundLayer) || Physics.Raycast(midLeft, Vector2.down, distance, groundLayer) || Physics.Raycast(midRight, Vector2.down, distance, groundLayer);
+		// Debug.DrawRay(midLeft, Vector2.down, Color.yellow);
+		// Debug.DrawRay(mid, Vector2.down, Color.yellow);
+		// Debug.DrawRay(midRight, Vector2.down, Color.yellow);
+
+		// Debug.DrawLine(midLeft, midLeft + Vector3.down * distance, Color.yellow);
+		// Debug.DrawLine(mid, mid + Vector3.down * distance, Color.yellow);
+		// Debug.DrawLine(midRight, midRight + Vector3.down * distance, Color.yellow);
+
+		// return Physics.Raycast(mid, Vector2.down, distance, groundLayer) || Physics.Raycast(midLeft, Vector2.down, distance, groundLayer) || Physics.Raycast(midRight, Vector2.down, distance, groundLayer);
 	}
 
 	private bool TouchingWall(CollisionSide side, bool checkTop = false)

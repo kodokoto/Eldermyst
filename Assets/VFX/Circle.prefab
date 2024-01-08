@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4240331718061780999}
   - component: {fileID: 8190737214013178667}
   - component: {fileID: 8505826753870132819}
-  - component: {fileID: 5247973959799494740}
   m_Layer: 0
   m_Name: Circle
   m_TagString: Untagged
@@ -4907,16 +4906,3 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &5247973959799494740
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3607226259590179397}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 351064470395fe3478f9a2909b47d22b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
