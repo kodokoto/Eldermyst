@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public abstract class Enemy : MonoBehaviour, ITakeDamage, IFreezable
@@ -52,6 +53,10 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage, IFreezable
     void Update()
     {
         // Debug.Log("Current State: " + CurrentState);
+        if (IsFrozen)
+        {
+            return;
+        }
         switch (CurrentState)
         {
             case EnemyState.Alert:
@@ -167,14 +172,35 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage, IFreezable
     public void Freeze(int damage)
     {
         IsFrozen = true;
-        TakeDamage(damage);
+        TakeDamage(damage, false);
+        StartCoroutine(FreezeEffect());
     }
 
-    public void TakeDamage(int damage)
+    public void Unfreeze()
+    {
+        IsFrozen = false;
+    }
+
+    private IEnumerator FreezeEffect()
+    {   
+        Animator.speed = 0;
+        Color c = MeshRenderer.material.GetColor("_BaseColor");
+        // 
+        MeshRenderer.material.SetColor("_BaseColor", new Color(93, 172, 177));
+        // wait for freeze to be false
+        while (IsFrozen)
+        {
+            yield return new WaitForSeconds(0.1f);
+        }
+        MeshRenderer.material.SetColor("_BaseColor", c);  
+        Animator.speed = 1;
+    }
+
+    public void TakeDamage(int damage, bool showEffect = true)
     {
         // Destroy the enemy if it takes damage
         Health -= damage;
-        StartCoroutine(DamageFlash());
+        if (showEffect) StartCoroutine(DamageFlash());
         if (Health <= 0)
         {
             Player.AddXP(XpValue);

@@ -3,5 +3,5 @@ using UnityEngine;
 
 public interface ITakeDamage
 {
-    void TakeDamage(int damage);
+    void TakeDamage(int damage, bool showEffect = true);
 }

@@ -141,7 +141,7 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost
         data.isShielded = isShielded;
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, bool showEffect = true)
     {
         if (!data.isShielded)
         {

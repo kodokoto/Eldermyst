@@ -74,7 +74,7 @@ public class RangedEnemy : MonoBehaviour, ITakeDamage, IFreezable
         TakeDamage(damage);
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, bool isCritical = false)
     {
         // Destroy the enemy if it takes damage
         health -= damage;

@@ -13,9 +13,6 @@ public class Freeze : Spell
     [SerializeField] private LayerMask targetMask;
     public GameObject ObjectToSpawn;
     private GameObject explosion;
-    public Material ice;
-    public Material lava;
-
 
     private Collider[] collisionChecks;
 
@@ -36,9 +33,6 @@ public class Freeze : Spell
             if (c.TryGetComponent(out IFreezable enemy))
             {
                 enemy.Freeze(damage);
-
-                Renderer renderer = c.GetComponent<Renderer>();
-                renderer.material = ice;
             }
         }
     }
@@ -46,17 +40,19 @@ public class Freeze : Spell
     public override void Deactivate(GameObject parent)
     {
         Destroy(explosion);
-        Player player = parent.GetComponent<Player>();
-        collisionChecks = Physics.OverlapSphere(player.transform.position, radius, targetMask);
         foreach (Collider c in collisionChecks)
         {
-            if (c.TryGetComponent(out IFreezable enemy))
+            // incase the enemy is killed by the explosion
+            if (c!= null)
             {
-                enemy.Unfreeze();
-                Renderer renderer = c.GetComponent<Renderer>();
-                renderer.material = lava;
+                if (c.TryGetComponent(out IFreezable enemy))
+                {
+                    enemy.Unfreeze();
+                }
             }
         }
+        // clear collision checks
+        collisionChecks = null;
     }
 
 }
