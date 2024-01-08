@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using System;
 using UnityEngine.UIElements;
+using UnityEngine.InputSystem;
 
 public enum CollisionSide
 {
@@ -16,7 +17,11 @@ public class PlayerMovement : MonoBehaviour
 	private Rigidbody rb;
 	private CapsuleCollider col;
 	[SerializeField] private BoxCollider FootCollider;
+
+	private PlayerInput playerInput;
 	// ingame variables
+
+	// inputs
 	private float input;
 	private float gravityScale;
 	private bool doubleJumpAvailable = true;
@@ -89,6 +94,98 @@ public class PlayerMovement : MonoBehaviour
 		col = GetComponent<CapsuleCollider>();
 		gravityScale = DEFAULT_GRAVITY_SCALE;
 		currentSpeed = RUN_SPEED;
+		playerInput = new PlayerInput();
+	}
+
+	private void OnEnable()
+	{
+		playerInput.Enable();
+		playerInput.Player.Movement.performed += OnInputMove;
+		playerInput.Player.Movement.canceled += OnInputStopMove;
+		playerInput.Player.Jump.started += OnInputJumpPressed;
+		playerInput.Player.Jump.canceled += OnInputJumpReleased;
+		playerInput.Player.Jump.performed += OnInputJumpHeld;
+		playerInput.Player.Dash.started += OnInputDash;
+	}
+
+	private void OnDisable()
+	{
+		playerInput.Disable();
+		playerInput.Player.Movement.performed -= OnInputMove;
+		playerInput.Player.Movement.canceled -= OnInputStopMove;
+		playerInput.Player.Jump.started -= OnInputJumpPressed;
+		playerInput.Player.Jump.canceled -= OnInputJumpReleased;
+		playerInput.Player.Jump.performed -= OnInputJumpHeld;
+		playerInput.Player.Dash.started -= OnInputDash;
+	}
+
+	private void OnInputMove(InputAction.CallbackContext context)
+	{
+		Vector2 i = context.ReadValue<Vector2>();
+		input = i.x;
+	}
+
+	private void OnInputStopMove(InputAction.CallbackContext context)
+	{
+		input = 0f;
+	}
+
+	private void OnInputJumpPressed(InputAction.CallbackContext context)
+	{
+		if (CanWallJump())
+		{
+			StartWallJump();
+		}
+		else if (CanJump())
+		{
+			StartJump();
+		}
+		else if (CanDoubleJump())
+		{
+			StartDoubleJump();
+		}
+		else
+		{
+			HanldeBufferedJump();
+			HandleBufferedDoubleJump();
+		}
+	}
+
+	private void OnInputJumpHeld(InputAction.CallbackContext context)
+	{
+		// Handle buffered inputs
+		if (jumpBuffered && CanJump())
+		{
+			StartJump();
+		}
+		else if (doubleJumpBuffered && CanDoubleJump())
+		{
+			if (grounded)
+			{
+				StartJump();
+			}
+			else
+			{
+				StartDoubleJump();
+			}
+		}
+	}
+
+	private void OnInputJumpReleased(InputAction.CallbackContext context)
+	{
+		JumpReleased();
+	}
+
+	private void OnInputDash(InputAction.CallbackContext context)
+	{
+		if (CanDash())
+		{
+			StartDash();
+		}
+		else
+		{
+			HandleBufferedDash();
+		}
 	}
 
 	private void Update()
@@ -157,7 +254,7 @@ public class PlayerMovement : MonoBehaviour
 
 	private void HandleInput()
 	{
-		input = Input.GetAxisRaw("Horizontal");
+		// Complex input handling
 		if (CanWallSlide())
 		{
 			if (touchingWallL && Input.GetKey(KeyCode.LeftArrow) && !wallSliding)
@@ -177,70 +274,15 @@ public class PlayerMovement : MonoBehaviour
 				FaceRight();
 			}
 		}
-
 		if (wallSliding && Input.GetKeyDown(KeyCode.S))
 		{
 			CancelWallsliding();
 			Flip();
 		}
-		if (Input.GetButtonDown("Jump"))
-		{
-			if (CanWallJump())
-			{
-				StartWallJump();
-			}
-			else if (CanJump())
-			{
-				StartJump();
-			}
-			else if (CanDoubleJump())
-			{
-				StartDoubleJump();
-			}
-			else
-			{
-				HanldeBufferedJump();
-				HandleBufferedDoubleJump();
-			}
-		}
-		else if (Input.GetButtonUp("Jump"))
-		{
-			JumpReleased();
-		}
-		if (Input.GetKeyDown(KeyCode.LeftShift))
-		{
-			if (CanDash())
-			{
-				StartDash();
-			}
-			else
-			{
-				HandleBufferedDash();
-			}
-		}
 	}
 
 	private void HandleBufferedInput()
 	{
-		if (Input.GetButton("Jump"))
-		{
-			// Handle buffered inputs
-			if (jumpBuffered && CanJump())
-			{
-				StartJump();
-			}
-			else if (doubleJumpBuffered && CanDoubleJump())
-			{
-				if (grounded)
-				{
-					StartJump();
-				}
-				else
-				{
-					StartDoubleJump();
-				}
-			}
-		}
 		if (Input.GetKeyDown(KeyCode.LeftShift) && dashBuffered && dashAvailable)
 		{
 			if (CanDash())
