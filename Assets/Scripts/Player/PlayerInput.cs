@@ -55,9 +55,54 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Combo"",
+                    ""name"": ""ComboLeft"",
                     ""type"": ""Button"",
-                    ""id"": ""8365d903-93fb-46c5-8fa1-913663f72d68"",
+                    ""id"": ""6d9e07d3-f19e-4f6d-b289-ae14d7114cb7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ComboRight"",
+                    ""type"": ""Button"",
+                    ""id"": ""d0b53563-278b-40c0-9e42-cdc06ff8800f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ComboUp"",
+                    ""type"": ""Button"",
+                    ""id"": ""b3e16b56-1393-4fe9-99a5-4cea52bd7985"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ComboDown"",
+                    ""type"": ""Button"",
+                    ""id"": ""318d09ee-c522-4ffd-a039-2e99d1b24ae7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ComboAttack"",
+                    ""type"": ""Button"",
+                    ""id"": ""87240da7-ed8d-4968-9827-090ab5bf1f95"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ComboDefend"",
+                    ""type"": ""Button"",
+                    ""id"": ""0a20fdd8-a4fe-4de3-b92c-6ea4dda7a91f"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -133,23 +178,34 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""59adc6b4-4949-4510-aa83-82513e0b5622"",
-                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""id"": ""719f6ffa-5916-4a1e-8abd-a3b0961f6155"",
+                    ""path"": ""<Keyboard>/shift"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Combo"",
+                    ""action"": ""Dash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""f430276d-e3df-40de-b1bd-8de046b9d60d"",
-                    ""path"": ""<Keyboard>/upArrow"",
+                    ""id"": ""354976f8-a169-4c1a-95d0-b6c4208b9fcc"",
+                    ""path"": ""<Keyboard>/leftArrow"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Combo"",
+                    ""action"": ""ComboLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""89acb3d0-d352-42e2-abc8-d3b72037772b"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ComboRight"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -160,18 +216,18 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Combo"",
+                    ""action"": ""ComboDown"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""de9fc719-3e31-4c14-b5cc-26b59d88646c"",
-                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""id"": ""f430276d-e3df-40de-b1bd-8de046b9d60d"",
+                    ""path"": ""<Keyboard>/upArrow"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Combo"",
+                    ""action"": ""ComboUp"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -182,7 +238,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Combo"",
+                    ""action"": ""ComboAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -193,18 +249,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Combo"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""719f6ffa-5916-4a1e-8abd-a3b0961f6155"",
-                    ""path"": ""<Keyboard>/shift"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Dash"",
+                    ""action"": ""ComboDefend"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -218,7 +263,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
-        m_Player_Combo = m_Player.FindAction("Combo", throwIfNotFound: true);
+        m_Player_ComboLeft = m_Player.FindAction("ComboLeft", throwIfNotFound: true);
+        m_Player_ComboRight = m_Player.FindAction("ComboRight", throwIfNotFound: true);
+        m_Player_ComboUp = m_Player.FindAction("ComboUp", throwIfNotFound: true);
+        m_Player_ComboDown = m_Player.FindAction("ComboDown", throwIfNotFound: true);
+        m_Player_ComboAttack = m_Player.FindAction("ComboAttack", throwIfNotFound: true);
+        m_Player_ComboDefend = m_Player.FindAction("ComboDefend", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -283,7 +333,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Movement;
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Dash;
-    private readonly InputAction m_Player_Combo;
+    private readonly InputAction m_Player_ComboLeft;
+    private readonly InputAction m_Player_ComboRight;
+    private readonly InputAction m_Player_ComboUp;
+    private readonly InputAction m_Player_ComboDown;
+    private readonly InputAction m_Player_ComboAttack;
+    private readonly InputAction m_Player_ComboDefend;
     public struct PlayerActions
     {
         private @PlayerInput m_Wrapper;
@@ -291,7 +346,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Dash => m_Wrapper.m_Player_Dash;
-        public InputAction @Combo => m_Wrapper.m_Player_Combo;
+        public InputAction @ComboLeft => m_Wrapper.m_Player_ComboLeft;
+        public InputAction @ComboRight => m_Wrapper.m_Player_ComboRight;
+        public InputAction @ComboUp => m_Wrapper.m_Player_ComboUp;
+        public InputAction @ComboDown => m_Wrapper.m_Player_ComboDown;
+        public InputAction @ComboAttack => m_Wrapper.m_Player_ComboAttack;
+        public InputAction @ComboDefend => m_Wrapper.m_Player_ComboDefend;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -310,9 +370,24 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Dash.started += instance.OnDash;
             @Dash.performed += instance.OnDash;
             @Dash.canceled += instance.OnDash;
-            @Combo.started += instance.OnCombo;
-            @Combo.performed += instance.OnCombo;
-            @Combo.canceled += instance.OnCombo;
+            @ComboLeft.started += instance.OnComboLeft;
+            @ComboLeft.performed += instance.OnComboLeft;
+            @ComboLeft.canceled += instance.OnComboLeft;
+            @ComboRight.started += instance.OnComboRight;
+            @ComboRight.performed += instance.OnComboRight;
+            @ComboRight.canceled += instance.OnComboRight;
+            @ComboUp.started += instance.OnComboUp;
+            @ComboUp.performed += instance.OnComboUp;
+            @ComboUp.canceled += instance.OnComboUp;
+            @ComboDown.started += instance.OnComboDown;
+            @ComboDown.performed += instance.OnComboDown;
+            @ComboDown.canceled += instance.OnComboDown;
+            @ComboAttack.started += instance.OnComboAttack;
+            @ComboAttack.performed += instance.OnComboAttack;
+            @ComboAttack.canceled += instance.OnComboAttack;
+            @ComboDefend.started += instance.OnComboDefend;
+            @ComboDefend.performed += instance.OnComboDefend;
+            @ComboDefend.canceled += instance.OnComboDefend;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -326,9 +401,24 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Dash.started -= instance.OnDash;
             @Dash.performed -= instance.OnDash;
             @Dash.canceled -= instance.OnDash;
-            @Combo.started -= instance.OnCombo;
-            @Combo.performed -= instance.OnCombo;
-            @Combo.canceled -= instance.OnCombo;
+            @ComboLeft.started -= instance.OnComboLeft;
+            @ComboLeft.performed -= instance.OnComboLeft;
+            @ComboLeft.canceled -= instance.OnComboLeft;
+            @ComboRight.started -= instance.OnComboRight;
+            @ComboRight.performed -= instance.OnComboRight;
+            @ComboRight.canceled -= instance.OnComboRight;
+            @ComboUp.started -= instance.OnComboUp;
+            @ComboUp.performed -= instance.OnComboUp;
+            @ComboUp.canceled -= instance.OnComboUp;
+            @ComboDown.started -= instance.OnComboDown;
+            @ComboDown.performed -= instance.OnComboDown;
+            @ComboDown.canceled -= instance.OnComboDown;
+            @ComboAttack.started -= instance.OnComboAttack;
+            @ComboAttack.performed -= instance.OnComboAttack;
+            @ComboAttack.canceled -= instance.OnComboAttack;
+            @ComboDefend.started -= instance.OnComboDefend;
+            @ComboDefend.performed -= instance.OnComboDefend;
+            @ComboDefend.canceled -= instance.OnComboDefend;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -351,6 +441,11 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnMovement(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
-        void OnCombo(InputAction.CallbackContext context);
+        void OnComboLeft(InputAction.CallbackContext context);
+        void OnComboRight(InputAction.CallbackContext context);
+        void OnComboUp(InputAction.CallbackContext context);
+        void OnComboDown(InputAction.CallbackContext context);
+        void OnComboAttack(InputAction.CallbackContext context);
+        void OnComboDefend(InputAction.CallbackContext context);
     }
 }

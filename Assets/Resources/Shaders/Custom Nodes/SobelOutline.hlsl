@@ -74,6 +74,10 @@ void Outline_float(
     float dtlbr = depths[2] - depths[3];
 
     float d = sqrt(dot(dtrbl, dtrbl) + dot(dtlbr, dtlbr));
+    #if UNITY_REVERSED_Z
+    depth = 1 - depth;
+    #endif
+
 
     float depthEdge = step(depthThreshold, d);
     
@@ -100,7 +104,7 @@ void Outline_float(
     // if the edge is a depth edge, then the colour should be darker, otherwise it should be lighter
     // if the edge is both a depth and normal edge, then the colour should be darker still
 
-    float4 mainTex = SAMPLE_TEXTURE2D(_BlitTexture,sampler_BlitTexture, UV);
+    float4 mainTex = SAMPLE_TEXTURE2D(_BlitTexture, sampler_BlitTexture, UV);
     
     if (depthEdge > 0.0)
     {
@@ -130,7 +134,8 @@ void Outline_float(
         color = mainTex;
         //color = float4(0.0, 0.0, 0.0, 1.0);
     }
-
+    // show depth texture
+    //color = float4(depth, depth, depth, 1.0);
     // normalize depth to 0-1;
     //color = float4(normal.xyz, 1.0);
 }
