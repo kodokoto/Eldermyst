@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using Unity.VisualScripting;
+using UnityEngine.InputSystem;
 
 public class ComboSystem : MonoBehaviour
 {
@@ -18,8 +20,31 @@ public class ComboSystem : MonoBehaviour
     private Queue<KeyValuePair<KeyCode, float>> inputQueue = new Queue<KeyValuePair<KeyCode, float>>();
     private float maxComboDelay = 1f;
 
+    private PlayerInput playerInput;
+
     // Define combos
     private Player player;
+
+    void Awake()
+    {
+        playerInput = new PlayerInput();
+    }
+
+    void OnEnable()
+    {
+        playerInput.Enable();
+    }
+
+    void OnDisable()
+    {
+        playerInput.Disable();
+    }
+
+    private void OnInput(InputAction.CallbackContext value)
+    {
+        // get the key pressed
+        Debug.Log("Key pressed");
+    }
 
     void Start()
     {

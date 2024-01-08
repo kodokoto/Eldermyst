@@ -6,7 +6,7 @@ public class PixelOutlinePass : ScriptableRenderPass
 {
     private PixelOutlineRenderFeature.PixelOutlineSettings settings;
     private RTHandle colourBuffer;
-    private RenderTargetIdentifier pixelatedBuffer;
+    private RTHandle pixelatedBuffer;
     private int pixelatedBufferID = Shader.PropertyToID("_PixelBuffer");
 
     private Material pixelationMaterial;
@@ -20,14 +20,16 @@ public class PixelOutlinePass : ScriptableRenderPass
 
     public override void OnCameraSetup(CommandBuffer cmd, ref RenderingData renderingData)
     {
-        colourBuffer = renderingData.cameraData.renderer.cameraColorTargetHandle;
-        RenderTextureDescriptor pixelatedBufferDescriptor = renderingData.cameraData.cameraTargetDescriptor;
-        pixelatedBufferDescriptor.depthBufferBits = 24;
+        var desc = renderingData.cameraData.cameraTargetDescriptor;
+        desc.depthBufferBits = 0; // Color and depth cannot be combined in RTHandles
 
+        RenderingUtils.ReAllocateIfNeeded(ref pixelatedBuffer, desc, name: "_TemporaryColorTexture");
+
+        var renderer = renderingData.cameraData.renderer;
+        colourBuffer = renderer.cameraColorTargetHandle;
+        
         pixelationMaterial.SetFloat("_NormalThreshold", settings.normalThreshold);
         pixelationMaterial.SetFloat("_DepthThreshold", settings.depthThreshold);
-        
-        pixelatedBuffer = new RenderTargetIdentifier(pixelatedBufferID);
     }
 
     public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
@@ -35,12 +37,15 @@ public class PixelOutlinePass : ScriptableRenderPass
         CommandBuffer cmd = CommandBufferPool.Get();
         using (new ProfilingScope(cmd, new ProfilingSampler("Pixelation Pass")))
         {
-            Blitter.BlitCameraTexture(cmd, colourBuffer, colourBuffer, pixelationMaterial, 0);
-            // cmd.Blit(colourBuffer, colourBuffer, pixelationMaterial, 0);
-            // cmd.Blit(pixelatedBuffer, colourBuffer);
+            Blitter.BlitCameraTexture(cmd, colourBuffer, pixelatedBuffer, pixelationMaterial, 0);
+            Blitter.BlitCameraTexture(cmd, pixelatedBuffer, colourBuffer);
         }
         context.ExecuteCommandBuffer(cmd);
         CommandBufferPool.Release(cmd);
+    }
+
+    public void ReleaseTargets() {
+        pixelatedBuffer?.Release();
     }
 
     public override void OnCameraCleanup(CommandBuffer cmd)
