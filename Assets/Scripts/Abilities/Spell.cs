@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class Spell : ScriptableObject
 {
+    public string spellName;
+    public Sprite icon;
     public float cooldownTime;
     public float activeTime;
     public int manaCost;
+    public int levelRequired;
+    public List<KeyCode> combo;
     public virtual void Activate(GameObject parent){}
     public virtual void Deactivate(GameObject parent){}
 

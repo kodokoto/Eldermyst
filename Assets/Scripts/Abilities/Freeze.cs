@@ -21,8 +21,15 @@ public class Freeze : Spell
 
     public override void Activate(GameObject parent)
     {
+        // assert parent is not null
+        Debug.Assert(parent != null, "Parent is null");
+
+        Debug.Assert(ObjectToSpawn != null, "ObjectToSpawn is null");
         Player player = parent.GetComponent<Player>();
-        explosion = Instantiate(ObjectToSpawn);
+        explosion = Instantiate(ObjectToSpawn, player.transform.position, player.transform.rotation);
+
+        // assert explosion is not null
+        Debug.Assert(explosion != null, "Explosion is null");
         collisionChecks = Physics.OverlapSphere(player.transform.position, radius, targetMask);
         foreach (Collider c in collisionChecks)
         {

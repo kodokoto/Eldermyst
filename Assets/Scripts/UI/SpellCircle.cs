@@ -24,12 +24,12 @@ public class SpellCircle : MonoBehaviour
             for (int i =0; i<Buttons.Length; i++)
             {
                 SpellButton spells = Buttons[i].GetComponent<SpellButton>();
-                string SpellName = spells.getName();
-                spell = player.searchSpells(SpellName);
-                if (spell.enabled==true)
-                {
-                    spells.ActivateButton();
-                }
+                // string SpellName = spells.getName();
+                // spell = player.searchSpells(SpellName);
+                // if (spell.enabled==true)
+                // {
+                //     spells.ActivateButton();
+                // }
             }
         }
         else

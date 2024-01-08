@@ -11,6 +11,8 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage, IFreezable
     [SerializeField] protected LayerMask obstructionMask;
 
     protected Animator Animator;
+
+    protected SkinnedMeshRenderer MeshRenderer;
     protected Player Player { get; private set; }
     protected abstract int XpValue { get; set; }
     public bool IsFrozen { get; set; }
@@ -44,6 +46,7 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage, IFreezable
         Player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         obstructionMask = LayerMask.GetMask("Ground") | LayerMask.GetMask("StickyWall");
         Animator = GetComponent<Animator>();
+        MeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
     }
 
     void Update()
@@ -171,6 +174,7 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage, IFreezable
     {
         // Destroy the enemy if it takes damage
         Health -= damage;
+        StartCoroutine(DamageFlash());
         if (Health <= 0)
         {
             Player.AddXP(XpValue);
@@ -178,5 +182,17 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage, IFreezable
             Destroy(gameObject);
         }
         Animator.SetTrigger("Hit");
+    }
+
+    private IEnumerator DamageFlash()
+    {
+        Color c = MeshRenderer.material.GetColor("_BaseColor");
+        for (int i = 0; i < 4; i++)
+        {
+            MeshRenderer.material.SetColor("_BaseColor", Color.red);
+            yield return new WaitForSeconds(0.1f);
+            MeshRenderer.material.SetColor("_BaseColor", c);
+            yield return new WaitForSeconds(0.1f);
+        }
     }
 }

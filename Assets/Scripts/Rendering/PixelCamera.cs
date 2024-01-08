@@ -22,10 +22,11 @@ public class PixelCamera : MonoBehaviour
         screenWidth = Screen.width;
         screenHeight = Screen.height;
 
-        // if display is deactivated, activate it
-        if (!display.gameObject.activeSelf) display.gameObject.SetActive(true);
-
-
+        // change display to stretch to screen
+        display.rectTransform.anchorMin = new Vector2(0, 0);
+        display.rectTransform.anchorMax = new Vector2(1, 1);
+        display.rectTransform.offsetMin = new Vector2(0, 0);
+        display.rectTransform.offsetMax = new Vector2(0, 0);
 
         Resize(targetScreenHeight * screenWidth / screenHeight, targetScreenHeight);
     }
@@ -49,6 +50,9 @@ public class PixelCamera : MonoBehaviour
 
         cam.targetTexture = output;
         display.texture = output;
+
+        Debug.Log("Set display texture to " + output.width + " " + output.height);
+
         Debug.Log("Current screen size " + Screen.width + " " + Screen.height);
         Debug.Log("Resized to " + pixelWidth + " " + pixelHeight);
     }

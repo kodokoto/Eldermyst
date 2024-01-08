@@ -59,7 +59,7 @@ public class PlayerMovement : MonoBehaviour
 	private readonly float FLOATING_BUFFER_TIME = 0.18f;
 	private readonly int LEDGE_BUFFER_TIME = 2;
 	private readonly int WALL_STICK_TIME = 3;
-	private readonly float DASH_SPEED = 20f;
+	private readonly float DASH_SPEED = 40f;
 	private readonly float DASH_TIME = 4;
 	private readonly int DASH_BUFFER_TIME = 10;
 	private readonly float DASH_COOLDOWN = 0.6f;
@@ -93,7 +93,6 @@ public class PlayerMovement : MonoBehaviour
 
 	private void Update()
 	{
-		Debug.Log("Touching Ground " + TouchingGround());
 		HandleFalling();
 		HandleInput();
 		HandleBufferedInput();

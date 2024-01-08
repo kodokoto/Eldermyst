@@ -28,8 +28,9 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost
 
     public Dialogue levelUpUI;
 
-    // Spells
-    private SpellHandler[] spells;
+    [SerializeField] public Loadout loadout;
+
+    public List<SpellHandler> SpellHandlers;
 
 
     // State
@@ -39,6 +40,7 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost
     void Start()
     {
         data.Reset();
+        Debug.Log("Plz");
         SetUpSpells();
         healthBar.SetMaxHealth(data.maxHealth);
         manaBar.SetMaxMana(data.maxMana);
@@ -72,55 +74,18 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost
 
     private void SetUpSpells()
     {
-        spells = GetComponents<SpellHandler>();
-        Debug.Log("Player gets projectile spell on start");
-        for (int i = 0; i < spells.Length; i++)
+        Debug.Log("Setting up spells");
+        loadout.Reset();
+        SpellHandlers = new List<SpellHandler>();
+        foreach (Spell spell in loadout.Spells)
         {
-            if (spells[i].spell.name == "ProjectileSpell")
-            {
-                spells[i].setIsAquired();
-                spells[i].Unlock();
-                spells[i].setKey(KeyCode.Mouse1);
-                isRightEnabled = true;
-                Debug.Log("Projectile Spell aquired");
-            }
-            
+            SpellHandler spellHandler = gameObject.AddComponent<SpellHandler>();
+            spellHandler.Spell = spell;
+            SpellHandlers.Add(spellHandler);
         }
+        loadout.SetSpellSlot1(SpellHandlers[0]);
+        loadout.SetSpellSlot2(null);
     }
-
-    public SpellHandler searchSpells(string spellName)
-    {
-        return FindSpell(spellName);
-    }
-
-    private SpellHandler FindSpell(string spellName)
-    {
-        for (int i = 0; i < spells.Length; i++)
-        {
-            if (spellName == spells[i].spell.name)
-            {
-                return spells[i];
-            }
-        }
-        return null;
-    }
-
-    public void AquireSpells(string spellName)
-    {
-        AquireSpellsFromList(spellName);
-    }
-
-    private void AquireSpellsFromList(string spellName)
-    {
-        for (int i = 0; i < spells.Length; i++)
-        {
-            if (spellName == spells[i].spell.name)
-            {
-                spells[i].setIsAquired();
-            }
-        }
-    }
-
 
     private void HealthRegen()
     {
@@ -153,20 +118,6 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost
             }
         }
     }
-
-    //private void SetUpSpells()
-    //{
-    //    spells = gameObject.GetComponents<SpellHandler>();
-    //
-        // if spell.levelRequirement == 0, unlock spell
-    //    for (int i = 0; i < spells.Length; i++)
-    //    {
-    //        if (spells[i].levelRequirement == 0)
-    //        {
-    //            UnlockSpell(spells[i]);
-    //        }
-    //    }   
-    //}
 
     // Helpers
 
@@ -284,23 +235,10 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost
         SetMaxHealth(data.maxHealth + data.levelUpHealthRate);
         SetMaxMana(data.maxMana + data.levelUpManaRate);
 
-    //    for (int i = 0; i < spells.Length; i++)
-    //    {
-    //        if (spells[i].levelRequirement == data.currentXpLevel)
-    //        {
-    //            UnlockSpell(spells[i]);
-    //        }
-
         xpBar.SetMaxXP(data.xpLevels[data.currentXpLevel]);
     }
 
-    private void UnlockSpell(SpellHandler spell)
-    {
-        Debug.Log("Unlocking " + spell.spell.name);
-        spell.Unlock();
-        string message = "You have unlocked " + spell.spell.name + "! \n Press " + spell.key + " to use it.";
-        levelUpUI.ShowMessage(data.currentXpLevel, message);
-    }
+
 
     private void SetMaxHealth(int amount)
     {
@@ -377,4 +315,11 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost
         state = PlayerState.Dead;
     }
 
+    internal void AddSpell(Spell spell)
+    {
+        loadout.AddSpell(spell);
+        SpellHandler spellHandler = gameObject.AddComponent<SpellHandler>();
+        spellHandler.Spell = spell;
+        SpellHandlers.Add(spellHandler);
+    }
 }
