@@ -28,6 +28,8 @@ public class Spell : ScriptableObject
     public int manaCost;
     public int levelRequired;
     public List<SpellCombo> combos;
+    [SerializeField] public List<string> sentences;
+
     public virtual void Activate(GameObject parent){}
     public virtual void Deactivate(GameObject parent){}
 

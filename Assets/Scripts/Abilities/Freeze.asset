@@ -18,7 +18,15 @@ MonoBehaviour:
   activeTime: 3
   manaCost: 10
   levelRequired: 0
-  combo: 14010000110100001301000065000000
+  combos:
+  - keys: 00000000020000000100000004000000
+  sentences:
+  - You feel a cold breeze surround you...
+  - ...
+  - ...
+  - 'You have found a new spell: Freeze'
+  - 'To use this spell you must utter this enchantment:'
+  - <- ^ -> E
   damage: 20
   radius: 10
   targetMask:

@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 // union type for screens
@@ -7,9 +9,11 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] private GameObject pauseScreen;
     [SerializeField] private GameObject spellBookScreen;
+    [SerializeField] private Dialogue dialogueScreen;
 
+    [Header("Listeners")]
     [SerializeField] private InputManager _inputManager = default;
-
+    [SerializeField] private DialogueDataChannelSO _dialogueChannel = default;
 
     public void OnEnable()
     {
@@ -17,6 +21,8 @@ public class UIManager : MonoBehaviour
         _inputManager.UnpauseEvent += OnPauseExit;
         _inputManager.OpenSpellBookEvent += OnOpenSpellBook;
         _inputManager.CloseSpellBookExitEvent += OnCloseSpellBookExit;
+        _inputManager.AdvanceEvent += OnDialogueAdvanced;
+        _dialogueChannel.OnEventRaised += OnDialogueEventRaised;
     }
 
     public void OnDisable()
@@ -25,6 +31,8 @@ public class UIManager : MonoBehaviour
         _inputManager.UnpauseEvent -= OnPauseExit;
         _inputManager.OpenSpellBookEvent -= OnOpenSpellBook;
         _inputManager.CloseSpellBookExitEvent -= OnCloseSpellBookExit;
+        _inputManager.AdvanceEvent -= OnDialogueAdvanced;
+        _dialogueChannel.OnEventRaised -= OnDialogueEventRaised;
     }
 
     public void OnPause()
@@ -51,32 +59,22 @@ public class UIManager : MonoBehaviour
         spellBookScreen.SetActive(false);
     }
 
-    
-    // public static UIManager instance;
-    
-    // private void Awake()
-    // {
-    //     if (instance == null)
-    //         instance = this;
-    // }
+    public void OnDialogueEventRaised(List<string> dialogue)
+    {
+        _inputManager.EnableDialogueInput();
+        Time.timeScale = 0;
+        dialogueScreen.gameObject.SetActive(true);
+        dialogueScreen.SetDialogue(dialogue);
+    }
 
-    // public void ShowGameOverScreen()
-    // {
-    //     gameObject.transform.Find("GameOverScreen").gameObject.SetActive(true);
-    // }
-
-    // public void HideGameOverScreen()
-    // {
-    //     gameObject.transform.Find("GameOverScreen").gameObject.SetActive(false);
-    // }
-
-    // public void ShowWinScreen()
-    // {
-    //     gameObject.transform.Find("WinScreen").gameObject.SetActive(true);
-    // }
-
-    // public void HideWinScreen()
-    // {
-    //     gameObject.transform.Find("WinScreen").gameObject.SetActive(false);
-    // }
+    private void OnDialogueAdvanced()
+    {
+        // show next line, if there isnt one, close the dialogue
+        if (!dialogueScreen.Advance())
+        {
+            Time.timeScale = 1;
+            dialogueScreen.gameObject.SetActive(false);
+            _inputManager.EnableGameplayInput();
+        }
+    }
 }
