@@ -3,11 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public enum GameState {
-    Playing,
-    Won,
-    Lost
+public class InGameStateSO : ScriptableObject
+{
+    public InGameState gameState;
+
+    public void SetGameState(InGameState state)
+    {
+        gameState = state;
+    }
+    public InGameState GetGameState()
+    {
+        return gameState;
+    }
 }
+
+public enum InGameState {
+    Playing,
+    Paused,
+    InSettings,
+    InSpellBook,
+    GameWon,
+    GameLost,
+}
+
+
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;

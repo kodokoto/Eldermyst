@@ -2,7 +2,7 @@
     "name": "PlayerInput",
     "maps": [
         {
-            "name": "Player",
+            "name": "Gameplay",
             "id": "60ddfc95-9ecd-49db-9c85-aeadb7fd1e76",
             "actions": [
                 {
@@ -81,6 +81,24 @@
                     "name": "ComboDefend",
                     "type": "Button",
                     "id": "0a20fdd8-a4fe-4de3-b92c-6ea4dda7a91f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "796c8707-6cc4-429e-9870-0e3fdd8f97fb",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SpellBook",
+                    "type": "Button",
+                    "id": "f5764d05-d8b4-4b7e-875f-4dda866d5dba",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -228,6 +246,166 @@
                     "processors": "",
                     "groups": "",
                     "action": "ComboDefend",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4500502c-c706-4204-91d1-c79bd089d500",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0edaec2a-89dc-48f1-a98c-7d9899a03efb",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SpellBook",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Dialogue",
+            "id": "d783f666-70ba-4065-b3a7-a62b604823f2",
+            "actions": [
+                {
+                    "name": "Advance",
+                    "type": "Button",
+                    "id": "3757ac56-8db2-4a25-9daa-f5bf05d9a530",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "fb170fab-ff3b-4273-b380-c0f979d8458b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SpellBook",
+                    "type": "Button",
+                    "id": "9b86076b-ecbd-4c0d-b3f8-9811e4047ed6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "05bc021f-e05b-4adb-811b-a648a80421c5",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Advance",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "873bd721-140d-43c0-b414-4173ccc94fa0",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Advance",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "99cb511a-46da-4ae4-9052-3cc5e840fb79",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Advance",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5566a32c-3b79-4b08-b7ed-c39d96088b29",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c6aac6bf-7c74-4d82-a99d-015732ecd2e4",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SpellBook",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Menu",
+            "id": "00658d4b-38ee-4115-886d-51f30fb8f232",
+            "actions": [
+                {
+                    "name": "Select",
+                    "type": "Button",
+                    "id": "ca8521dc-6efc-409d-8cad-7e11dbd1e9a1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "MenuExit",
+                    "type": "Button",
+                    "id": "a848c041-ccf1-4d70-8cce-d9aa9a3419fb",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "f594705f-e97a-4d03-8575-626fdd23c8be",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Select",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ab6e06a7-b861-48f7-aa52-d23111bf1cd2",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MenuExit",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

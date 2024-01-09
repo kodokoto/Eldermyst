@@ -24,7 +24,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     ""name"": ""PlayerInput"",
     ""maps"": [
         {
-            ""name"": ""Player"",
+            ""name"": ""Gameplay"",
             ""id"": ""60ddfc95-9ecd-49db-9c85-aeadb7fd1e76"",
             ""actions"": [
                 {
@@ -103,6 +103,24 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""name"": ""ComboDefend"",
                     ""type"": ""Button"",
                     ""id"": ""0a20fdd8-a4fe-4de3-b92c-6ea4dda7a91f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""796c8707-6cc4-429e-9870-0e3fdd8f97fb"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SpellBook"",
+                    ""type"": ""Button"",
+                    ""id"": ""f5764d05-d8b4-4b7e-875f-4dda866d5dba"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -252,23 +270,194 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""ComboDefend"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4500502c-c706-4204-91d1-c79bd089d500"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0edaec2a-89dc-48f1-a98c-7d9899a03efb"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SpellBook"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Dialogue"",
+            ""id"": ""d783f666-70ba-4065-b3a7-a62b604823f2"",
+            ""actions"": [
+                {
+                    ""name"": ""Advance"",
+                    ""type"": ""Button"",
+                    ""id"": ""3757ac56-8db2-4a25-9daa-f5bf05d9a530"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""fb170fab-ff3b-4273-b380-c0f979d8458b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SpellBook"",
+                    ""type"": ""Button"",
+                    ""id"": ""9b86076b-ecbd-4c0d-b3f8-9811e4047ed6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""05bc021f-e05b-4adb-811b-a648a80421c5"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Advance"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""873bd721-140d-43c0-b414-4173ccc94fa0"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Advance"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""99cb511a-46da-4ae4-9052-3cc5e840fb79"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Advance"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5566a32c-3b79-4b08-b7ed-c39d96088b29"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c6aac6bf-7c74-4d82-a99d-015732ecd2e4"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SpellBook"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Menu"",
+            ""id"": ""00658d4b-38ee-4115-886d-51f30fb8f232"",
+            ""actions"": [
+                {
+                    ""name"": ""Select"",
+                    ""type"": ""Button"",
+                    ""id"": ""ca8521dc-6efc-409d-8cad-7e11dbd1e9a1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MenuExit"",
+                    ""type"": ""Button"",
+                    ""id"": ""a848c041-ccf1-4d70-8cce-d9aa9a3419fb"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""f594705f-e97a-4d03-8575-626fdd23c8be"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Select"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ab6e06a7-b861-48f7-aa52-d23111bf1cd2"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MenuExit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
     ],
     ""controlSchemes"": []
 }");
-        // Player
-        m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
-        m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
-        m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
-        m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
-        m_Player_ComboLeft = m_Player.FindAction("ComboLeft", throwIfNotFound: true);
-        m_Player_ComboRight = m_Player.FindAction("ComboRight", throwIfNotFound: true);
-        m_Player_ComboUp = m_Player.FindAction("ComboUp", throwIfNotFound: true);
-        m_Player_ComboDown = m_Player.FindAction("ComboDown", throwIfNotFound: true);
-        m_Player_ComboAttack = m_Player.FindAction("ComboAttack", throwIfNotFound: true);
-        m_Player_ComboDefend = m_Player.FindAction("ComboDefend", throwIfNotFound: true);
+        // Gameplay
+        m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
+        m_Gameplay_Movement = m_Gameplay.FindAction("Movement", throwIfNotFound: true);
+        m_Gameplay_Jump = m_Gameplay.FindAction("Jump", throwIfNotFound: true);
+        m_Gameplay_Dash = m_Gameplay.FindAction("Dash", throwIfNotFound: true);
+        m_Gameplay_ComboLeft = m_Gameplay.FindAction("ComboLeft", throwIfNotFound: true);
+        m_Gameplay_ComboRight = m_Gameplay.FindAction("ComboRight", throwIfNotFound: true);
+        m_Gameplay_ComboUp = m_Gameplay.FindAction("ComboUp", throwIfNotFound: true);
+        m_Gameplay_ComboDown = m_Gameplay.FindAction("ComboDown", throwIfNotFound: true);
+        m_Gameplay_ComboAttack = m_Gameplay.FindAction("ComboAttack", throwIfNotFound: true);
+        m_Gameplay_ComboDefend = m_Gameplay.FindAction("ComboDefend", throwIfNotFound: true);
+        m_Gameplay_Pause = m_Gameplay.FindAction("Pause", throwIfNotFound: true);
+        m_Gameplay_SpellBook = m_Gameplay.FindAction("SpellBook", throwIfNotFound: true);
+        // Dialogue
+        m_Dialogue = asset.FindActionMap("Dialogue", throwIfNotFound: true);
+        m_Dialogue_Advance = m_Dialogue.FindAction("Advance", throwIfNotFound: true);
+        m_Dialogue_Pause = m_Dialogue.FindAction("Pause", throwIfNotFound: true);
+        m_Dialogue_SpellBook = m_Dialogue.FindAction("SpellBook", throwIfNotFound: true);
+        // Menu
+        m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
+        m_Menu_Select = m_Menu.FindAction("Select", throwIfNotFound: true);
+        m_Menu_MenuExit = m_Menu.FindAction("MenuExit", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -327,40 +516,44 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         return asset.FindBinding(bindingMask, out action);
     }
 
-    // Player
-    private readonly InputActionMap m_Player;
-    private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
-    private readonly InputAction m_Player_Movement;
-    private readonly InputAction m_Player_Jump;
-    private readonly InputAction m_Player_Dash;
-    private readonly InputAction m_Player_ComboLeft;
-    private readonly InputAction m_Player_ComboRight;
-    private readonly InputAction m_Player_ComboUp;
-    private readonly InputAction m_Player_ComboDown;
-    private readonly InputAction m_Player_ComboAttack;
-    private readonly InputAction m_Player_ComboDefend;
-    public struct PlayerActions
+    // Gameplay
+    private readonly InputActionMap m_Gameplay;
+    private List<IGameplayActions> m_GameplayActionsCallbackInterfaces = new List<IGameplayActions>();
+    private readonly InputAction m_Gameplay_Movement;
+    private readonly InputAction m_Gameplay_Jump;
+    private readonly InputAction m_Gameplay_Dash;
+    private readonly InputAction m_Gameplay_ComboLeft;
+    private readonly InputAction m_Gameplay_ComboRight;
+    private readonly InputAction m_Gameplay_ComboUp;
+    private readonly InputAction m_Gameplay_ComboDown;
+    private readonly InputAction m_Gameplay_ComboAttack;
+    private readonly InputAction m_Gameplay_ComboDefend;
+    private readonly InputAction m_Gameplay_Pause;
+    private readonly InputAction m_Gameplay_SpellBook;
+    public struct GameplayActions
     {
         private @PlayerInput m_Wrapper;
-        public PlayerActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Movement => m_Wrapper.m_Player_Movement;
-        public InputAction @Jump => m_Wrapper.m_Player_Jump;
-        public InputAction @Dash => m_Wrapper.m_Player_Dash;
-        public InputAction @ComboLeft => m_Wrapper.m_Player_ComboLeft;
-        public InputAction @ComboRight => m_Wrapper.m_Player_ComboRight;
-        public InputAction @ComboUp => m_Wrapper.m_Player_ComboUp;
-        public InputAction @ComboDown => m_Wrapper.m_Player_ComboDown;
-        public InputAction @ComboAttack => m_Wrapper.m_Player_ComboAttack;
-        public InputAction @ComboDefend => m_Wrapper.m_Player_ComboDefend;
-        public InputActionMap Get() { return m_Wrapper.m_Player; }
+        public GameplayActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Movement => m_Wrapper.m_Gameplay_Movement;
+        public InputAction @Jump => m_Wrapper.m_Gameplay_Jump;
+        public InputAction @Dash => m_Wrapper.m_Gameplay_Dash;
+        public InputAction @ComboLeft => m_Wrapper.m_Gameplay_ComboLeft;
+        public InputAction @ComboRight => m_Wrapper.m_Gameplay_ComboRight;
+        public InputAction @ComboUp => m_Wrapper.m_Gameplay_ComboUp;
+        public InputAction @ComboDown => m_Wrapper.m_Gameplay_ComboDown;
+        public InputAction @ComboAttack => m_Wrapper.m_Gameplay_ComboAttack;
+        public InputAction @ComboDefend => m_Wrapper.m_Gameplay_ComboDefend;
+        public InputAction @Pause => m_Wrapper.m_Gameplay_Pause;
+        public InputAction @SpellBook => m_Wrapper.m_Gameplay_SpellBook;
+        public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(PlayerActions set) { return set.Get(); }
-        public void AddCallbacks(IPlayerActions instance)
+        public static implicit operator InputActionMap(GameplayActions set) { return set.Get(); }
+        public void AddCallbacks(IGameplayActions instance)
         {
-            if (instance == null || m_Wrapper.m_PlayerActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_PlayerActionsCallbackInterfaces.Add(instance);
+            if (instance == null || m_Wrapper.m_GameplayActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_GameplayActionsCallbackInterfaces.Add(instance);
             @Movement.started += instance.OnMovement;
             @Movement.performed += instance.OnMovement;
             @Movement.canceled += instance.OnMovement;
@@ -388,9 +581,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @ComboDefend.started += instance.OnComboDefend;
             @ComboDefend.performed += instance.OnComboDefend;
             @ComboDefend.canceled += instance.OnComboDefend;
+            @Pause.started += instance.OnPause;
+            @Pause.performed += instance.OnPause;
+            @Pause.canceled += instance.OnPause;
+            @SpellBook.started += instance.OnSpellBook;
+            @SpellBook.performed += instance.OnSpellBook;
+            @SpellBook.canceled += instance.OnSpellBook;
         }
 
-        private void UnregisterCallbacks(IPlayerActions instance)
+        private void UnregisterCallbacks(IGameplayActions instance)
         {
             @Movement.started -= instance.OnMovement;
             @Movement.performed -= instance.OnMovement;
@@ -419,24 +618,146 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @ComboDefend.started -= instance.OnComboDefend;
             @ComboDefend.performed -= instance.OnComboDefend;
             @ComboDefend.canceled -= instance.OnComboDefend;
+            @Pause.started -= instance.OnPause;
+            @Pause.performed -= instance.OnPause;
+            @Pause.canceled -= instance.OnPause;
+            @SpellBook.started -= instance.OnSpellBook;
+            @SpellBook.performed -= instance.OnSpellBook;
+            @SpellBook.canceled -= instance.OnSpellBook;
         }
 
-        public void RemoveCallbacks(IPlayerActions instance)
+        public void RemoveCallbacks(IGameplayActions instance)
         {
-            if (m_Wrapper.m_PlayerActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_GameplayActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(IPlayerActions instance)
+        public void SetCallbacks(IGameplayActions instance)
         {
-            foreach (var item in m_Wrapper.m_PlayerActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_GameplayActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_PlayerActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_GameplayActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
-    public PlayerActions @Player => new PlayerActions(this);
-    public interface IPlayerActions
+    public GameplayActions @Gameplay => new GameplayActions(this);
+
+    // Dialogue
+    private readonly InputActionMap m_Dialogue;
+    private List<IDialogueActions> m_DialogueActionsCallbackInterfaces = new List<IDialogueActions>();
+    private readonly InputAction m_Dialogue_Advance;
+    private readonly InputAction m_Dialogue_Pause;
+    private readonly InputAction m_Dialogue_SpellBook;
+    public struct DialogueActions
+    {
+        private @PlayerInput m_Wrapper;
+        public DialogueActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Advance => m_Wrapper.m_Dialogue_Advance;
+        public InputAction @Pause => m_Wrapper.m_Dialogue_Pause;
+        public InputAction @SpellBook => m_Wrapper.m_Dialogue_SpellBook;
+        public InputActionMap Get() { return m_Wrapper.m_Dialogue; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(DialogueActions set) { return set.Get(); }
+        public void AddCallbacks(IDialogueActions instance)
+        {
+            if (instance == null || m_Wrapper.m_DialogueActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_DialogueActionsCallbackInterfaces.Add(instance);
+            @Advance.started += instance.OnAdvance;
+            @Advance.performed += instance.OnAdvance;
+            @Advance.canceled += instance.OnAdvance;
+            @Pause.started += instance.OnPause;
+            @Pause.performed += instance.OnPause;
+            @Pause.canceled += instance.OnPause;
+            @SpellBook.started += instance.OnSpellBook;
+            @SpellBook.performed += instance.OnSpellBook;
+            @SpellBook.canceled += instance.OnSpellBook;
+        }
+
+        private void UnregisterCallbacks(IDialogueActions instance)
+        {
+            @Advance.started -= instance.OnAdvance;
+            @Advance.performed -= instance.OnAdvance;
+            @Advance.canceled -= instance.OnAdvance;
+            @Pause.started -= instance.OnPause;
+            @Pause.performed -= instance.OnPause;
+            @Pause.canceled -= instance.OnPause;
+            @SpellBook.started -= instance.OnSpellBook;
+            @SpellBook.performed -= instance.OnSpellBook;
+            @SpellBook.canceled -= instance.OnSpellBook;
+        }
+
+        public void RemoveCallbacks(IDialogueActions instance)
+        {
+            if (m_Wrapper.m_DialogueActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IDialogueActions instance)
+        {
+            foreach (var item in m_Wrapper.m_DialogueActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_DialogueActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public DialogueActions @Dialogue => new DialogueActions(this);
+
+    // Menu
+    private readonly InputActionMap m_Menu;
+    private List<IMenuActions> m_MenuActionsCallbackInterfaces = new List<IMenuActions>();
+    private readonly InputAction m_Menu_Select;
+    private readonly InputAction m_Menu_MenuExit;
+    public struct MenuActions
+    {
+        private @PlayerInput m_Wrapper;
+        public MenuActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Select => m_Wrapper.m_Menu_Select;
+        public InputAction @MenuExit => m_Wrapper.m_Menu_MenuExit;
+        public InputActionMap Get() { return m_Wrapper.m_Menu; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(MenuActions set) { return set.Get(); }
+        public void AddCallbacks(IMenuActions instance)
+        {
+            if (instance == null || m_Wrapper.m_MenuActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_MenuActionsCallbackInterfaces.Add(instance);
+            @Select.started += instance.OnSelect;
+            @Select.performed += instance.OnSelect;
+            @Select.canceled += instance.OnSelect;
+            @MenuExit.started += instance.OnMenuExit;
+            @MenuExit.performed += instance.OnMenuExit;
+            @MenuExit.canceled += instance.OnMenuExit;
+        }
+
+        private void UnregisterCallbacks(IMenuActions instance)
+        {
+            @Select.started -= instance.OnSelect;
+            @Select.performed -= instance.OnSelect;
+            @Select.canceled -= instance.OnSelect;
+            @MenuExit.started -= instance.OnMenuExit;
+            @MenuExit.performed -= instance.OnMenuExit;
+            @MenuExit.canceled -= instance.OnMenuExit;
+        }
+
+        public void RemoveCallbacks(IMenuActions instance)
+        {
+            if (m_Wrapper.m_MenuActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IMenuActions instance)
+        {
+            foreach (var item in m_Wrapper.m_MenuActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_MenuActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public MenuActions @Menu => new MenuActions(this);
+    public interface IGameplayActions
     {
         void OnMovement(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
@@ -447,5 +768,18 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnComboDown(InputAction.CallbackContext context);
         void OnComboAttack(InputAction.CallbackContext context);
         void OnComboDefend(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
+        void OnSpellBook(InputAction.CallbackContext context);
+    }
+    public interface IDialogueActions
+    {
+        void OnAdvance(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
+        void OnSpellBook(InputAction.CallbackContext context);
+    }
+    public interface IMenuActions
+    {
+        void OnSelect(InputAction.CallbackContext context);
+        void OnMenuExit(InputAction.CallbackContext context);
     }
 }
