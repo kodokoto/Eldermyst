@@ -4,28 +4,33 @@ using UnityEngine.InputSystem;
 
 
 [CreateAssetMenu(fileName = "InputManager", menuName = "Managers/InputManager")]
-public class InputManager : ScriptableObject, PlayerInput.IGameplayActions, PlayerInput.IDialogueActions, PlayerInput.IMenuActions
+public class InputManager : ScriptableObject, 
+                            PlayerInput.IGameplayActions, 
+                            PlayerInput.IDialogueActions, 
+                            PlayerInput.IPauseMenuActions
 {
     public PlayerInput playerInput;
-    public event UnityAction PauseEvent = delegate { };
-    public event UnityAction PauseExitEvent;
-    public event UnityAction OpenSpellBookEvent;
-    public event UnityAction CloseSpellBookExitEvent;
+    public event UnityAction MenuSelectEvent;
 
     // Ingame events
+    public event UnityAction PauseEvent = delegate { };
     public event UnityAction<float> MoveEvent;
     public event UnityAction JumpStartedEvent;
     public event UnityAction JumpHeldEvent;
     public event UnityAction JumpCancelEvent;
     public event UnityAction DashEvent;
     public event UnityAction<SpellKey> SpellEvent = delegate { };
+    public event UnityAction OpenSpellBookEvent;
+    public event UnityAction CloseSpellBookExitEvent;
 
     // Dialogue events
     public event UnityAction AdvanceEvent;
 
-    // Menu events
-    public event UnityAction MenuExitEvent;
-    public event UnityAction MenuSelectEvent;
+    // Pause Menu event
+    public event UnityAction UnpauseEvent;
+
+    // Spell Book event
+
 
     public void OnEnable()
     {
@@ -34,7 +39,7 @@ public class InputManager : ScriptableObject, PlayerInput.IGameplayActions, Play
             playerInput = new PlayerInput();
             playerInput.Gameplay.SetCallbacks(this);
             playerInput.Dialogue.SetCallbacks(this);
-            playerInput.Menu.SetCallbacks(this);
+            playerInput.PauseMenu.SetCallbacks(this);
         }
 
         EnableGameplayInput();
@@ -45,33 +50,7 @@ public class InputManager : ScriptableObject, PlayerInput.IGameplayActions, Play
         DisableAllInput();
     }
 
-    public void EnableGameplayInput()
-    {
-        playerInput.Gameplay.Enable();
-        playerInput.Dialogue.Disable();
-        playerInput.Menu.Disable();
-    }
-
-    public void EnableDialogueInput()
-    {
-        playerInput.Gameplay.Disable();
-        playerInput.Dialogue.Enable();
-        playerInput.Menu.Disable();
-    }
-
-    public void EnableMenuInput()
-    {
-        playerInput.Gameplay.Disable();
-        playerInput.Dialogue.Disable();
-        playerInput.Menu.Enable();
-    }
-
-    public void DisableAllInput()
-    {
-        playerInput.Gameplay.Disable();
-        playerInput.Dialogue.Disable();
-        playerInput.Menu.Disable();
-    }
+    // Gameplay Actions
 
     public void OnMovement(InputAction.CallbackContext context)
     {
@@ -134,11 +113,11 @@ public class InputManager : ScriptableObject, PlayerInput.IGameplayActions, Play
     {
         if (PauseEvent != null && context.started) {
             PauseEvent.Invoke();
-            EnableMenuInput();
+            EnablePauseMenuInput();
         }
     }
 
-    public void OnSpellBook(InputAction.CallbackContext context)
+    public void OnOpenSpellBook(InputAction.CallbackContext context)
     {
         if (OpenSpellBookEvent != null && context.started)
             OpenSpellBookEvent.Invoke();
@@ -146,11 +125,25 @@ public class InputManager : ScriptableObject, PlayerInput.IGameplayActions, Play
             CloseSpellBookExitEvent.Invoke();
     }
 
+    // Pause Menu Actions
+
+    public void OnPauseExit(InputAction.CallbackContext context)
+    {
+        if (UnpauseEvent != null && context.started) {
+            UnpauseEvent.Invoke();
+            EnableGameplayInput();
+        }
+    }
+
+    // Dialogue Actions
+
     public void OnAdvance(InputAction.CallbackContext context)
     {
         if (AdvanceEvent != null && context.started)
             AdvanceEvent.Invoke();
     }
+
+    // Global Actions
 
     public void OnSelect(InputAction.CallbackContext context)
     {
@@ -158,9 +151,38 @@ public class InputManager : ScriptableObject, PlayerInput.IGameplayActions, Play
             MenuSelectEvent.Invoke();
     }
 
-    public void OnMenuExit(InputAction.CallbackContext context)
+    public void EnableGameplayInput()
     {
-        if (MenuExitEvent != null && context.started)
-            MenuExitEvent.Invoke();
+        playerInput.Gameplay.Enable();
+        playerInput.Dialogue.Disable();
+        playerInput.PauseMenu.Disable();
+    }
+
+    public void EnableDialogueInput()
+    {
+        playerInput.Gameplay.Disable();
+        playerInput.Dialogue.Enable();
+        playerInput.PauseMenu.Disable();
+    }
+
+    public void EnablePauseMenuInput()
+    {
+        playerInput.Gameplay.Disable();
+        playerInput.Dialogue.Disable();
+        playerInput.PauseMenu.Enable();
+    }
+
+    public void EnableSpellBookInput()
+    {
+        playerInput.Gameplay.Disable();
+        playerInput.Dialogue.Disable();
+        playerInput.PauseMenu.Disable();
+    }
+
+    public void DisableAllInput()
+    {
+        playerInput.Gameplay.Disable();
+        playerInput.Dialogue.Disable();
+        playerInput.PauseMenu.Disable();
     }
 }

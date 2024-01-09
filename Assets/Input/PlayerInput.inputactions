@@ -96,7 +96,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "SpellBook",
+                    "name": "OpenSpellBook",
                     "type": "Button",
                     "id": "f5764d05-d8b4-4b7e-875f-4dda866d5dba",
                     "expectedControlType": "Button",
@@ -267,7 +267,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "SpellBook",
+                    "action": "OpenSpellBook",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -281,24 +281,6 @@
                     "name": "Advance",
                     "type": "Button",
                     "id": "3757ac56-8db2-4a25-9daa-f5bf05d9a530",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Pause",
-                    "type": "Button",
-                    "id": "fb170fab-ff3b-4273-b380-c0f979d8458b",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "SpellBook",
-                    "type": "Button",
-                    "id": "9b86076b-ecbd-4c0d-b3f8-9811e4047ed6",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -338,33 +320,11 @@
                     "action": "Advance",
                     "isComposite": false,
                     "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "5566a32c-3b79-4b08-b7ed-c39d96088b29",
-                    "path": "<Keyboard>/escape",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Pause",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "c6aac6bf-7c74-4d82-a99d-015732ecd2e4",
-                    "path": "<Keyboard>/tab",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "SpellBook",
-                    "isComposite": false,
-                    "isPartOfComposite": false
                 }
             ]
         },
         {
-            "name": "Menu",
+            "name": "PauseMenu",
             "id": "00658d4b-38ee-4115-886d-51f30fb8f232",
             "actions": [
                 {
@@ -377,7 +337,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "MenuExit",
+                    "name": "PauseExit",
                     "type": "Button",
                     "id": "a848c041-ccf1-4d70-8cce-d9aa9a3419fb",
                     "expectedControlType": "Button",
@@ -405,7 +365,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MenuExit",
+                    "action": "PauseExit",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

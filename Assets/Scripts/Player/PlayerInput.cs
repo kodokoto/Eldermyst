@@ -118,7 +118,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""SpellBook"",
+                    ""name"": ""OpenSpellBook"",
                     ""type"": ""Button"",
                     ""id"": ""f5764d05-d8b4-4b7e-875f-4dda866d5dba"",
                     ""expectedControlType"": ""Button"",
@@ -289,7 +289,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""SpellBook"",
+                    ""action"": ""OpenSpellBook"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -303,24 +303,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""name"": ""Advance"",
                     ""type"": ""Button"",
                     ""id"": ""3757ac56-8db2-4a25-9daa-f5bf05d9a530"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Pause"",
-                    ""type"": ""Button"",
-                    ""id"": ""fb170fab-ff3b-4273-b380-c0f979d8458b"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""SpellBook"",
-                    ""type"": ""Button"",
-                    ""id"": ""9b86076b-ecbd-4c0d-b3f8-9811e4047ed6"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -360,33 +342,11 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""Advance"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""5566a32c-3b79-4b08-b7ed-c39d96088b29"",
-                    ""path"": ""<Keyboard>/escape"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Pause"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""c6aac6bf-7c74-4d82-a99d-015732ecd2e4"",
-                    ""path"": ""<Keyboard>/tab"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""SpellBook"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 }
             ]
         },
         {
-            ""name"": ""Menu"",
+            ""name"": ""PauseMenu"",
             ""id"": ""00658d4b-38ee-4115-886d-51f30fb8f232"",
             ""actions"": [
                 {
@@ -399,7 +359,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""MenuExit"",
+                    ""name"": ""PauseExit"",
                     ""type"": ""Button"",
                     ""id"": ""a848c041-ccf1-4d70-8cce-d9aa9a3419fb"",
                     ""expectedControlType"": ""Button"",
@@ -427,7 +387,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""MenuExit"",
+                    ""action"": ""PauseExit"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -448,16 +408,14 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_Gameplay_ComboAttack = m_Gameplay.FindAction("ComboAttack", throwIfNotFound: true);
         m_Gameplay_ComboDefend = m_Gameplay.FindAction("ComboDefend", throwIfNotFound: true);
         m_Gameplay_Pause = m_Gameplay.FindAction("Pause", throwIfNotFound: true);
-        m_Gameplay_SpellBook = m_Gameplay.FindAction("SpellBook", throwIfNotFound: true);
+        m_Gameplay_OpenSpellBook = m_Gameplay.FindAction("OpenSpellBook", throwIfNotFound: true);
         // Dialogue
         m_Dialogue = asset.FindActionMap("Dialogue", throwIfNotFound: true);
         m_Dialogue_Advance = m_Dialogue.FindAction("Advance", throwIfNotFound: true);
-        m_Dialogue_Pause = m_Dialogue.FindAction("Pause", throwIfNotFound: true);
-        m_Dialogue_SpellBook = m_Dialogue.FindAction("SpellBook", throwIfNotFound: true);
-        // Menu
-        m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
-        m_Menu_Select = m_Menu.FindAction("Select", throwIfNotFound: true);
-        m_Menu_MenuExit = m_Menu.FindAction("MenuExit", throwIfNotFound: true);
+        // PauseMenu
+        m_PauseMenu = asset.FindActionMap("PauseMenu", throwIfNotFound: true);
+        m_PauseMenu_Select = m_PauseMenu.FindAction("Select", throwIfNotFound: true);
+        m_PauseMenu_PauseExit = m_PauseMenu.FindAction("PauseExit", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -529,7 +487,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_ComboAttack;
     private readonly InputAction m_Gameplay_ComboDefend;
     private readonly InputAction m_Gameplay_Pause;
-    private readonly InputAction m_Gameplay_SpellBook;
+    private readonly InputAction m_Gameplay_OpenSpellBook;
     public struct GameplayActions
     {
         private @PlayerInput m_Wrapper;
@@ -544,7 +502,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @ComboAttack => m_Wrapper.m_Gameplay_ComboAttack;
         public InputAction @ComboDefend => m_Wrapper.m_Gameplay_ComboDefend;
         public InputAction @Pause => m_Wrapper.m_Gameplay_Pause;
-        public InputAction @SpellBook => m_Wrapper.m_Gameplay_SpellBook;
+        public InputAction @OpenSpellBook => m_Wrapper.m_Gameplay_OpenSpellBook;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -584,9 +542,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Pause.started += instance.OnPause;
             @Pause.performed += instance.OnPause;
             @Pause.canceled += instance.OnPause;
-            @SpellBook.started += instance.OnSpellBook;
-            @SpellBook.performed += instance.OnSpellBook;
-            @SpellBook.canceled += instance.OnSpellBook;
+            @OpenSpellBook.started += instance.OnOpenSpellBook;
+            @OpenSpellBook.performed += instance.OnOpenSpellBook;
+            @OpenSpellBook.canceled += instance.OnOpenSpellBook;
         }
 
         private void UnregisterCallbacks(IGameplayActions instance)
@@ -621,9 +579,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Pause.started -= instance.OnPause;
             @Pause.performed -= instance.OnPause;
             @Pause.canceled -= instance.OnPause;
-            @SpellBook.started -= instance.OnSpellBook;
-            @SpellBook.performed -= instance.OnSpellBook;
-            @SpellBook.canceled -= instance.OnSpellBook;
+            @OpenSpellBook.started -= instance.OnOpenSpellBook;
+            @OpenSpellBook.performed -= instance.OnOpenSpellBook;
+            @OpenSpellBook.canceled -= instance.OnOpenSpellBook;
         }
 
         public void RemoveCallbacks(IGameplayActions instance)
@@ -646,15 +604,11 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Dialogue;
     private List<IDialogueActions> m_DialogueActionsCallbackInterfaces = new List<IDialogueActions>();
     private readonly InputAction m_Dialogue_Advance;
-    private readonly InputAction m_Dialogue_Pause;
-    private readonly InputAction m_Dialogue_SpellBook;
     public struct DialogueActions
     {
         private @PlayerInput m_Wrapper;
         public DialogueActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @Advance => m_Wrapper.m_Dialogue_Advance;
-        public InputAction @Pause => m_Wrapper.m_Dialogue_Pause;
-        public InputAction @SpellBook => m_Wrapper.m_Dialogue_SpellBook;
         public InputActionMap Get() { return m_Wrapper.m_Dialogue; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -667,12 +621,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Advance.started += instance.OnAdvance;
             @Advance.performed += instance.OnAdvance;
             @Advance.canceled += instance.OnAdvance;
-            @Pause.started += instance.OnPause;
-            @Pause.performed += instance.OnPause;
-            @Pause.canceled += instance.OnPause;
-            @SpellBook.started += instance.OnSpellBook;
-            @SpellBook.performed += instance.OnSpellBook;
-            @SpellBook.canceled += instance.OnSpellBook;
         }
 
         private void UnregisterCallbacks(IDialogueActions instance)
@@ -680,12 +628,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Advance.started -= instance.OnAdvance;
             @Advance.performed -= instance.OnAdvance;
             @Advance.canceled -= instance.OnAdvance;
-            @Pause.started -= instance.OnPause;
-            @Pause.performed -= instance.OnPause;
-            @Pause.canceled -= instance.OnPause;
-            @SpellBook.started -= instance.OnSpellBook;
-            @SpellBook.performed -= instance.OnSpellBook;
-            @SpellBook.canceled -= instance.OnSpellBook;
         }
 
         public void RemoveCallbacks(IDialogueActions instance)
@@ -704,59 +646,59 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     }
     public DialogueActions @Dialogue => new DialogueActions(this);
 
-    // Menu
-    private readonly InputActionMap m_Menu;
-    private List<IMenuActions> m_MenuActionsCallbackInterfaces = new List<IMenuActions>();
-    private readonly InputAction m_Menu_Select;
-    private readonly InputAction m_Menu_MenuExit;
-    public struct MenuActions
+    // PauseMenu
+    private readonly InputActionMap m_PauseMenu;
+    private List<IPauseMenuActions> m_PauseMenuActionsCallbackInterfaces = new List<IPauseMenuActions>();
+    private readonly InputAction m_PauseMenu_Select;
+    private readonly InputAction m_PauseMenu_PauseExit;
+    public struct PauseMenuActions
     {
         private @PlayerInput m_Wrapper;
-        public MenuActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Select => m_Wrapper.m_Menu_Select;
-        public InputAction @MenuExit => m_Wrapper.m_Menu_MenuExit;
-        public InputActionMap Get() { return m_Wrapper.m_Menu; }
+        public PauseMenuActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Select => m_Wrapper.m_PauseMenu_Select;
+        public InputAction @PauseExit => m_Wrapper.m_PauseMenu_PauseExit;
+        public InputActionMap Get() { return m_Wrapper.m_PauseMenu; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(MenuActions set) { return set.Get(); }
-        public void AddCallbacks(IMenuActions instance)
+        public static implicit operator InputActionMap(PauseMenuActions set) { return set.Get(); }
+        public void AddCallbacks(IPauseMenuActions instance)
         {
-            if (instance == null || m_Wrapper.m_MenuActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_MenuActionsCallbackInterfaces.Add(instance);
+            if (instance == null || m_Wrapper.m_PauseMenuActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_PauseMenuActionsCallbackInterfaces.Add(instance);
             @Select.started += instance.OnSelect;
             @Select.performed += instance.OnSelect;
             @Select.canceled += instance.OnSelect;
-            @MenuExit.started += instance.OnMenuExit;
-            @MenuExit.performed += instance.OnMenuExit;
-            @MenuExit.canceled += instance.OnMenuExit;
+            @PauseExit.started += instance.OnPauseExit;
+            @PauseExit.performed += instance.OnPauseExit;
+            @PauseExit.canceled += instance.OnPauseExit;
         }
 
-        private void UnregisterCallbacks(IMenuActions instance)
+        private void UnregisterCallbacks(IPauseMenuActions instance)
         {
             @Select.started -= instance.OnSelect;
             @Select.performed -= instance.OnSelect;
             @Select.canceled -= instance.OnSelect;
-            @MenuExit.started -= instance.OnMenuExit;
-            @MenuExit.performed -= instance.OnMenuExit;
-            @MenuExit.canceled -= instance.OnMenuExit;
+            @PauseExit.started -= instance.OnPauseExit;
+            @PauseExit.performed -= instance.OnPauseExit;
+            @PauseExit.canceled -= instance.OnPauseExit;
         }
 
-        public void RemoveCallbacks(IMenuActions instance)
+        public void RemoveCallbacks(IPauseMenuActions instance)
         {
-            if (m_Wrapper.m_MenuActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_PauseMenuActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(IMenuActions instance)
+        public void SetCallbacks(IPauseMenuActions instance)
         {
-            foreach (var item in m_Wrapper.m_MenuActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_PauseMenuActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_MenuActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_PauseMenuActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
-    public MenuActions @Menu => new MenuActions(this);
+    public PauseMenuActions @PauseMenu => new PauseMenuActions(this);
     public interface IGameplayActions
     {
         void OnMovement(InputAction.CallbackContext context);
@@ -769,17 +711,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnComboAttack(InputAction.CallbackContext context);
         void OnComboDefend(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
-        void OnSpellBook(InputAction.CallbackContext context);
+        void OnOpenSpellBook(InputAction.CallbackContext context);
     }
     public interface IDialogueActions
     {
         void OnAdvance(InputAction.CallbackContext context);
-        void OnPause(InputAction.CallbackContext context);
-        void OnSpellBook(InputAction.CallbackContext context);
     }
-    public interface IMenuActions
+    public interface IPauseMenuActions
     {
         void OnSelect(InputAction.CallbackContext context);
-        void OnMenuExit(InputAction.CallbackContext context);
+        void OnPauseExit(InputAction.CallbackContext context);
     }
 }

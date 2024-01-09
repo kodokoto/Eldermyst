@@ -70,48 +70,48 @@ public class GameManager : MonoBehaviour
 
     private void HandleGameLost()
     {
-        Debug.Log("Game lost");
-        if (gameState == GameState.Playing)
-        {
-            Debug.Log("Game lost for real");
-            gameState = GameState.Lost;
-            UIManager.instance.ShowGameOverScreen();
-        }
-        else
-        {
-            Debug.LogWarning("Tried to set game state to lost when it is not playing");
-        }
+        // Debug.Log("Game lost");
+        // if (gameState == GameState.Playing)
+        // {
+        //     Debug.Log("Game lost for real");
+        //     gameState = GameState.Lost;
+        //     UIManager.instance.ShowGameOverScreen();
+        // }
+        // else
+        // {
+        //     Debug.LogWarning("Tried to set game state to lost when it is not playing");
+        // }
     }
 
     private void HandleGameWon()
     {
-        if (gameState == GameState.Playing)
-        {
-            gameState = GameState.Won;
-            UIManager.instance.ShowWinScreen();
-        }
-        else
-        {
-            Debug.LogWarning("Tried to set game state to won when it is not playing");
-        }
+        // if (gameState == GameState.Playing)
+        // {
+        //     gameState = GameState.Won;
+        //     UIManager.instance.ShowWinScreen();
+        // }
+        // else
+        // {
+        //     Debug.LogWarning("Tried to set game state to won when it is not playing");
+        // }
     }
 
     private void HandleGamePlaying()
     {
-        if (gameState == GameState.Won)
-        {
-            gameState = GameState.Playing;
-            UIManager.instance.HideWinScreen();
-        }
-        else if (gameState == GameState.Lost)
-        {
-            gameState = GameState.Playing;
-            UIManager.instance.HideGameOverScreen();
-        }
-        else
-        {
-            Debug.LogWarning("Tried to set game state to playing when it is already playing");
-        }
+        // if (gameState == GameState.Won)
+        // {
+        //     gameState = GameState.Playing;
+        //     UIManager.instance.HideWinScreen();
+        // }
+        // else if (gameState == GameState.Lost)
+        // {
+        //     gameState = GameState.Playing;
+        //     UIManager.instance.HideGameOverScreen();
+        // }
+        // else
+        // {
+        //     Debug.LogWarning("Tried to set game state to playing when it is already playing");
+        // }
     }
 
 }
