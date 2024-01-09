@@ -2,16 +2,8 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
-public enum SpellKey
-{
-    Left,
-    Right,
-    Up,
-    Down,
-    Attack,
-    Defend
-}
 
+[CreateAssetMenu(fileName = "InputManager", menuName = "Managers/InputManager")]
 public class InputManager : ScriptableObject, PlayerInput.IGameplayActions, PlayerInput.IDialogueActions, PlayerInput.IMenuActions
 {
     public PlayerInput playerInput;
@@ -26,7 +18,7 @@ public class InputManager : ScriptableObject, PlayerInput.IGameplayActions, Play
     public event UnityAction JumpHeldEvent;
     public event UnityAction JumpCancelEvent;
     public event UnityAction DashEvent;
-    public event UnityAction<SpellKey> SpellEvent;
+    public event UnityAction<SpellKey> SpellEvent = delegate { };
 
     // Dialogue events
     public event UnityAction AdvanceEvent;

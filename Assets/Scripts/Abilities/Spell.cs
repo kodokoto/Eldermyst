@@ -2,6 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum SpellKey
+{
+    Left,
+    Right,
+    Up,
+    Down,
+    Attack,
+    Defend
+}
+
+[System.Serializable]
+public struct SpellCombo
+{
+    public List<SpellKey> keys;
+}
+
+
 public class Spell : ScriptableObject
 {
     public string spellName;
@@ -10,7 +27,7 @@ public class Spell : ScriptableObject
     public float activeTime;
     public int manaCost;
     public int levelRequired;
-    public List<KeyCode> combo;
+    public List<SpellCombo> combos;
     public virtual void Activate(GameObject parent){}
     public virtual void Deactivate(GameObject parent){}
 

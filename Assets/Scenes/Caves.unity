@@ -231,11 +231,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 451775161483058476, guid: 4c3418275307541d999da958603922f0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 142.97781
+      value: -1.0421795
       objectReference: {fileID: 0}
     - target: {fileID: 451775161483058476, guid: 4c3418275307541d999da958603922f0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -24.181812
+      value: -1.01181
       objectReference: {fileID: 0}
     - target: {fileID: 451775161483058476, guid: 4c3418275307541d999da958603922f0, type: 3}
       propertyPath: m_LocalPosition.z
@@ -299,11 +299,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6363228650213023043, guid: 4c3418275307541d999da958603922f0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 142.97781
+      value: -1.0421795
       objectReference: {fileID: 0}
     - target: {fileID: 6363228650213023043, guid: 4c3418275307541d999da958603922f0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -24.181812
+      value: -1.01181
       objectReference: {fileID: 0}
     - target: {fileID: 6363228650213023043, guid: 4c3418275307541d999da958603922f0, type: 3}
       propertyPath: m_LocalPosition.z
@@ -992,15 +992,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 328253547644519594, guid: f93fe2533336848f1beb77e895e9b908, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 147.06
+      value: 3.04
       objectReference: {fileID: 0}
     - target: {fileID: 328253547644519594, guid: f93fe2533336848f1beb77e895e9b908, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -23.77
+      value: -0.6
       objectReference: {fileID: 0}
     - target: {fileID: 328253547644519594, guid: f93fe2533336848f1beb77e895e9b908, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 328253547644519594, guid: f93fe2533336848f1beb77e895e9b908, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1042,6 +1042,10 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3375673259835774554, guid: f93fe2533336848f1beb77e895e9b908, type: 3}
+      propertyPath: inputManager
+      value: 
+      objectReference: {fileID: 11400000, guid: fe9aa25dba7844e1f8272d492fdc1f00, type: 2}
     - target: {fileID: 5809156591853880789, guid: f93fe2533336848f1beb77e895e9b908, type: 3}
       propertyPath: xpBar
       value: 
@@ -1386,6 +1390,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8266a3a27551d4c7fb798bdbd8b8e16b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputManager: {fileID: 11400000, guid: fe9aa25dba7844e1f8272d492fdc1f00, type: 2}
 --- !u!1001 &1967384613153380604
 PrefabInstance:
   m_ObjectHideFlags: 0

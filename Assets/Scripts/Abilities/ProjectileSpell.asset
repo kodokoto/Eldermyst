@@ -18,5 +18,7 @@ MonoBehaviour:
   activeTime: 0
   manaCost: 10
   levelRequired: 0
-  combo: 130100001301000013010000
+  combos:
+  - keys: 000000000000000000000000
+  - keys: 010000000100000001000000
   projectilePrefab: {fileID: 6539326632289364038, guid: 4063f456b3a8441f18b268b410dac2c6, type: 3}
