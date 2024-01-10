@@ -9,7 +9,7 @@ public class EndPoint : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            GameManager.instance.SetGameState(GameState.Won);
+            // GameManager.instance.SetGameState(GameState.Won);
         }
     }
 }

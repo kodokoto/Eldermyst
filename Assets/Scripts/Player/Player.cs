@@ -47,22 +47,6 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost
 
         // WARNING: ANYTHING BELOW THIS IF STATEMENT WILL NOT RUN IF THE PLAYER SPAWN POINT IS NOT SET
         // TODO: FIX THIS
-
-        if (PlayerSpawnPoint.instance == null)
-        {
-            Debug.LogError("Player spawn point is null, please add one to the scene");
-        }
-        //SetUpSpells();
-        // if spawn point is not the default value, set player position to spawn point
-        if (PlayerSpawnPoint.instance.GetSpawnPoint() != Vector3.zero)
-        {
-            transform.position = PlayerSpawnPoint.instance.GetSpawnPoint();
-        }
-        else
-        {
-            PlayerSpawnPoint.instance.SetSpawnPoint(transform.position);
-        }
-
     }
    
     void Update()

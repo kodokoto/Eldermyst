@@ -35,12 +35,14 @@ public class UIManager : MonoBehaviour
     {
         Time.timeScale = 0;
         deathScreen.SetActive(true);
+        Debug.Log("Player died");
     }
 
     public void OnRetry()
     {
+        Debug.Log("Retry");
         Time.timeScale = 1;
-        deathScreen.SetActive(false);
+        _inputManager.EnableGameplayInput();
         _onRetry.RaiseEvent();
     }
 

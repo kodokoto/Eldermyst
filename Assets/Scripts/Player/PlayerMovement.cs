@@ -192,6 +192,7 @@ public class PlayerMovement : MonoBehaviour
 		{
 			HandleWallSliding();
 		}
+		Debug.Log("input enabled: " + inputManager.playerInput.Gameplay.enabled);
 	}
 
 	private void FixedUpdate()

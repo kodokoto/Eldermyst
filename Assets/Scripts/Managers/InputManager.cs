@@ -41,7 +41,7 @@ public class InputManager : ScriptableObject,
             playerInput.Dialogue.SetCallbacks(this);
             playerInput.PauseMenu.SetCallbacks(this);
         }
-
+        
         EnableGameplayInput();
     }
 
@@ -54,6 +54,7 @@ public class InputManager : ScriptableObject,
 
     public void OnMovement(InputAction.CallbackContext context)
     {
+        Debug.Log("Move");
         MoveEvent?.Invoke(context.ReadValue<Vector2>().x);
     }
 
