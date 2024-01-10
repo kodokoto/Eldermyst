@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "GameData/PlayerSpawnPoint")]
-public class PlayerSpawnPoint : ScriptableObject
+public class PlayerSpawnPoint : SerializableScriptableObject
 {
     [SerializeField] private Vector3 spawnPoint;
     private Vector3 currentSpawnPoint;

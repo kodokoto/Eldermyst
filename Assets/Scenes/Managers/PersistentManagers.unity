@@ -164,9 +164,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64f20c03bfe734cd8b4bd33648f529e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameplayScene: {fileID: 11400000, guid: 0484e016b9d724eb7aa6d6c63ca608f3, type: 2}
   _loadMenuChannel: {fileID: 11400000, guid: dc26650b8d1ad4d71bc19a9938a7d9bd, type: 2}
   _loadLevelChannel: {fileID: 11400000, guid: 944e977de67a24fef8c7903be0bc1786, type: 2}
+  _onSceneReload: {fileID: 11400000, guid: 1ee1321aa69ee4316a0124c81fe6a0cd, type: 2}
   _onSceneReady: {fileID: 11400000, guid: 3f7f106b6691649b8b09c3d9f40f8aba, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

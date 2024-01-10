@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum PlayerState
 {
@@ -14,9 +16,11 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost
 {
 
     [Header("Data")]
-    [SerializeField] private PlayerSpawnPoint currentSpawnPoint;
-    [SerializeField] private PlayerData data;
-    
+    [SerializeField] public PlayerSpawnPoint currentSpawnPoint;
+    [SerializeField] public PlayerData data;
+    [SerializeField] public PlayerInventory PlayerInventory;
+
+
     // public PlayerState state;
     [SerializeField] private Transform projectileSpawnPoint;
     private float healthRegenTimer;
@@ -31,7 +35,6 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost
 
     public Dialogue levelUpUI;
 
-    [SerializeField] public Loadout loadout;
 
     public List<SpellHandler> SpellHandlers;
 
@@ -55,22 +58,19 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost
     {
         HealthRegen();
         ManaRegen();
-        // Debug.Log("Current level " + data.currentXpLevel);
     }
 
     private void SetUpSpells()
     {
         Debug.Log("Setting up spells");
-        loadout.Reset();
+        PlayerInventory.Reset();
         SpellHandlers = new List<SpellHandler>();
-        foreach (Spell spell in loadout.Spells)
+        foreach (Spell spell in PlayerInventory.Spells)
         {
             SpellHandler spellHandler = gameObject.AddComponent<SpellHandler>();
             spellHandler.Spell = spell;
             SpellHandlers.Add(spellHandler);
         }
-        loadout.SetSpellSlot1(SpellHandlers[0]);
-        loadout.SetSpellSlot2(null);
     }
 
     private void HealthRegen()
@@ -286,7 +286,7 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost
 
     internal void AddSpell(Spell spell)
     {
-        loadout.AddSpell(spell);
+        PlayerInventory.AddSpell(spell);
         SpellHandler spellHandler = gameObject.AddComponent<SpellHandler>();
         spellHandler.Spell = spell;
         SpellHandlers.Add(spellHandler);

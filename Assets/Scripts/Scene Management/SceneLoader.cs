@@ -1,5 +1,7 @@
 using System;
+using Unity.Collections;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
@@ -8,9 +10,15 @@ public class SceneLoader : MonoBehaviour
 {
     // [SerializeField] private SceneSO _gameplayScene;
 
+    [Header("Listeners")]
     [SerializeField] private LoadSceneChannelSO _loadMenuChannel;
     [SerializeField] private LoadSceneChannelSO _loadLevelChannel;
+    [SerializeField] private SimpleEventChannelSO _onSceneReload;
+
+
+    [Header("Broadcasts")]
     [SerializeField] private SimpleEventChannelSO _onSceneReady;
+
     // private SceneSO _gameplaySceneInstance;
     private SceneSO _currentScene;
     private SceneSO _sceneToLoad;
@@ -19,12 +27,21 @@ public class SceneLoader : MonoBehaviour
     {
         _loadMenuChannel.OnLoadingRequested += LoadMenu;
         _loadLevelChannel.OnLoadingRequested += LoadLevel;
+        _onSceneReload.OnTrigger += ReloadScene;
     }
 
     public void OnDisable()
     {
         _loadMenuChannel.OnLoadingRequested -= LoadMenu;
         _loadLevelChannel.OnLoadingRequested -= LoadLevel;
+        _onSceneReload.OnTrigger -= ReloadScene;
+    }
+
+    private void ReloadScene()
+    {
+        _sceneToLoad = _currentScene;
+        UnloadScene();
+        // 
     }
 
     private void LoadMenu(SceneSO menu)
@@ -44,14 +61,27 @@ public class SceneLoader : MonoBehaviour
         // if its null, we're coming from initialization, so we don't need to unload anything
         if (_currentScene != null)
         {
-            _currentScene.sceneReference.UnLoadScene();
+			if (_currentScene.sceneReference.OperationHandle.IsValid())
+			{
+				//Unload the scene through its AssetReference, i.e. through the Addressable system
+				_currentScene.sceneReference.UnLoadScene();
+			}
+        #if UNITY_EDITOR
+			else
+			{
+				//Only used when, after a "cold start", the player moves to a new scene
+				//Since the AsyncOperationHandle has not been used (the scene was already open in the editor),
+				//the scene needs to be unloaded using regular SceneManager instead of as an Addressable
+				SceneManager.UnloadSceneAsync(_currentScene.sceneReference.editorAsset.name);
+			}
+        #endif        
         }
         LoadNewScene();
     }
 
     private void LoadNewScene()
     {
-        _sceneToLoad.sceneReference.LoadSceneAsync(LoadSceneMode.Additive, true, 0).Completed += OnNewSceneLoaded;
+        Addressables.LoadSceneAsync(_sceneToLoad.sceneReference, LoadSceneMode.Additive, true, 0).Completed += OnNewSceneLoaded;
     }
 
     private void OnNewSceneLoaded(AsyncOperationHandle<SceneInstance> handle)

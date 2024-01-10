@@ -19,7 +19,7 @@ public struct SpellCombo
 }
 
 
-public class Spell : ScriptableObject
+public class Spell : SerializableScriptableObject
 {
     public string spellName;
     public Sprite icon;

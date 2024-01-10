@@ -381,7 +381,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce1a41f5559d54df18a80f64ef9ba070, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnPointChannel: {fileID: 11400000, guid: 9efae7490bce24594913c5ee260b91ad, type: 2}
+  spawnPointChangedSignal: {fileID: 11400000, guid: 5cc5333c18a8946398a839673e1112fe, type: 2}
 --- !u!1 &630575981
 GameObject:
   m_ObjectHideFlags: 0
@@ -979,6 +979,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1302000842}
     - target: {fileID: 5809156591853880789, guid: f93fe2533336848f1beb77e895e9b908, type: 3}
+      propertyPath: isRightEnabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5809156591853880789, guid: f93fe2533336848f1beb77e895e9b908, type: 3}
+      propertyPath: PlayerInventory
+      value: 
+      objectReference: {fileID: 11400000, guid: 3705d0a23c751413c9706dd0ec7d0070, type: 2}
+    - target: {fileID: 5809156591853880789, guid: f93fe2533336848f1beb77e895e9b908, type: 3}
       propertyPath: currentSpawnPoint
       value: 
       objectReference: {fileID: 11400000, guid: 488ab6c37fa3249739bb16c575e21166, type: 2}
@@ -1185,8 +1193,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentSpawnPoint: {fileID: 11400000, guid: 488ab6c37fa3249739bb16c575e21166, type: 2}
   playerData: {fileID: 11400000, guid: 18715116c749f48f68ea9ae1ab0843ad, type: 2}
+  _menuToLoad: {fileID: 11400000, guid: 315d012550d1b4aba93e97db42776511, type: 2}
+  _inputManager: {fileID: 11400000, guid: fe9aa25dba7844e1f8272d492fdc1f00, type: 2}
   _onRetry: {fileID: 11400000, guid: e0030fde79b6b43568a4d194f87057ce, type: 2}
-  spawnPointChannel: {fileID: 11400000, guid: 9efae7490bce24594913c5ee260b91ad, type: 2}
+  _onExit: {fileID: 11400000, guid: e9920e2fffeed43f098b89d75ccab2da, type: 2}
+  _onReady: {fileID: 11400000, guid: 3f7f106b6691649b8b09c3d9f40f8aba, type: 2}
+  spawnPointChangedSignal: {fileID: 11400000, guid: 5cc5333c18a8946398a839673e1112fe, type: 2}
+  _loadLevelSignal: {fileID: 11400000, guid: dc26650b8d1ad4d71bc19a9938a7d9bd, type: 2}
+  _onRestartScene: {fileID: 11400000, guid: 1ee1321aa69ee4316a0124c81fe6a0cd, type: 2}
 --- !u!114 &2093792332 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7328591678712001275, guid: 3bd6cad5feb19405b846519b5e5e4fc4, type: 3}
@@ -1226,6 +1240,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI
       objectReference: {fileID: 0}
+    - target: {fileID: 4478378413449996420, guid: 3bd6cad5feb19405b846519b5e5e4fc4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4808509230063767646, guid: 3bd6cad5feb19405b846519b5e5e4fc4, type: 3}
+      propertyPath: _onExitToMenu
+      value: 
+      objectReference: {fileID: 11400000, guid: e9920e2fffeed43f098b89d75ccab2da, type: 2}
     - target: {fileID: 6503519454521026191, guid: 3bd6cad5feb19405b846519b5e5e4fc4, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

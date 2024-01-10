@@ -19,34 +19,50 @@ public class GameManager : MonoBehaviour
     [Header("Data")]
     [SerializeField] private PlayerSpawnPoint currentSpawnPoint;
     [SerializeField] private PlayerData playerData;
+	[SerializeField] private SceneSO _menuToLoad = default;
+    [SerializeField] private InputManager _inputManager = default;
 
     [Header("Listeners")]
     [SerializeField] private SimpleEventChannelSO _onRetry;
+    [SerializeField] private SimpleEventChannelSO _onExit;
+    [SerializeField] private SimpleEventChannelSO _onReady;
 
-    [Header("Channels")]
-    [SerializeField] private SpawnPointEventChannel spawnPointChannel;
 
-    private void Awake()
-    {
-
-    }
+    [Header("Broadcasts")]
+    [SerializeField] private SpawnPointChangedSignal spawnPointChangedSignal;
+    [SerializeField] private LoadSceneChannelSO _loadLevelSignal;
+    [SerializeField] private SimpleEventChannelSO _onRestartScene;
 
     private void OnEnable()
     {
-        spawnPointChannel.OnSpawnPointChanged += SetSpawnPoint;
+        spawnPointChangedSignal.OnSpawnPointChanged += SetSpawnPoint;
         _onRetry.OnTrigger += RestartGame;
+        _onExit.OnTrigger += SaveAndQuit;
+        _onReady.OnTrigger += OnSceneReady;
+    }
+
+    private void OnSceneReady()
+    {
+        _inputManager.EnableGameplayInput();
     }
 
     private void RestartGame()
     {
         playerData.SoftReset();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        _onRestartScene.RaiseEvent();
+    }
+
+    private void OnDisable()
+    {
+        spawnPointChangedSignal.OnSpawnPointChanged -= SetSpawnPoint;
+        _onRetry.OnTrigger -= RestartGame;
+        _onExit.OnTrigger -= SaveAndQuit;
+        _onReady.OnTrigger -= OnSceneReady;
     }
 
     private void SaveAndQuit()
     {
-        // SaveSystem.SavePlayerData(playerData);
-        Application.Quit();
+        _loadLevelSignal.RaiseEvent(_menuToLoad);
     }
 
     private void OnSave()
@@ -54,10 +70,7 @@ public class GameManager : MonoBehaviour
         // SaveSystem.SavePlayerData(playerData);
     }
 
-    private void OnDisable()
-    {
-        spawnPointChannel.OnSpawnPointChanged -= SetSpawnPoint;
-    }
+
 
 
 

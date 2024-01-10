@@ -19,6 +19,7 @@ public class UIManager : MonoBehaviour
 
     [Header("Broadcasts")]
     [SerializeField] private SimpleEventChannelSO _onRetry;
+    [SerializeField] private SimpleEventChannelSO _onExitToMenu;
 
     public void OnEnable()
     {
@@ -55,6 +56,14 @@ public class UIManager : MonoBehaviour
         _inputManager.AdvanceEvent -= OnDialogueAdvanced;
         _dialogueChannel.OnDialogueTriggered -= OnDialogueEventRaised;
         _onPlayerDeath.OnTrigger -= OnPlayerDeath;
+    }
+
+    public void OnExitToMenu()
+    {
+        Debug.Log("Exit to menu");
+        Time.timeScale = 1;
+        _inputManager.EnablePauseMenuInput();
+        _onExitToMenu.RaiseEvent();
     }
 
     public void OnPause()

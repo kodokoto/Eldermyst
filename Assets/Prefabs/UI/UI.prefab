@@ -128,6 +128,7 @@ MonoBehaviour:
   _dialogueChannel: {fileID: 11400000, guid: 804f7b18096194b01997ce8366ce4628, type: 2}
   _onPlayerDeath: {fileID: 11400000, guid: 5f6568f6334dc4636823e7fe78c905f2, type: 2}
   _onRetry: {fileID: 11400000, guid: e0030fde79b6b43568a4d194f87057ce, type: 2}
+  _onExitToMenu: {fileID: 0}
 --- !u!1001 &1229642406567818744
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -593,6 +594,22 @@ PrefabInstance:
     - target: {fileID: 3186362857751769514, guid: 8492bf171099a45ea85e36d0d067ea3a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9021085077085405115, guid: 8492bf171099a45ea85e36d0d067ea3a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 4808509230063767646}
+    - target: {fileID: 9021085077085405115, guid: 8492bf171099a45ea85e36d0d067ea3a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnExitToMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 9021085077085405115, guid: 8492bf171099a45ea85e36d0d067ea3a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UIManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 9021085077085405115, guid: 8492bf171099a45ea85e36d0d067ea3a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

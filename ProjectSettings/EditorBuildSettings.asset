@@ -8,9 +8,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Init.unity
     guid: 06f3f1a89410e471bb21635d7b30ce00
-  - enabled: 0
-    path: Assets/Scenes/Levels/Caves.unity
-    guid: aafd98345476a4aeabe65163f5ab2c10
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 8ab849b9c0c754b44853069a589702d0, type: 2}
   m_UseUCBPForAssetBundles: 0

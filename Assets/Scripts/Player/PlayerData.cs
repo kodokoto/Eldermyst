@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu]
-public class PlayerData : ScriptableObject
+[CreateAssetMenu(menuName = "GameData/PlayerData")]
+
+public class PlayerData : SerializableScriptableObject
 {
     
     [Header("Stats")]
@@ -25,6 +26,26 @@ public class PlayerData : ScriptableObject
     [HideInInspector] public int currentXp;
     [HideInInspector] public int currentXpLevel;
     [HideInInspector] public int excessHealth;
+
+    public void SetPlayerData(PlayerData newData)
+    {
+        maxHealth = newData.maxHealth;
+        maxMana = newData.maxMana;
+        healthRegen = newData.healthRegen;
+        healthRegenRate = newData.healthRegenRate;
+        manaRegen = newData.manaRegen;
+        manaRegenRate = newData.manaRegenRate;
+        xpLevels = newData.xpLevels;
+        levelUpHealthRate = newData.levelUpHealthRate;
+        levelUpManaRate = newData.levelUpManaRate;
+
+        health = newData.health;
+        mana = newData.mana;
+        isShielded = newData.isShielded;
+        currentXp = newData.currentXp;
+        currentXpLevel = newData.currentXpLevel;
+        excessHealth = newData.excessHealth;
+    }
 
     void OnValidate() 
     {

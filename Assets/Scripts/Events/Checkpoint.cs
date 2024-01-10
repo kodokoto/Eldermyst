@@ -5,14 +5,14 @@ using UnityEngine;
 
 public class Checkpoint : MonoBehaviour
 {
-    [SerializeField] private SpawnPointEventChannel spawnPointChannel;
+    [SerializeField] private SpawnPointChangedSignal spawnPointChangedSignal;
 
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
             Debug.Log("Player entered checkpoint");
-            spawnPointChannel.RaiseEvent(transform.position);
+            spawnPointChangedSignal.RaiseEvent(transform.position);
             gameObject.SetActive(false);
         }
     }
