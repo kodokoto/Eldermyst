@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Chckpoint : MonoBehaviour
+public class Checkpoint : MonoBehaviour
 {
-    [SerializeField] private SpawnPointChannelSO spawnPointChannel;
+    [SerializeField] private SpawnPointEventChannel spawnPointChannel;
 
     void OnTriggerEnter(Collider other)
     {

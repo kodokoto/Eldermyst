@@ -4,30 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 
-public class SpawnPointSO : ScriptableObject
-{
-    [SerializeField] private Vector3 spawnPoint;
-    private Vector3 currentSpawnPoint;
 
-    public void Awake()
-    {
-        currentSpawnPoint = spawnPoint;
-    } 
-    public Vector3 GetSpawnPoint()
-    {
-        return currentSpawnPoint;
-    }
-
-    public void SetSpawnPoint(Vector3 newSpawnPoint)
-    {
-        currentSpawnPoint = newSpawnPoint;
-    }
-
-    public void ResetSpawnPoint()
-    {
-        currentSpawnPoint = spawnPoint;
-    }
-}
 public enum GameState {
     Playing,
     Won,
@@ -38,14 +15,16 @@ public enum GameState {
 public class GameManager : MonoBehaviour
 {
     private GameState gameState;
-    private SpawnPointSO currentSpawnPoint;
+
+    [Header("Data")]
+    [SerializeField] private PlayerSpawnPoint currentSpawnPoint;
     [SerializeField] private PlayerData playerData;
 
     [Header("Listeners")]
     [SerializeField] private SimpleEventChannelSO _onRetry;
 
     [Header("Channels")]
-    [SerializeField] private SpawnPointChannelSO spawnPointChannel;
+    [SerializeField] private SpawnPointEventChannel spawnPointChannel;
 
     private void Awake()
     {

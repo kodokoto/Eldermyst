@@ -1,32 +1,43 @@
 using UnityEngine;
 
-class PlayerSpawnPoint : MonoBehaviour
+[CreateAssetMenu(menuName = "GameData/PlayerSpawnPoint")]
+public class PlayerSpawnPoint : ScriptableObject
 {
-    [HideInInspector] public Vector3 spawnPoint;
-    public static PlayerSpawnPoint instance;
-    private void Awake()
-    {
-        Debug.Log("PlayerSpawnPoint Awake");
-        if (instance == null)
-        {
-            Debug.Log("PlayerSpawnPoint instance is null");
-            instance = this;
-        }
-        else
-        {
-            Debug.Log("PlayerSpawnPoint instance is not null");
-            Destroy(gameObject); // destroy the new one
-        }
-        DontDestroyOnLoad(gameObject);
-    }
+    [SerializeField] private Vector3 spawnPoint;
+    private Vector3 currentSpawnPoint;
 
-    public void SetSpawnPoint(Vector3 point)
+    public void Awake()
     {
-        spawnPoint = point;
-    }
-
+        Debug.Log("Spawn Point Awake");
+        currentSpawnPoint = spawnPoint;
+    } 
     public Vector3 GetSpawnPoint()
     {
-        return spawnPoint;
+        Debug.Log("Spawn Point Get");
+        return currentSpawnPoint;
+    }
+
+    public void SetSpawnPoint(Vector3 newSpawnPoint)
+    {
+        Debug.Log("Spawn Point Changed to " + newSpawnPoint);
+        currentSpawnPoint = newSpawnPoint;
+    }
+
+    public void ResetSpawnPoint()
+    {
+        Debug.Log("Spawn Point Reset");
+        currentSpawnPoint = spawnPoint;
+    }
+
+    // when play mode starts, this will be called.
+    // You can use this to set up references.
+    public void OnValidate() 
+    {
+        ResetSpawnPoint();
+    }
+
+    // You can also use OnAfterDeserialize for the other way around
+    public void OnAfterDeserialize() 
+    {
     }
 }

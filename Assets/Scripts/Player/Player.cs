@@ -12,7 +12,11 @@ public enum PlayerState
 
 public class Player : MonoBehaviour , ITakeDamage, IGhost
 {
-    public PlayerData data;
+
+    [Header("Data")]
+    [SerializeField] private PlayerSpawnPoint currentSpawnPoint;
+    [SerializeField] private PlayerData data;
+    
     // public PlayerState state;
     [SerializeField] private Transform projectileSpawnPoint;
     private float healthRegenTimer;
@@ -44,9 +48,7 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost
         SetUpSpells();
         healthBar.SetMaxHealth(data.maxHealth);
         manaBar.SetMaxMana(data.maxMana);
-
-        // WARNING: ANYTHING BELOW THIS IF STATEMENT WILL NOT RUN IF THE PLAYER SPAWN POINT IS NOT SET
-        // TODO: FIX THIS
+        transform.position = currentSpawnPoint.GetSpawnPoint();
     }
    
     void Update()
