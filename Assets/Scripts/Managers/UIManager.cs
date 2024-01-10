@@ -9,11 +9,16 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] private GameObject pauseScreen;
     [SerializeField] private GameObject spellBookScreen;
+    [SerializeField] private GameObject deathScreen;
     [SerializeField] private Dialogue dialogueScreen;
 
     [Header("Listeners")]
     [SerializeField] private InputManager _inputManager = default;
     [SerializeField] private DialogueDataChannelSO _dialogueChannel = default;
+    [SerializeField] private SimpleEventChannelSO _onPlayerDeath;
+
+    [Header("Broadcasts")]
+    [SerializeField] private SimpleEventChannelSO _onRetry;
 
     public void OnEnable()
     {
@@ -22,7 +27,21 @@ public class UIManager : MonoBehaviour
         _inputManager.OpenSpellBookEvent += OnOpenSpellBook;
         _inputManager.CloseSpellBookExitEvent += OnCloseSpellBookExit;
         _inputManager.AdvanceEvent += OnDialogueAdvanced;
-        _dialogueChannel.OnEventRaised += OnDialogueEventRaised;
+        _dialogueChannel.OnDialogueTriggered += OnDialogueEventRaised;
+        _onPlayerDeath.OnTrigger += OnPlayerDeath;
+    }
+
+    public void OnPlayerDeath()
+    {
+        Time.timeScale = 0;
+        deathScreen.SetActive(true);
+    }
+
+    public void OnRetry()
+    {
+        Time.timeScale = 1;
+        deathScreen.SetActive(false);
+        _onRetry.RaiseEvent();
     }
 
     public void OnDisable()
@@ -32,7 +51,8 @@ public class UIManager : MonoBehaviour
         _inputManager.OpenSpellBookEvent -= OnOpenSpellBook;
         _inputManager.CloseSpellBookExitEvent -= OnCloseSpellBookExit;
         _inputManager.AdvanceEvent -= OnDialogueAdvanced;
-        _dialogueChannel.OnEventRaised -= OnDialogueEventRaised;
+        _dialogueChannel.OnDialogueTriggered -= OnDialogueEventRaised;
+        _onPlayerDeath.OnTrigger -= OnPlayerDeath;
     }
 
     public void OnPause()

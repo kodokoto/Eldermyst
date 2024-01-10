@@ -3,10 +3,89 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
+public class SpawnPointSO : ScriptableObject
+{
+    [SerializeField] private Vector3 spawnPoint;
+    private Vector3 currentSpawnPoint;
+
+    public void Awake()
+    {
+        currentSpawnPoint = spawnPoint;
+    } 
+    public Vector3 GetSpawnPoint()
+    {
+        return currentSpawnPoint;
+    }
+
+    public void SetSpawnPoint(Vector3 newSpawnPoint)
+    {
+        currentSpawnPoint = newSpawnPoint;
+    }
+
+    public void ResetSpawnPoint()
+    {
+        currentSpawnPoint = spawnPoint;
+    }
+}
 public enum GameState {
     Playing,
     Won,
     Lost
+}
+
+// Everything that needs to be saved should be in this class
+public class GameStateM : MonoBehaviour
+{
+    private GameState gameState;
+    private SpawnPointSO currentSpawnPoint;
+    private PlayerData playerData;
+
+    [Header("Listeners")]
+    [SerializeField] private SimpleEventChannelSO _onRetry;
+
+    [Header("Channels")]
+    [SerializeField] private SpawnPointChannelSO spawnPointChannel;
+
+    private void Awake()
+    {
+
+    }
+
+    private void OnEnable()
+    {
+        spawnPointChannel.OnSpawnPointChanged += SetSpawnPoint;
+        _onRetry.OnTrigger += RestartGame;
+    }
+
+    private void RestartGame()
+    {
+        playerData.SoftReset();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    private void SaveAndQuit()
+    {
+        // SaveSystem.SavePlayerData(playerData);
+        Application.Quit();
+    }
+
+    private void OnSave()
+    {
+        // SaveSystem.SavePlayerData(playerData);
+    }
+
+    private void OnDisable()
+    {
+        spawnPointChannel.OnSpawnPointChanged -= SetSpawnPoint;
+    }
+
+
+
+    public void SetSpawnPoint(Vector3 spawnPoint)
+    {
+        currentSpawnPoint.SetSpawnPoint(spawnPoint);
+    }
 }
 public class GameManager : MonoBehaviour
 {

@@ -32,12 +32,17 @@ public class PlayerData : ScriptableObject
         mana = maxMana;
     }
 
-    public void Reset()
+    public void HardReset()
+    {
+        currentXpLevel = 0;
+        SoftReset();
+    }
+
+    public void SoftReset()
     {
         health = maxHealth;
         mana = maxMana;
-        currentXp = 0;
-        currentXpLevel = 0;
         excessHealth = 0;
+        currentXp = 0;
     }
 }

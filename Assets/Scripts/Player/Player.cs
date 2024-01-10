@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public enum PlayerState
@@ -12,7 +13,7 @@ public enum PlayerState
 public class Player : MonoBehaviour , ITakeDamage, IGhost
 {
     public PlayerData data;
-    public PlayerState state;
+    // public PlayerState state;
     [SerializeField] private Transform projectileSpawnPoint;
     private float healthRegenTimer;
     private float manaRegenTimer;
@@ -30,6 +31,8 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost
 
     public List<SpellHandler> SpellHandlers;
 
+    // Broadcasts
+    [SerializeField] private SimpleEventChannelSO _onPlayerDeath;
 
     // State
     public bool IsGhost{ get; set; } = false;
@@ -37,7 +40,6 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost
 
     void Start()
     {
-        data.Reset();
         Debug.Log("Plz");
         SetUpSpells();
         healthBar.SetMaxHealth(data.maxHealth);
@@ -254,10 +256,6 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost
 
     private void AddHealth(int amount)
     {
-        if (state.Equals(PlayerState.Dead))
-        {
-            return;
-        }
         if(getExcess()!=0 && amount > getExcess())
         {
             amount = amount - getExcess();
@@ -274,10 +272,6 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost
 
     private void RemoveHealth(int amount)
     {
-        if (state.Equals(PlayerState.Dead))
-        {
-            return;
-        }
         data.health = Mathf.Max(data.health - amount, 0);
         healthBar.SetHealth(data.health);
         if (data.health <= 0)
@@ -289,28 +283,19 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost
 
     private void AddMana(int amount)
     {
-        if (state.Equals(PlayerState.Dead))
-        {
-            return;
-        }
         data.mana = Mathf.Min(data.mana + amount, data.maxMana);
         manaBar.SetMana(data.mana);
     }
 
     private void RemoveMana(int amount)
     {
-        if (state.Equals(PlayerState.Dead))
-        {
-            return;
-        }
         data.mana = Mathf.Max(data.mana - amount, 0);
         manaBar.SetMana(data.mana);
     }
 
     private void HandleDeath()
     {
-        GameManager.instance.SetGameState(GameState.Lost);
-        state = PlayerState.Dead;
+        _onPlayerDeath.RaiseEvent();
     }
 
     internal void AddSpell(Spell spell)

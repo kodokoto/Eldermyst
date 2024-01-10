@@ -5,15 +5,15 @@ using UnityEngine;
 
 public class Chckpoint : MonoBehaviour
 {
+    [SerializeField] private SpawnPointChannelSO spawnPointChannel;
+
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
             Debug.Log("Player entered checkpoint");
-            PlayerSpawnPoint.instance.spawnPoint = transform.position;
-            Debug.Log("Player spawn point set to " + PlayerSpawnPoint.instance.spawnPoint);
+            spawnPointChannel.RaiseEvent(transform.position);
             gameObject.SetActive(false);
-            // GameManager.instance.SetGameState(GameState.Won);
         }
     }
 }
