@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour
 
     private void OnSceneReady()
     {
+        Debug.Log("Gameplay Scene is ready");
         _inputManager.EnableGameplayInput();
     }
 

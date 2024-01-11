@@ -7,7 +7,7 @@ public class SpellScroll : Pickup
 
     void Update()
     {
-        gameObject.transform.Rotate(10.0f, 0.0f, 0.0f, Space.Self);
+        transform.Rotate(Vector3.up, 50 * Time.deltaTime);
     }
 
     protected override void OnPickup(GameObject actor)
