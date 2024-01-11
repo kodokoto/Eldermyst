@@ -70,18 +70,16 @@ public class SceneLoader : MonoBehaviour
 			if (_currentScene.sceneReference.OperationHandle.IsValid())
 			{
                 Debug.Log("Unloading scene through addressables");
-                //Unload the scene through its AsyncOperationHandle
-				// /_currentScene.sceneReference.UnLoadScene();
-                //Unload the scene through its AssetReference, i.e. through the Addressable system
                 Addressables.UnloadSceneAsync(_currentScene.sceneReference.OperationHandle);
 			}
+            // webgl sucks
+            else if (Application.platform == RuntimePlatform.WebGLPlayer)
+            {
+                SceneManager.UnloadSceneAsync(_currentScene.sceneName);
+            }
         #if UNITY_EDITOR
 			else
 			{
-                Debug.Log("LOLL");
-				//Only used when, after a "cold start", the player moves to a new scene
-				//Since the AsyncOperationHandle has not been used (the scene was already open in the editor),
-				//the scene needs to be unloaded using regular SceneManager instead of as an Addressable
 				SceneManager.UnloadSceneAsync(_currentScene.sceneReference.editorAsset.name);
 			}
         #endif        

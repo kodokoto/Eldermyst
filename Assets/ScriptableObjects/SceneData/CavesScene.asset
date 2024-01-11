@@ -12,8 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d40926a558c3b49f0ba74289029aadf4, type: 3}
   m_Name: CavesScene
   m_EditorClassIdentifier: 
+  _guid: 07fe629da667a476ebac47514bcf8ce3
   sceneReference:
     m_AssetGUID: aafd98345476a4aeabe65163f5ab2c10
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
+  sceneType: 0
+  sceneName: Caves
