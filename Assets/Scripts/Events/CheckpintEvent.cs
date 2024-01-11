@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CheckpointEvent : MonoBehaviour
 {
-    [SerializeField] private SpawnPointChangedSignal spawnPointChangedSignal;
+    [SerializeField] private SpawnPointSignal spawnPointChangedSignal;
 
     void OnTriggerEnter(Collider other)
     {
