@@ -25,7 +25,7 @@ public class Freeze : Spell
         Debug.Assert(ObjectToSpawn != null, "ObjectToSpawn is null");
         Player player = parent.GetComponent<Player>();
         explosion = Instantiate(ObjectToSpawn, player.transform.position, player.transform.rotation);
-
+        
         // assert explosion is not null
         Debug.Assert(explosion != null, "Explosion is null");
         collisionChecks = Physics.OverlapSphere(player.transform.position, radius, targetMask);

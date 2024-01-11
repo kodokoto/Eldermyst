@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f18aef620f645472d9c6aadc7711b4c2, type: 3}
+  m_Name: Shield
+  m_EditorClassIdentifier: 
+  _guid: 512e9b086b19046febd3d9d66b74659c
+  spellName: Shield
+  icon: {fileID: 0}
+  cooldownTime: 0
+  activeTime: 2
+  manaCost: 20
+  combos: []
+  sentences: []
+  ObjectToSpawn: {fileID: 8949330691328959716, guid: bec396535b9f3084aa099513ad82f4cf, type: 3}
