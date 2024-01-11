@@ -1,5 +1,3 @@
-using System;
-using Unity.Collections;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -8,56 +6,41 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
 {
-    // [SerializeField] private SceneSO _gameplayScene;
-
     [Header("Listeners")]
-    [SerializeField] private LoadSceneChannelSO _loadMenuChannel;
-    [SerializeField] private LoadSceneChannelSO _loadLevelChannel;
-    [SerializeField] private SimpleEventChannelSO _onSceneReload;
+    [SerializeField] private LoadSceneSignalSO _loadMenuSignal;
+    [SerializeField] private LoadSceneSignalSO _loadLevelSignal;
+    [SerializeField] private SignalSO _onSceneReload;
 
 
     [Header("Broadcasts")]
-    [SerializeField] private SimpleEventChannelSO _onSceneReady;
+    [SerializeField] private SignalSO _onSceneReady;
 
-    // private SceneSO _gameplaySceneInstance;
     private SceneSO _currentScene;
     private SceneSO _sceneToLoad;
 
     public void OnEnable()
     {
-        _loadMenuChannel.OnLoadingRequested += LoadMenu;
-        _loadLevelChannel.OnLoadingRequested += LoadLevel;
-        _onSceneReload.OnTrigger += ReloadScene;
-    }
-
-    public void Update()
-    {
-        Debug.Log(SceneManager.sceneCount);
+        _loadMenuSignal.OnTriggered += LoadMenu;
+        _loadLevelSignal.OnTriggered += LoadLevel;
+        _onSceneReload.OnTriggered += ReloadScene;
     }
 
     public void OnDisable()
     {
-        _loadMenuChannel.OnLoadingRequested -= LoadMenu;
-        _loadLevelChannel.OnLoadingRequested -= LoadLevel;
-        _onSceneReload.OnTrigger -= ReloadScene;
+        _loadMenuSignal.OnTriggered -= LoadMenu;
+        _loadLevelSignal.OnTriggered -= LoadLevel;
+        _onSceneReload.OnTriggered -= ReloadScene;
     }
 
     private void ReloadScene()
     {
         _sceneToLoad = _currentScene;
         UnloadScene();
-        // 
     }
 
     private void LoadMenu(SceneSO menu)
     {
         _sceneToLoad = menu;
-        // unload the persistent gameplay manager scene if it's loaded
-        // if (_gameplaySceneInstance != null && _gameplaySceneInstance.Scene.isLoaded)
-        // {
-        //     SceneManager.UnloadSceneAsync(_gameplaySceneInstance.Scene);
-        // }
-
         UnloadScene();
     }
 
@@ -106,34 +89,11 @@ public class SceneLoader : MonoBehaviour
     private void LoadLevel(SceneSO level)
     {
         _sceneToLoad = level;
-        
-        // // if the gameplay scene is not loaded, load it
-        // if (_gameplaySceneInstance == null || !_gameplaySceneInstance.Scene.isLoaded)
-        // {
-        //     SceneManager.LoadSceneAsync(_gameplayScene.name, LoadSceneMode.Additive).completed += OnGameplaySceneLoaded;
-        // }
-        // else
-        // {
-        //     UnloadScene();
-        // }
-        UnloadScene();
-
-    }
-
-    private void OnGameplaySceneLoaded(AsyncOperation obj)
-    {
-        // _gameplaySceneInstance = _gameplayScene;
         UnloadScene();
     }
 
     private void StartGameplay()
 	{
-		_onSceneReady.RaiseEvent(); //Spawn system will spawn the PigChef in a gameplay scene
-	}
-
-	private void ExitGame()
-	{
-		Application.Quit();
-		Debug.Log("Exit!");
+		_onSceneReady.Trigger(); //Spawn system will spawn the PigChef in a gameplay scene
 	}
 }

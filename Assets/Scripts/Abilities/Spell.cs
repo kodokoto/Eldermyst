@@ -26,7 +26,6 @@ public class Spell : SerializableScriptableObject
     public float cooldownTime;
     public float activeTime;
     public int manaCost;
-    public int levelRequired;
     public List<SpellCombo> combos;
     [SerializeField] public List<string> sentences;
 

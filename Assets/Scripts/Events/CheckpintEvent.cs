@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class Checkpoint : MonoBehaviour
+public class CheckpointEvent : MonoBehaviour
 {
     [SerializeField] private SpawnPointChangedSignal spawnPointChangedSignal;
 
@@ -12,7 +9,7 @@ public class Checkpoint : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             Debug.Log("Player entered checkpoint");
-            spawnPointChangedSignal.RaiseEvent(transform.position);
+            spawnPointChangedSignal.Trigger(transform.position);
             gameObject.SetActive(false);
         }
     }

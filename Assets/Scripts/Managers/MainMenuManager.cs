@@ -1,29 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.Events;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UI;
 
 public class MainMenuManager : MonoBehaviour
 {
     [Header("Managers")]
-    [SerializeField] private InputManager _inputManager = default;
-    [SerializeField] private SaveManager _saveManager = default;
+    [SerializeField] private InputManager _inputManager;
+    [SerializeField] private SaveManager _saveManager;
 
     [Header("Data")]
     [SerializeField] private SceneSO _startingScene;
 
-    [SerializeField] private LoadSceneChannelSO _loadSceneChannel = default;
-
-    // UI
-    // Text mash pro input feild
     [Header("UI")]
-    [SerializeField] private TMP_InputField _saveNameInputField = default;
-    [SerializeField] private GameObject _savedGamesPanel = default;
+    [SerializeField] private TMP_InputField _saveNameInputField;
+    [SerializeField] private GameObject _savedGamesPanel;
+
+    [Header("Broadcasts")]
+    [SerializeField] private LoadSceneSignalSO _loadSceneSignal;
+
 
     public void OnEnable()
     {
@@ -40,7 +38,7 @@ public class MainMenuManager : MonoBehaviour
         }
         _saveManager.CreateNewSave(_saveNameInputField.text);
         Debug.Log("Broadcasting load scene event from main menu");
-        _loadSceneChannel.RaiseEvent(_startingScene);
+        _loadSceneSignal.Trigger(_startingScene);
     }
 
     public void ShowLoadGameScreen()
@@ -64,13 +62,6 @@ public class MainMenuManager : MonoBehaviour
             button.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -i * 50);
         }
     }
-
-    // public void LoadGame(string saveName)
-    // {
-    //     // Debug.Log("Load game: " + saveName);
-    //     _saveManager.LoadGame(saveName);
-    //     // _loadSceneChannel.RaiseEvent(_startingScene);
-    // }
     private IEnumerator LoadGame(string saveName)
 	{
         _saveManager.saveFilename = saveName + ".json";
@@ -99,7 +90,7 @@ public class MainMenuManager : MonoBehaviour
 		if (asyncOperationHandle.Status == AsyncOperationStatus.Succeeded)
 		{
 			SceneSO locationSO = asyncOperationHandle.Result;
-			_loadSceneChannel.RaiseEvent(locationSO);
+			_loadSceneSignal.Trigger(locationSO);
 		}
 
 	}

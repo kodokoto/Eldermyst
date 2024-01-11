@@ -1,25 +1,23 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-// union type for screens
 
 public class UIManager : MonoBehaviour
 {
 
-    [SerializeField] private GameObject pauseScreen;
-    [SerializeField] private GameObject spellBookScreen;
-    [SerializeField] private GameObject deathScreen;
-    [SerializeField] private Dialogue dialogueScreen;
+    [Header("UI")]
+    [SerializeField] private GameObject _pauseScreen;
+    [SerializeField] private GameObject _spellBookScreen;
+    [SerializeField] private GameObject _deathScreen;
+    [SerializeField] private Dialogue _dialogueScreen;
 
     [Header("Listeners")]
-    [SerializeField] private InputManager _inputManager = default;
-    [SerializeField] private DialogueDataChannelSO _dialogueChannel = default;
-    [SerializeField] private SimpleEventChannelSO _onPlayerDeath;
+    [SerializeField] private InputManager _inputManager;
+    [SerializeField] private DialogueSignalSO _dialogueChannel;
+    [SerializeField] private SignalSO _onPlayerDeath;
 
     [Header("Broadcasts")]
-    [SerializeField] private SimpleEventChannelSO _onRetry;
-    [SerializeField] private SimpleEventChannelSO _onExitToMenu;
+    [SerializeField] private SignalSO _onRetry;
+    [SerializeField] private SignalSO _onExitToMenu;
 
     public void OnEnable()
     {
@@ -28,14 +26,15 @@ public class UIManager : MonoBehaviour
         _inputManager.OpenSpellBookEvent += OnOpenSpellBook;
         _inputManager.CloseSpellBookExitEvent += OnCloseSpellBookExit;
         _inputManager.AdvanceEvent += OnDialogueAdvanced;
-        _dialogueChannel.OnDialogueTriggered += OnDialogueEventRaised;
-        _onPlayerDeath.OnTrigger += OnPlayerDeath;
+
+        _dialogueChannel.OnTriggered += OnDialogueEventRaised;
+        _onPlayerDeath.OnTriggered += OnPlayerDeath;
     }
 
     public void OnPlayerDeath()
     {
         Time.timeScale = 0;
-        deathScreen.SetActive(true);
+        _deathScreen.SetActive(true);
         Debug.Log("Player died");
     }
 
@@ -44,7 +43,7 @@ public class UIManager : MonoBehaviour
         Debug.Log("Retry");
         Time.timeScale = 1;
         _inputManager.EnableGameplayInput();
-        _onRetry.RaiseEvent();
+        _onRetry.Trigger();
     }
 
     public void OnDisable()
@@ -54,8 +53,9 @@ public class UIManager : MonoBehaviour
         _inputManager.OpenSpellBookEvent -= OnOpenSpellBook;
         _inputManager.CloseSpellBookExitEvent -= OnCloseSpellBookExit;
         _inputManager.AdvanceEvent -= OnDialogueAdvanced;
-        _dialogueChannel.OnDialogueTriggered -= OnDialogueEventRaised;
-        _onPlayerDeath.OnTrigger -= OnPlayerDeath;
+
+        _dialogueChannel.OnTriggered -= OnDialogueEventRaised;
+        _onPlayerDeath.OnTriggered -= OnPlayerDeath;
     }
 
     public void OnExitToMenu()
@@ -63,48 +63,48 @@ public class UIManager : MonoBehaviour
         Debug.Log("Exit to menu");
         Time.timeScale = 1;
         _inputManager.EnablePauseMenuInput();
-        _onExitToMenu.RaiseEvent();
+        _onExitToMenu.Trigger();
     }
 
     public void OnPause()
     {
         Time.timeScale = 0;
-        pauseScreen.SetActive(true);
+        _pauseScreen.SetActive(true);
     }
 
     public void OnPauseExit()
     {
         Time.timeScale = 1;
-        pauseScreen.SetActive(false);
+        _pauseScreen.SetActive(false);
     }
 
     public void OnOpenSpellBook()
     {
         Time.timeScale = 0;
-        spellBookScreen.SetActive(true);
+        _spellBookScreen.SetActive(true);
     }
 
     public void OnCloseSpellBookExit()
     {
         Time.timeScale = 1;
-        spellBookScreen.SetActive(false);
+        _spellBookScreen.SetActive(false);
     }
 
     public void OnDialogueEventRaised(List<string> dialogue)
     {
         _inputManager.EnableDialogueInput();
         Time.timeScale = 0;
-        dialogueScreen.gameObject.SetActive(true);
-        dialogueScreen.SetDialogue(dialogue);
+        _dialogueScreen.gameObject.SetActive(true);
+        _dialogueScreen.SetDialogue(dialogue);
     }
 
     private void OnDialogueAdvanced()
     {
         // show next line, if there isnt one, close the dialogue
-        if (!dialogueScreen.Advance())
+        if (!_dialogueScreen.Advance())
         {
             Time.timeScale = 1;
-            dialogueScreen.gameObject.SetActive(false);
+            _dialogueScreen.gameObject.SetActive(false);
             _inputManager.EnableGameplayInput();
         }
     }

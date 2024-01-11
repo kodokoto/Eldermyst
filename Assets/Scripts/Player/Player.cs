@@ -34,7 +34,7 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost
     public List<SpellHandler> SpellHandlers;
 
     // Broadcasts
-    [SerializeField] private SimpleEventChannelSO _onPlayerDeath;
+    [SerializeField] private SignalSO _onPlayerDeath;
 
     // State
     public bool IsGhost{ get; set; } = false;
@@ -275,7 +275,7 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost
 
     private void HandleDeath()
     {
-        _onPlayerDeath.RaiseEvent();
+        _onPlayerDeath.Trigger();
     }
 
     internal void AddSpell(Spell spell)

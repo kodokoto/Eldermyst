@@ -8,7 +8,7 @@ public class Initialization : MonoBehaviour
 {
 	[SerializeField] private SceneSO _managersScene = default;
 	[SerializeField] private SceneSO _menuToLoad = default;
-    [SerializeField] private AssetReference _loadMenuChannel = default;
+    [SerializeField] private AssetReference _loadMenuSignal = default;
 
 	private void Start()
 	{
@@ -18,12 +18,14 @@ public class Initialization : MonoBehaviour
 
 	private void OnManagersSceneLoaded(AsyncOperationHandle<SceneInstance> obj)
 	{
-		_loadMenuChannel.LoadAssetAsync<LoadSceneChannelSO>().Completed += LoadMainMenu;
+		//Load the menu scene asset
+		_loadMenuSignal.LoadAssetAsync<LoadSceneSignalSO>().Completed += LoadMainMenu;
 	}
 
-    private void LoadMainMenu(AsyncOperationHandle<LoadSceneChannelSO> handle)
+    private void LoadMainMenu(AsyncOperationHandle<LoadSceneSignalSO> handle)
     {
-        handle.Result.RaiseEvent(_menuToLoad);
+		// Broadcast the load menu signal to load the menu scene
+        handle.Result.Trigger(_menuToLoad);
 		SceneManager.UnloadSceneAsync(0); // unload the initialization scene
     }
 }

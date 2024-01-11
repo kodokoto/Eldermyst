@@ -8,10 +8,13 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 [CreateAssetMenu(menuName = "Managers/Save Manager")]
 public class SaveManager : ScriptableObject
 {
+    [Header("Data")]
     [SerializeField] private PlayerData _playerData = default;
     [SerializeField] private PlayerInventory _playerInventory = default;
     [SerializeField] private PlayerSpawnPoint _playerSpawnPoint = default;
-    [SerializeField] private LoadSceneChannelSO _loadSceneSignal = default;
+
+    [Header("Broadcasts")]
+    [SerializeField] private LoadSceneSignalSO _loadSceneSignal = default;
 
     public string saveFilename = "save.json";
 
@@ -19,12 +22,12 @@ public class SaveManager : ScriptableObject
     
     public void OnEnable()
     {
-        _loadSceneSignal.OnLoadingRequested += SetCurrentScene;
+        _loadSceneSignal.OnTriggered += SetCurrentScene;
     }
 
     public void OnDisable()
     {
-        _loadSceneSignal.OnLoadingRequested -= SetCurrentScene;
+        _loadSceneSignal.OnTriggered -= SetCurrentScene;
     }
 
     public void SetCurrentScene(SceneSO scene)
@@ -36,8 +39,6 @@ public class SaveManager : ScriptableObject
             Debug.Log(scene.name +" = " + scene.Guid);
             _gameSave._scene_guid = scene.Guid;
         }
-
-        // SaveGame();
     }
 
     public void CreateNewSave(string saveName)
