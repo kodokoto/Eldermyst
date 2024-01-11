@@ -1,10 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using NUnit.Framework;
 using UnityEngine;
-using UnityEngine.Scripting.APIUpdating;
-using UnityEngine.UIElements;
-// import IAutoMove interface from Assets/Scripts/Systems/IAutoMove.cs
 public class MovingPlatform : Platform, IAutoMove
 {
     [SerializeField] public AutoMoveType AutoMoveType { get; set; }

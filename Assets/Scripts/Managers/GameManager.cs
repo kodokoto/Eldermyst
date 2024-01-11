@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private SignalSO _onRetry;
     [SerializeField] private SignalSO _onExit;
     [SerializeField] private SignalSO _onReady;
-    [SerializeField] private SpawnPointChangedSignal _spawnPointChangedSignal;
+    [SerializeField] private SpawnPointSignal _spawnPointSignal;
 
     [Header("Broadcasts")]
     [SerializeField] private LoadSceneSignalSO _loadLevelSignal;
@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
 
     private void OnEnable()
     {
-        _spawnPointChangedSignal.OnTriggered += SetSpawnPoint;
+        _spawnPointSignal.OnTriggered += SetSpawnPoint;
         _onRetry.OnTriggered += RestartGame;
         _onExit.OnTriggered += SaveAndQuit;
         _onReady.OnTriggered += OnSceneReady;
@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
 
     private void OnDisable()
     {
-        _spawnPointChangedSignal.OnTriggered -= SetSpawnPoint;
+        _spawnPointSignal.OnTriggered -= SetSpawnPoint;
         _onRetry.OnTriggered -= RestartGame;
         _onExit.OnTriggered -= SaveAndQuit;
         _onReady.OnTriggered -= OnSceneReady;
