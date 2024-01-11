@@ -9,27 +9,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 092e9c3dfa7416943be5e27c70005a18, type: 3}
+  m_Script: {fileID: 0}
   m_Name: Freeze
-  m_EditorClassIdentifier: 
-  spellName: Freeze
+  m_EditorClassIdentifier: Assembly-CSharp::Freeze
+  _guid: 
+  spellName: 
   icon: {fileID: 0}
   cooldownTime: 0
-  activeTime: 3
-  manaCost: 10
-  levelRequired: 0
-  combos:
-  - keys: 00000000020000000100000004000000
-  sentences:
-  - You feel a cold breeze surround you...
-  - ...
-  - ...
-  - 'You have found a new spell: Freeze'
-  - 'To use this spell you must utter this enchantment:'
-  - <- ^ -> E
-  damage: 20
+  activeTime: 0
+  manaCost: 0
+  combos: []
+  sentences: []
+  damage: 2
   radius: 10
   targetMask:
     serializedVersion: 2
-    m_Bits: 3072
-  ObjectToSpawn: {fileID: 3607226259590179397, guid: 95e35cf0301dd124ca387705f29fddc7, type: 3}
+    m_Bits: 0
+  ObjectToSpawn: {fileID: 0}

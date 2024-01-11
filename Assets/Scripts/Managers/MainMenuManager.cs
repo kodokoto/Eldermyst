@@ -18,14 +18,27 @@ public class MainMenuManager : MonoBehaviour
     [Header("UI")]
     [SerializeField] private TMP_InputField _saveNameInputField;
     [SerializeField] private GameObject _savedGamesPanel;
+    [SerializeField] private Button _continueButton;
 
     [Header("Broadcasts")]
     [SerializeField] private LoadSceneSignalSO _loadSceneSignal;
 
+    private List<string> _files;
 
     public void OnEnable()
     {
+        _files = FileManager.GetAllSaveFiles();
+        if (_files.Count > 0)
+        {
+            _continueButton.gameObject.SetActive(true);
+        }
         _inputManager.EnablePauseMenuInput();
+    }
+
+    public void ContinueGame()
+    {
+        Debug.Log("Continue game");
+        StartCoroutine(LoadGame(_files[0]));
     }
 
     public void StartNewGame()
@@ -45,19 +58,19 @@ public class MainMenuManager : MonoBehaviour
     {
         Debug.Log("Load game");
         _savedGamesPanel.SetActive(true);
-        List<string> saves = FileManager.GetAllSaveFiles();
-        Debug.Log("Found " + saves.Count + " saves");
+        _files = FileManager.GetAllSaveFiles();
+        Debug.Log("Found " + _files.Count + " saves");
 
         // create buttons for each save
-        for (int i = 0; i < saves.Count; i++)
+        for (int i = 0; i < _files.Count; i++)
         {
-            Debug.Log("Creating button for save " + saves[i]);
+            Debug.Log("Creating button for save " + _files[i]);
             GameObject button = new GameObject();
             button.transform.SetParent(_savedGamesPanel.transform);
             button.AddComponent<Button>();
             button.GetComponent<Button>().onClick.AddListener(() => StartCoroutine(LoadGame(button.GetComponent<TextMeshProUGUI>().text)));
             button.AddComponent<TextMeshProUGUI>();
-            button.GetComponent<TextMeshProUGUI>().text = saves[i];
+            button.GetComponent<TextMeshProUGUI>().text = _files[i];
             // position button
             button.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -i * 50);
         }

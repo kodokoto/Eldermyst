@@ -18,7 +18,6 @@ public class UIManager : MonoBehaviour
     [Header("Broadcasts")]
     [SerializeField] private SignalSO _onRetry;
     [SerializeField] private SignalSO _onExitToMenu;
-
     public void OnEnable()
     {
         _inputManager.PauseEvent += OnPause;
