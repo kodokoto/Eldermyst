@@ -12,7 +12,7 @@ public class UIManager : MonoBehaviour
 
     [Header("Listeners")]
     [SerializeField] private InputManager _inputManager;
-    [SerializeField] private DialogueSignalSO _dialogueChannel;
+    [SerializeField] private DialogueSignalSO _dialogueSignal;
     [SerializeField] private SignalSO _onPlayerDeath;
 
     [Header("Broadcasts")]
@@ -27,7 +27,7 @@ public class UIManager : MonoBehaviour
         _inputManager.CloseSpellBookExitEvent += OnCloseSpellBookExit;
         _inputManager.AdvanceEvent += OnDialogueAdvanced;
 
-        _dialogueChannel.OnTriggered += OnDialogueEventRaised;
+        _dialogueSignal.OnTriggered += OnDialogueEventRaised;
         _onPlayerDeath.OnTriggered += OnPlayerDeath;
     }
 
@@ -54,7 +54,7 @@ public class UIManager : MonoBehaviour
         _inputManager.CloseSpellBookExitEvent -= OnCloseSpellBookExit;
         _inputManager.AdvanceEvent -= OnDialogueAdvanced;
 
-        _dialogueChannel.OnTriggered -= OnDialogueEventRaised;
+        _dialogueSignal.OnTriggered -= OnDialogueEventRaised;
         _onPlayerDeath.OnTriggered -= OnPlayerDeath;
     }
 

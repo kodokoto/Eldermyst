@@ -1,12 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum PlayerState
-{
-    Alive,
-    Dead
-}
-
 public class Player : MonoBehaviour , ITakeDamage, IGhost
 {
 

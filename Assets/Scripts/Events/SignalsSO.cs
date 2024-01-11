@@ -28,7 +28,7 @@ public class DialogueSignalSO : SignalSO<List<string>> {}
 [CreateAssetMenu(menuName = "Signals/Spawn Point Changed Signal")]
 public class SpawnPointChangedSignal : SignalSO<Vector3> {}
 
-[CreateAssetMenu(menuName = "Signals/Load Scene Channel")]
+[CreateAssetMenu(menuName = "Signals/Load Scene Signal")]
 public class LoadSceneSignalSO : SignalSO<SceneSO> {}
 
 

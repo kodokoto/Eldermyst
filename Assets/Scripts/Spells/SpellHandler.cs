@@ -20,7 +20,7 @@ public class SpellHandler : MonoBehaviour
     void Start()
     {
         state = SpellState.Ready;
-xw    }
+    }
 
     void Update()
     {
