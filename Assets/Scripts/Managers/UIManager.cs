@@ -1,34 +1,111 @@
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-// union type for screens
 
 public class UIManager : MonoBehaviour
 {
-    public static UIManager instance;
-    
-    private void Awake()
+
+    [Header("UI")]
+    [SerializeField] private GameObject _pauseScreen;
+    [SerializeField] private GameObject _spellBookScreen;
+    [SerializeField] private GameObject _deathScreen;
+    [SerializeField] private Dialogue _dialogueScreen;
+
+    [Header("Listeners")]
+    [SerializeField] private InputManager _inputManager;
+    [SerializeField] private DialogueSignalSO _dialogueSignal;
+    [SerializeField] private SignalSO _onPlayerDeath;
+
+    [Header("Broadcasts")]
+    [SerializeField] private SignalSO _onRetry;
+    [SerializeField] private SignalSO _onExitToMenu;
+
+    public void OnEnable()
     {
-        if (instance == null)
-            instance = this;
+        _inputManager.PauseEvent += OnPause;
+        _inputManager.UnpauseEvent += OnPauseExit;
+        _inputManager.OpenSpellBookEvent += OnOpenSpellBook;
+        _inputManager.CloseSpellBookExitEvent += OnCloseSpellBookExit;
+        _inputManager.AdvanceEvent += OnDialogueAdvanced;
+
+        _dialogueSignal.OnTriggered += OnDialogueEventRaised;
+        _onPlayerDeath.OnTriggered += OnPlayerDeath;
     }
 
-    public void ShowGameOverScreen()
+    public void OnPlayerDeath()
     {
-        gameObject.transform.Find("GameOverScreen").gameObject.SetActive(true);
+        Time.timeScale = 0;
+        _deathScreen.SetActive(true);
+        Debug.Log("Player died");
     }
 
-    public void HideGameOverScreen()
+    public void OnRetry()
     {
-        gameObject.transform.Find("GameOverScreen").gameObject.SetActive(false);
+        Debug.Log("Retry");
+        Time.timeScale = 1;
+        _inputManager.EnableGameplayInput();
+        _onRetry.Trigger();
     }
 
-    public void ShowWinScreen()
+    public void OnDisable()
     {
-        gameObject.transform.Find("WinScreen").gameObject.SetActive(true);
+        _inputManager.PauseEvent -= OnPause;
+        _inputManager.UnpauseEvent -= OnPauseExit;
+        _inputManager.OpenSpellBookEvent -= OnOpenSpellBook;
+        _inputManager.CloseSpellBookExitEvent -= OnCloseSpellBookExit;
+        _inputManager.AdvanceEvent -= OnDialogueAdvanced;
+
+        _dialogueSignal.OnTriggered -= OnDialogueEventRaised;
+        _onPlayerDeath.OnTriggered -= OnPlayerDeath;
     }
 
-    public void HideWinScreen()
+    public void OnExitToMenu()
     {
-        gameObject.transform.Find("WinScreen").gameObject.SetActive(false);
+        Debug.Log("Exit to menu");
+        Time.timeScale = 1;
+        _inputManager.EnablePauseMenuInput();
+        _onExitToMenu.Trigger();
+    }
+
+    public void OnPause()
+    {
+        Time.timeScale = 0;
+        _pauseScreen.SetActive(true);
+    }
+
+    public void OnPauseExit()
+    {
+        Time.timeScale = 1;
+        _pauseScreen.SetActive(false);
+    }
+
+    public void OnOpenSpellBook()
+    {
+        Time.timeScale = 0;
+        _spellBookScreen.SetActive(true);
+    }
+
+    public void OnCloseSpellBookExit()
+    {
+        Time.timeScale = 1;
+        _spellBookScreen.SetActive(false);
+    }
+
+    public void OnDialogueEventRaised(List<string> dialogue)
+    {
+        _inputManager.EnableDialogueInput();
+        Time.timeScale = 0;
+        _dialogueScreen.gameObject.SetActive(true);
+        _dialogueScreen.SetDialogue(dialogue);
+    }
+
+    private void OnDialogueAdvanced()
+    {
+        // show next line, if there isnt one, close the dialogue
+        if (!_dialogueScreen.Advance())
+        {
+            Time.timeScale = 1;
+            _dialogueScreen.gameObject.SetActive(false);
+            _inputManager.EnableGameplayInput();
+        }
     }
 }

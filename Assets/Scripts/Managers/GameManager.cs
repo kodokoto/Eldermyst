@@ -1,117 +1,68 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public enum GameState {
-    Playing,
-    Won,
-    Lost
-}
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance;
-    public GameState gameState;
-    private void Awake()
+
+    [Header("Data")]
+    [SerializeField] private PlayerSpawnPoint currentSpawnPoint;
+    [SerializeField] private PlayerData playerData;
+	[SerializeField] private SceneSO _menuToLoad = default;
+
+    [Header("Managers")]
+    [SerializeField] private InputManager _inputManager = default;
+    [SerializeField] private SaveManager _saveManager = default;
+
+    [Header("Listeners")]
+    [SerializeField] private SignalSO _onRetry;
+    [SerializeField] private SignalSO _onExit;
+    [SerializeField] private SignalSO _onReady;
+    [SerializeField] private SpawnPointSignal _spawnPointSignal;
+
+    [Header("Broadcasts")]
+    [SerializeField] private LoadSceneSignalSO _loadLevelSignal;
+    [SerializeField] private SignalSO _onRestartScene;
+
+    private void OnEnable()
     {
-        if (instance == null) {
-            instance = this;
-        } else {
-            Destroy(gameObject);
-        }
+        _spawnPointSignal.OnTriggered += SetSpawnPoint;
+        _onRetry.OnTriggered += RestartGame;
+        _onExit.OnTriggered += SaveAndQuit;
+        _onReady.OnTriggered += OnSceneReady;
     }
 
-    private void Start()
+    private void OnDisable()
     {
-        gameState = GameState.Playing;
+        _spawnPointSignal.OnTriggered -= SetSpawnPoint;
+        _onRetry.OnTriggered -= RestartGame;
+        _onExit.OnTriggered -= SaveAndQuit;
+        _onReady.OnTriggered -= OnSceneReady;
     }
 
-    public void SetGameState(GameState state)
+    private void OnSceneReady()
     {
-        switch (state)
-        {
-            case GameState.Playing:
-                HandleGamePlaying();
-                break;
-            case GameState.Won:
-                HandleGameWon();
-                break;
-            case GameState.Lost:
-                HandleGameLost();
-                break;
-        }
+        Debug.Log("Gameplay Scene is ready");
+        _inputManager.EnableGameplayInput();
     }
 
-    public void Retry()
+    private void RestartGame()
     {
-        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+        playerData.SoftReset();
+        _onRestartScene.Trigger();
     }
 
-    public void RestartGame()
+    private void SaveAndQuit()
     {
-        Destroy(gameObject);
-        instance = null;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        _loadLevelSignal.Trigger(_menuToLoad);
     }
 
-    public void MainMenu()
+    public void OnSave()
     {
-        // reset spawn point
-        PlayerSpawnPoint.instance.SetSpawnPoint(Vector3.zero);
-        SceneManager.LoadSceneAsync("MainMenu");
+        _saveManager.saveFilename = playerData.playerName + ".json";
+        _saveManager.SaveGame();
     }
 
-    public GameState GetGameState()
+    public void SetSpawnPoint(Vector3 spawnPoint)
     {
-        return gameState;
+        currentSpawnPoint.SetSpawnPoint(spawnPoint);
     }
-
-    // handlers
-
-    private void HandleGameLost()
-    {
-        Debug.Log("Game lost");
-        if (gameState == GameState.Playing)
-        {
-            Debug.Log("Game lost for real");
-            gameState = GameState.Lost;
-            UIManager.instance.ShowGameOverScreen();
-        }
-        else
-        {
-            Debug.LogWarning("Tried to set game state to lost when it is not playing");
-        }
-    }
-
-    private void HandleGameWon()
-    {
-        if (gameState == GameState.Playing)
-        {
-            gameState = GameState.Won;
-            UIManager.instance.ShowWinScreen();
-        }
-        else
-        {
-            Debug.LogWarning("Tried to set game state to won when it is not playing");
-        }
-    }
-
-    private void HandleGamePlaying()
-    {
-        if (gameState == GameState.Won)
-        {
-            gameState = GameState.Playing;
-            UIManager.instance.HideWinScreen();
-        }
-        else if (gameState == GameState.Lost)
-        {
-            gameState = GameState.Playing;
-            UIManager.instance.HideGameOverScreen();
-        }
-        else
-        {
-            Debug.LogWarning("Tried to set game state to playing when it is already playing");
-        }
-    }
-
 }

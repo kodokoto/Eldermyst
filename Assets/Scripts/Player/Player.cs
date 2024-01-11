@@ -1,35 +1,27 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum PlayerState
-{
-    Alive,
-    Dead
-}
-
 public class Player : MonoBehaviour , ITakeDamage, IGhost
 {
-    public PlayerData data;
-    public PlayerState state;
+
+    [Header("Data")]
+    [SerializeField] public PlayerSpawnPoint currentSpawnPoint;
+    [SerializeField] public PlayerData data;
+    [SerializeField] public PlayerInventory PlayerInventory;
+
     [SerializeField] private Transform projectileSpawnPoint;
     private float healthRegenTimer;
     private float manaRegenTimer;
     
-    // UI
+    [Header("UI")]
     public HealthBar healthBar;
     public ManaBar manaBar;
     public XPBar xpBar;
-    public bool isRightEnabled=false;
-    public bool isLeftEnabled=false;
-
-    public Dialogue levelUpUI;
-
-    [SerializeField] public Loadout loadout;
 
     public List<SpellHandler> SpellHandlers;
 
+    // Broadcasts
+    [SerializeField] private SignalSO _onPlayerDeath;
 
     // State
     public bool IsGhost{ get; set; } = false;
@@ -37,52 +29,28 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost
 
     void Start()
     {
-        data.Reset();
-        Debug.Log("Plz");
         SetUpSpells();
         healthBar.SetMaxHealth(data.maxHealth);
         manaBar.SetMaxMana(data.maxMana);
-
-        // WARNING: ANYTHING BELOW THIS IF STATEMENT WILL NOT RUN IF THE PLAYER SPAWN POINT IS NOT SET
-        // TODO: FIX THIS
-
-        if (PlayerSpawnPoint.instance == null)
-        {
-            Debug.LogError("Player spawn point is null, please add one to the scene");
-        }
-        //SetUpSpells();
-        // if spawn point is not the default value, set player position to spawn point
-        if (PlayerSpawnPoint.instance.GetSpawnPoint() != Vector3.zero)
-        {
-            transform.position = PlayerSpawnPoint.instance.GetSpawnPoint();
-        }
-        else
-        {
-            PlayerSpawnPoint.instance.SetSpawnPoint(transform.position);
-        }
-
+        transform.position = currentSpawnPoint.GetSpawnPoint();
     }
    
     void Update()
     {
         HealthRegen();
         ManaRegen();
-        // Debug.Log("Current level " + data.currentXpLevel);
     }
 
     private void SetUpSpells()
     {
         Debug.Log("Setting up spells");
-        loadout.Reset();
         SpellHandlers = new List<SpellHandler>();
-        foreach (Spell spell in loadout.Spells)
+        foreach (Spell spell in PlayerInventory.Spells)
         {
             SpellHandler spellHandler = gameObject.AddComponent<SpellHandler>();
             spellHandler.Spell = spell;
             SpellHandlers.Add(spellHandler);
         }
-        loadout.SetSpellSlot1(SpellHandlers[0]);
-        loadout.SetSpellSlot2(null);
     }
 
     private void HealthRegen()
@@ -254,10 +222,6 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost
 
     private void AddHealth(int amount)
     {
-        if (state.Equals(PlayerState.Dead))
-        {
-            return;
-        }
         if(getExcess()!=0 && amount > getExcess())
         {
             amount = amount - getExcess();
@@ -274,10 +238,6 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost
 
     private void RemoveHealth(int amount)
     {
-        if (state.Equals(PlayerState.Dead))
-        {
-            return;
-        }
         data.health = Mathf.Max(data.health - amount, 0);
         healthBar.SetHealth(data.health);
         if (data.health <= 0)
@@ -289,33 +249,24 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost
 
     private void AddMana(int amount)
     {
-        if (state.Equals(PlayerState.Dead))
-        {
-            return;
-        }
         data.mana = Mathf.Min(data.mana + amount, data.maxMana);
         manaBar.SetMana(data.mana);
     }
 
     private void RemoveMana(int amount)
     {
-        if (state.Equals(PlayerState.Dead))
-        {
-            return;
-        }
         data.mana = Mathf.Max(data.mana - amount, 0);
         manaBar.SetMana(data.mana);
     }
 
     private void HandleDeath()
     {
-        GameManager.instance.SetGameState(GameState.Lost);
-        state = PlayerState.Dead;
+        _onPlayerDeath.Trigger();
     }
 
     internal void AddSpell(Spell spell)
     {
-        loadout.AddSpell(spell);
+        PlayerInventory.AddSpell(spell);
         SpellHandler spellHandler = gameObject.AddComponent<SpellHandler>();
         spellHandler.Spell = spell;
         SpellHandlers.Add(spellHandler);

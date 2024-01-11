@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 605c33c7b1bc9df4aabafd5b3bc25850, type: 3}
+  m_Name: Ghost
+  m_EditorClassIdentifier: 
+  _guid: 94a27eb62715748cd893783d187cee0b
+  spellName: Ghost
+  icon: {fileID: 0}
+  cooldownTime: 3
+  activeTime: 5
+  manaCost: 10
+  combos: []
+  sentences: []

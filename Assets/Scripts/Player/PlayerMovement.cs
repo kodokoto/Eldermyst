@@ -18,7 +18,7 @@ public class PlayerMovement : MonoBehaviour
 	private CapsuleCollider col;
 	[SerializeField] private BoxCollider FootCollider;
 
-	private PlayerInput playerInput;
+	[SerializeField] private InputManager inputManager = default;
 	// ingame variables
 
 	// inputs
@@ -90,39 +90,34 @@ public class PlayerMovement : MonoBehaviour
 
 	private void Awake()
 	{
+		Debug.Assert(inputManager != null, "InputManager is null, please assign in inspector.");
 		rb = GetComponent<Rigidbody>();
 		col = GetComponent<CapsuleCollider>();
 		gravityScale = DEFAULT_GRAVITY_SCALE;
 		currentSpeed = RUN_SPEED;
-		playerInput = new PlayerInput();
 	}
 
 	private void OnEnable()
 	{
-		playerInput.Enable();
-		playerInput.Player.Movement.performed += OnInputMove;
-		playerInput.Player.Movement.canceled += OnInputStopMove;
-		playerInput.Player.Jump.started += OnInputJumpPressed;
-		playerInput.Player.Jump.canceled += OnInputJumpReleased;
-		playerInput.Player.Jump.performed += OnInputJumpHeld;
-		playerInput.Player.Dash.started += OnInputDash;
+		inputManager.MoveEvent += OnInputMove;
+		inputManager.JumpStartedEvent += OnInputJumpPressed;
+		inputManager.JumpHeldEvent += OnInputJumpHeld;
+		inputManager.JumpCancelEvent += OnInputJumpReleased;
+		inputManager.DashEvent += OnInputDash;
 	}
 
 	private void OnDisable()
 	{
-		playerInput.Disable();
-		playerInput.Player.Movement.performed -= OnInputMove;
-		playerInput.Player.Movement.canceled -= OnInputStopMove;
-		playerInput.Player.Jump.started -= OnInputJumpPressed;
-		playerInput.Player.Jump.canceled -= OnInputJumpReleased;
-		playerInput.Player.Jump.performed -= OnInputJumpHeld;
-		playerInput.Player.Dash.started -= OnInputDash;
+		inputManager.MoveEvent -= OnInputMove;
+		inputManager.JumpStartedEvent -= OnInputJumpPressed;
+		inputManager.JumpHeldEvent -= OnInputJumpHeld;
+		inputManager.JumpCancelEvent -= OnInputJumpReleased;
+		inputManager.DashEvent -= OnInputDash;
 	}
 
-	private void OnInputMove(InputAction.CallbackContext context)
+	private void OnInputMove(float move_direction)
 	{
-		Vector2 i = context.ReadValue<Vector2>();
-		input = i.x;
+		input = move_direction;
 	}
 
 	private void OnInputStopMove(InputAction.CallbackContext context)
@@ -130,7 +125,7 @@ public class PlayerMovement : MonoBehaviour
 		input = 0f;
 	}
 
-	private void OnInputJumpPressed(InputAction.CallbackContext context)
+	private void OnInputJumpPressed()
 	{
 		if (CanWallJump())
 		{
@@ -151,7 +146,7 @@ public class PlayerMovement : MonoBehaviour
 		}
 	}
 
-	private void OnInputJumpHeld(InputAction.CallbackContext context)
+	private void OnInputJumpHeld()
 	{
 		// Handle buffered inputs
 		if (jumpBuffered && CanJump())
@@ -171,12 +166,12 @@ public class PlayerMovement : MonoBehaviour
 		}
 	}
 
-	private void OnInputJumpReleased(InputAction.CallbackContext context)
+	private void OnInputJumpReleased()
 	{
 		JumpReleased();
 	}
 
-	private void OnInputDash(InputAction.CallbackContext context)
+	private void OnInputDash()
 	{
 		if (CanDash())
 		{

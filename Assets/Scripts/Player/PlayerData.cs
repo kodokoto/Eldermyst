@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu]
-public class PlayerData : ScriptableObject
+[CreateAssetMenu(menuName = "GameData/PlayerData")]
+
+public class PlayerData : SerializableScriptableObject
 {
     
+    public string playerName = "Player";
+
     [Header("Stats")]
     public int maxHealth;
     public int maxMana;
@@ -26,18 +29,44 @@ public class PlayerData : ScriptableObject
     [HideInInspector] public int currentXpLevel;
     [HideInInspector] public int excessHealth;
 
-    void OnValidate() 
+    public void SetPlayerData(PlayerData newData)
     {
-        health = maxHealth;
-        mana = maxMana;
+        playerName = newData.playerName;
+        maxHealth = newData.maxHealth;
+        maxMana = newData.maxMana;
+        healthRegen = newData.healthRegen;
+        healthRegenRate = newData.healthRegenRate;
+        manaRegen = newData.manaRegen;
+        manaRegenRate = newData.manaRegenRate;
+        xpLevels = newData.xpLevels;
+        levelUpHealthRate = newData.levelUpHealthRate;
+        levelUpManaRate = newData.levelUpManaRate;
+
+        health = newData.health;
+        mana = newData.mana;
+        isShielded = newData.isShielded;
+        currentXp = newData.currentXp;
+        currentXpLevel = newData.currentXpLevel;
+        excessHealth = newData.excessHealth;
     }
 
-    public void Reset()
+    // void OnValidate() 
+    // {
+    //     health = maxHealth;
+    //     mana = maxMana;
+    // }
+
+    public void HardReset()
+    {
+        currentXpLevel = 0;
+        SoftReset();
+    }
+
+    public void SoftReset()
     {
         health = maxHealth;
         mana = maxMana;
-        currentXp = 0;
-        currentXpLevel = 0;
         excessHealth = 0;
+        currentXp = 0;
     }
 }

@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8f740ffb33dc4ca9860789a0372b022, type: 3}
+  m_Name: PlayerData
+  m_EditorClassIdentifier: 
+  _guid: 18715116c749f48f68ea9ae1ab0843ad
+  playerName: Blegg
+  maxHealth: 110
+  maxMana: 110
+  healthRegen: 1
+  healthRegenRate: 1
+  manaRegen: 1
+  manaRegenRate: 1
+  xpLevels: 0a000000140000001e0000002800000032000000
+  levelUpHealthRate: 10
+  levelUpManaRate: 10
+  health: 110
+  mana: 110
+  isShielded: 0
+  currentXp: 0
+  currentXpLevel: 0
+  excessHealth: 0
