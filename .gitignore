@@ -1,5 +1,8 @@
 connectwebgl.zip
+
 WebGL Builds
+WebGL-dev_BurstDebugInformation_DoNotShip
+
 .DS_Store
 .vscode
 # This .gitignore file should be placed at the root of your Unity project directory

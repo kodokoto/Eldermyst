@@ -4,7 +4,7 @@ public class MainMenuManager : MonoBehaviour
 {
     public void StartGame()
     {
-        SceneManager.LoadSceneAsync("Level 2");
+        SceneManager.LoadSceneAsync("Caves");
     }
 
     public void QuitGame()
