@@ -21,7 +21,10 @@ MonoBehaviour:
   combos:
   - keys: 00000000020000000100000004000000
   sentences:
-  - Bleh
+  - A chill breeze arises...
+  - within the scroll you find the following glyphs
+  - "\u2190 \u2191 \u2192 E"
+  - what could they mean?
   damage: 100
   radius: 10
   targetMask:

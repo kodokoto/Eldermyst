@@ -31,7 +31,6 @@ public class DialogueManager : MonoBehaviour
         if (index < dialogue.Count)
         {
             ShowCurrentLine();
-            index++;
             return true;
         }
         else
@@ -43,15 +42,16 @@ public class DialogueManager : MonoBehaviour
     private void ShowCurrentLine()
     {
         StartCoroutine(DisplayText(dialogue[index]));
+        index++;
     }
 
-    public IEnumerator DisplayText(string text)
+    public IEnumerator DisplayText(string t)
     {
         _isDialogueDoneDisplaying = false;
-        for (int i = 0; i < text.Length; i++)
+        for (int i = 0; i < t.Length; i++)
         {
-            this.text.text = text.Substring(0, i);
-            yield return new WaitForSeconds(0.05f);
+            this.text.text = t.Substring(0, i+1);
+            yield return new WaitForSecondsRealtime(0.05f);
         }
         _isDialogueDoneDisplaying = true;
     }
