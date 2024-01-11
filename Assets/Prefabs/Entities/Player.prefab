@@ -1057,7 +1057,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f426f4525e0e45588cc77cd35220a99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentSpawnPoint: {fileID: 11400000, guid: 488ab6c37fa3249739bb16c575e21166, type: 2}
   data: {fileID: 11400000, guid: 18715116c749f48f68ea9ae1ab0843ad, type: 2}
+  PlayerInventory: {fileID: 11400000, guid: 3705d0a23c751413c9706dd0ec7d0070, type: 2}
   projectileSpawnPoint: {fileID: 5132645758182098452}
   healthBar: {fileID: 0}
   manaBar: {fileID: 0}
@@ -1065,7 +1067,6 @@ MonoBehaviour:
   isRightEnabled: 0
   isLeftEnabled: 0
   levelUpUI: {fileID: 0}
-  loadout: {fileID: 11400000, guid: 3705d0a23c751413c9706dd0ec7d0070, type: 2}
   SpellHandlers: []
   _onPlayerDeath: {fileID: 11400000, guid: 5f6568f6334dc4636823e7fe78c905f2, type: 2}
 --- !u!114 &3375673259835774554
