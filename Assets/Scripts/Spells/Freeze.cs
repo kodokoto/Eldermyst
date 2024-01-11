@@ -18,6 +18,7 @@ public class Freeze : Spell
 
     public override void Activate(GameObject parent)
     {
+        Debug.Log("Freeze activated");
         // assert parent is not null
         Debug.Assert(parent != null, "Parent is null");
 
@@ -28,10 +29,12 @@ public class Freeze : Spell
         // assert explosion is not null
         Debug.Assert(explosion != null, "Explosion is null");
         collisionChecks = Physics.OverlapSphere(player.transform.position, radius, targetMask);
+        Debug.Log("Freeze collision checks " + collisionChecks.Length);
         foreach (Collider c in collisionChecks)
         {
             if (c.TryGetComponent(out IFreezable enemy))
             {
+                Debug.Log("Freezing enemy");
                 enemy.Freeze(damage);
             }
         }
@@ -54,5 +57,4 @@ public class Freeze : Spell
         // clear collision checks
         collisionChecks = null;
     }
-
 }
