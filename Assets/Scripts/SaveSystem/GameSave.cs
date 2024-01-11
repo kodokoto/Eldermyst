@@ -5,7 +5,7 @@ public class GameSave
 {
     public string _scene_guid;
 
-    public List<string> _spell_guids;
+    public List<string> _spell_guids = new List<string>();
 
     public string _player_data_guid;
 

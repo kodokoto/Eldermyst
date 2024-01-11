@@ -41,7 +41,7 @@ public class InputManager : ScriptableObject,
             playerInput.Dialogue.SetCallbacks(this);
             playerInput.PauseMenu.SetCallbacks(this);
         }
-        
+
         EnableGameplayInput();
     }
 
@@ -54,7 +54,6 @@ public class InputManager : ScriptableObject,
 
     public void OnMovement(InputAction.CallbackContext context)
     {
-        Debug.Log("Move");
         MoveEvent?.Invoke(context.ReadValue<Vector2>().x);
     }
 
@@ -154,6 +153,7 @@ public class InputManager : ScriptableObject,
 
     public void EnableGameplayInput()
     {
+        Debug.Log("Enable Gameplay Input");
         playerInput.Gameplay.Enable();
         playerInput.Dialogue.Disable();
         playerInput.PauseMenu.Disable();
@@ -161,6 +161,7 @@ public class InputManager : ScriptableObject,
 
     public void EnableDialogueInput()
     {
+        Debug.Log("Enable Dialogue Input");
         playerInput.Gameplay.Disable();
         playerInput.Dialogue.Enable();
         playerInput.PauseMenu.Disable();
@@ -168,6 +169,7 @@ public class InputManager : ScriptableObject,
 
     public void EnablePauseMenuInput()
     {
+        Debug.Log("Enable Pause Menu Input");
         playerInput.Gameplay.Disable();
         playerInput.Dialogue.Disable();
         playerInput.PauseMenu.Enable();
@@ -175,6 +177,7 @@ public class InputManager : ScriptableObject,
 
     public void EnableSpellBookInput()
     {
+        Debug.Log("Enable Spell Book Input");
         playerInput.Gameplay.Disable();
         playerInput.Dialogue.Disable();
         playerInput.PauseMenu.Disable();
@@ -182,6 +185,7 @@ public class InputManager : ScriptableObject,
 
     public void DisableAllInput()
     {
+        Debug.Log("Disable All Input");
         playerInput.Gameplay.Disable();
         playerInput.Dialogue.Disable();
         playerInput.PauseMenu.Disable();

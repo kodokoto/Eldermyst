@@ -20,7 +20,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private PlayerSpawnPoint currentSpawnPoint;
     [SerializeField] private PlayerData playerData;
 	[SerializeField] private SceneSO _menuToLoad = default;
+
+    [Header("Managers")]
     [SerializeField] private InputManager _inputManager = default;
+    [SerializeField] private SaveManager _saveManager = default;
 
     [Header("Listeners")]
     [SerializeField] private SimpleEventChannelSO _onRetry;
@@ -65,14 +68,11 @@ public class GameManager : MonoBehaviour
         _loadLevelSignal.RaiseEvent(_menuToLoad);
     }
 
-    private void OnSave()
+    public void OnSave()
     {
-        // SaveSystem.SavePlayerData(playerData);
+        _saveManager.saveFilename = playerData.playerName + ".json";
+        _saveManager.SaveGame();
     }
-
-
-
-
 
     public void SetSpawnPoint(Vector3 spawnPoint)
     {

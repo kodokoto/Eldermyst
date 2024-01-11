@@ -7,6 +7,8 @@ using UnityEngine;
 public class PlayerData : SerializableScriptableObject
 {
     
+    public string playerName = "Player";
+
     [Header("Stats")]
     public int maxHealth;
     public int maxMana;
@@ -29,6 +31,7 @@ public class PlayerData : SerializableScriptableObject
 
     public void SetPlayerData(PlayerData newData)
     {
+        playerName = newData.playerName;
         maxHealth = newData.maxHealth;
         maxMana = newData.maxMana;
         healthRegen = newData.healthRegen;
@@ -47,11 +50,11 @@ public class PlayerData : SerializableScriptableObject
         excessHealth = newData.excessHealth;
     }
 
-    void OnValidate() 
-    {
-        health = maxHealth;
-        mana = maxMana;
-    }
+    // void OnValidate() 
+    // {
+    //     health = maxHealth;
+    //     mana = maxMana;
+    // }
 
     public void HardReset()
     {

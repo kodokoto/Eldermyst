@@ -1,10 +1,5 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.SearchService;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public enum PlayerState
 {
@@ -63,7 +58,6 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost
     private void SetUpSpells()
     {
         Debug.Log("Setting up spells");
-        PlayerInventory.Reset();
         SpellHandlers = new List<SpellHandler>();
         foreach (Spell spell in PlayerInventory.Spells)
         {

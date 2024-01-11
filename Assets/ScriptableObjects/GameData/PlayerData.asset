@@ -12,12 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8f740ffb33dc4ca9860789a0372b022, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: 
+  _guid: 18715116c749f48f68ea9ae1ab0843ad
+  playerName: Bobo
   maxHealth: 100
   maxMana: 100
   healthRegen: 1
   healthRegenRate: 1
   manaRegen: 1
   manaRegenRate: 1
-  health: 100
-  mana: 36
+  xpLevels: 0a000000140000001e0000002800000032000000
+  levelUpHealthRate: 10
+  levelUpManaRate: 10
+  health: 0
+  mana: 100
   isShielded: 0
+  currentXp: 0
+  currentXpLevel: 0
+  excessHealth: 0

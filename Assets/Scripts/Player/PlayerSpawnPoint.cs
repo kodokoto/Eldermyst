@@ -23,21 +23,9 @@ public class PlayerSpawnPoint : SerializableScriptableObject
         currentSpawnPoint = newSpawnPoint;
     }
 
-    public void ResetSpawnPoint()
+    public void Reset()
     {
         Debug.Log("Spawn Point Reset");
         currentSpawnPoint = spawnPoint;
-    }
-
-    // when play mode starts, this will be called.
-    // You can use this to set up references.
-    public void OnValidate() 
-    {
-        ResetSpawnPoint();
-    }
-
-    // You can also use OnAfterDeserialize for the other way around
-    public void OnAfterDeserialize() 
-    {
     }
 }
