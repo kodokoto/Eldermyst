@@ -387,7 +387,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spell: {fileID: 11400000, guid: e11337db2e1b8f840ba28fe61c3dfdee, type: 2}
-  dialogueChannel: {fileID: 11400000, guid: 804f7b18096194b01997ce8366ce4628, type: 2}
+  dialogueSignal: {fileID: 11400000, guid: cda9bde42674943e99905365cd48a372, type: 2}
 --- !u!135 &630575983
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -943,6 +943,10 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 5809156591853880789, guid: f93fe2533336848f1beb77e895e9b908, type: 3}
+      propertyPath: xpBar
+      value: 
+      objectReference: {fileID: 1855172860588040507}
+    - target: {fileID: 5809156591853880789, guid: f93fe2533336848f1beb77e895e9b908, type: 3}
       propertyPath: manaBar
       value: 
       objectReference: {fileID: 2093792332}
@@ -1054,10 +1058,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 886149553545712743, guid: c70baacc7d01a4ba783f51dbe7065de1, type: 3}
-      propertyPath: m_Intensity
-      value: 0.001
-      objectReference: {fileID: 0}
     - target: {fileID: 5142617825021828063, guid: c70baacc7d01a4ba783f51dbe7065de1, type: 3}
       propertyPath: m_Name
       value: Directional Light
@@ -1159,7 +1159,7 @@ MonoBehaviour:
   _onRetry: {fileID: 11400000, guid: e0030fde79b6b43568a4d194f87057ce, type: 2}
   _onExit: {fileID: 11400000, guid: e9920e2fffeed43f098b89d75ccab2da, type: 2}
   _onReady: {fileID: 11400000, guid: 3f7f106b6691649b8b09c3d9f40f8aba, type: 2}
-  spawnPointChangedSignal: {fileID: 11400000, guid: 5cc5333c18a8946398a839673e1112fe, type: 2}
+  _spawnPointSignal: {fileID: 11400000, guid: 5cc5333c18a8946398a839673e1112fe, type: 2}
   _loadLevelSignal: {fileID: 11400000, guid: dc26650b8d1ad4d71bc19a9938a7d9bd, type: 2}
   _onRestartScene: {fileID: 11400000, guid: 1ee1321aa69ee4316a0124c81fe6a0cd, type: 2}
 --- !u!114 &2093792332 stripped
@@ -1294,6 +1294,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3bd6cad5feb19405b846519b5e5e4fc4, type: 3}
+--- !u!114 &1855172860588040507 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3170798420141823291, guid: 3bd6cad5feb19405b846519b5e5e4fc4, type: 3}
+  m_PrefabInstance: {fileID: 1855172860588040506}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e367a175713a8c2489334bc33f5cec6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1967384613153380604
 PrefabInstance:
   m_ObjectHideFlags: 0

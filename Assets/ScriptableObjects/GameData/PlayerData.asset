@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: PlayerData
   m_EditorClassIdentifier: 
   _guid: 18715116c749f48f68ea9ae1ab0843ad
-  playerName: Bobo
-  maxHealth: 100
-  maxMana: 100
+  playerName: Blegg
+  maxHealth: 110
+  maxMana: 110
   healthRegen: 1
   healthRegenRate: 1
   manaRegen: 1
@@ -23,8 +23,8 @@ MonoBehaviour:
   xpLevels: 0a000000140000001e0000002800000032000000
   levelUpHealthRate: 10
   levelUpManaRate: 10
-  health: 0
-  mana: 100
+  health: 110
+  mana: 110
   isShielded: 0
   currentXp: 0
   currentXpLevel: 0

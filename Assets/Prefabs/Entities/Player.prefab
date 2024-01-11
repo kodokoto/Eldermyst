@@ -1064,11 +1064,8 @@ MonoBehaviour:
   healthBar: {fileID: 0}
   manaBar: {fileID: 0}
   xpBar: {fileID: 0}
-  isRightEnabled: 0
-  isLeftEnabled: 0
-  levelUpUI: {fileID: 0}
   SpellHandlers: []
-  _onPlayerDeath: {fileID: 11400000, guid: 5f6568f6334dc4636823e7fe78c905f2, type: 2}
+  _onPlayerDeath: {fileID: 11400000, guid: b683471bea443432eba7ab3a1530e501, type: 2}
 --- !u!114 &3375673259835774554
 MonoBehaviour:
   m_ObjectHideFlags: 0

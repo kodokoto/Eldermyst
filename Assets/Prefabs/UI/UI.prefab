@@ -387,13 +387,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2863492aa48b4863aa4bb185f683580, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseScreen: {fileID: 4478378413449996420}
-  spellBookScreen: {fileID: 3501538627055127074}
-  deathScreen: {fileID: 845953279137415760}
-  dialogueScreen: {fileID: 9178331324274221869}
+  _pauseScreen: {fileID: 4478378413449996420}
+  _spellBookScreen: {fileID: 3501538627055127074}
+  _deathScreen: {fileID: 845953279137415760}
+  _dialogueScreen: {fileID: 9178331324274221869}
   _inputManager: {fileID: 11400000, guid: fe9aa25dba7844e1f8272d492fdc1f00, type: 2}
-  _dialogueChannel: {fileID: 11400000, guid: 804f7b18096194b01997ce8366ce4628, type: 2}
-  _onPlayerDeath: {fileID: 11400000, guid: 5f6568f6334dc4636823e7fe78c905f2, type: 2}
+  _dialogueSignal: {fileID: 11400000, guid: cda9bde42674943e99905365cd48a372, type: 2}
+  _onPlayerDeath: {fileID: 11400000, guid: b683471bea443432eba7ab3a1530e501, type: 2}
   _onRetry: {fileID: 11400000, guid: e0030fde79b6b43568a4d194f87057ce, type: 2}
   _onExitToMenu: {fileID: 11400000, guid: e9920e2fffeed43f098b89d75ccab2da, type: 2}
 --- !u!1001 &1229642406567818744

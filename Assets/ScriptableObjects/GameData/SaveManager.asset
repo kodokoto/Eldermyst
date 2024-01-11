@@ -15,4 +15,5 @@ MonoBehaviour:
   _playerData: {fileID: 11400000, guid: 18715116c749f48f68ea9ae1ab0843ad, type: 2}
   _playerInventory: {fileID: 11400000, guid: 3705d0a23c751413c9706dd0ec7d0070, type: 2}
   _playerSpawnPoint: {fileID: 11400000, guid: 488ab6c37fa3249739bb16c575e21166, type: 2}
-  _loadSceneSignal: {fileID: 11400000, guid: 944e977de67a24fef8c7903be0bc1786, type: 2}
+  _loadSceneSignal: {fileID: 11400000, guid: 9d5d19b7836724e8f8d0594897637b55, type: 2}
+  saveFilename: awdda.json

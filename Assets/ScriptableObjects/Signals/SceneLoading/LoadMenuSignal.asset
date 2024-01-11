@@ -9,6 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5004b60503ea4eeb819cd1dc7de3526, type: 3}
-  m_Name: LoadMenuEventChannel
+  m_Script: {fileID: 11500000, guid: 67480fdd26e294ab1b222c8dc2d472ae, type: 3}
+  m_Name: LoadMenuSignal
   m_EditorClassIdentifier: 

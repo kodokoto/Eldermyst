@@ -9,14 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe9deba2fb86d1a4ea64dff126f436b7, type: 3}
-  m_Name: Health Spell
+  m_Script: {fileID: 11500000, guid: cd3b45afeddd04958acfea26da7dca1c, type: 3}
+  m_Name: DialogueSignal
   m_EditorClassIdentifier: 
-  _guid: 75ae984c91597fc4a904a7e0f52729db
-  spellName: Heal
-  icon: {fileID: 0}
-  cooldownTime: 0
-  activeTime: 3
-  manaCost: 10
-  combos: []
-  sentences: []

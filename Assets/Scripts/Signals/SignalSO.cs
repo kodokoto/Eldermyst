@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class SignalSO : ScriptableObject
+[CreateAssetMenu(menuName = "Signals/Signal")]
+public class SignalSO : SerializableScriptableObject
 {
 	public UnityAction OnTriggered;
 	
@@ -11,7 +12,7 @@ public class SignalSO : ScriptableObject
 	}
 }
 
-public class SignalSO<T> : ScriptableObject
+public class SignalSO<T> : SerializableScriptableObject
 {
 	public UnityAction<T> OnTriggered;
 	
