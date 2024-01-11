@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Spells/Shield")]
 public class Shield : Spell
 {
     public GameObject ObjectToSpawn;

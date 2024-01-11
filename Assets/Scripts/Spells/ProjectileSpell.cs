@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Spells/ProjectileSpell")]
 public class ProjectileSpell : Spell
 {
     public GameObject projectilePrefab;

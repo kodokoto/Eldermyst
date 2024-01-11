@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Spells/Ghost")]
 public class Ghost : Spell
 {
     public override void Activate(GameObject parent)

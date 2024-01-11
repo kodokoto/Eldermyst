@@ -15,21 +15,14 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost
     [SerializeField] public PlayerData data;
     [SerializeField] public PlayerInventory PlayerInventory;
 
-
-    // public PlayerState state;
     [SerializeField] private Transform projectileSpawnPoint;
     private float healthRegenTimer;
     private float manaRegenTimer;
     
-    // UI
+    [Header("UI")]
     public HealthBar healthBar;
     public ManaBar manaBar;
     public XPBar xpBar;
-    public bool isRightEnabled=false;
-    public bool isLeftEnabled=false;
-
-    public Dialogue levelUpUI;
-
 
     public List<SpellHandler> SpellHandlers;
 
@@ -42,7 +35,6 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost
 
     void Start()
     {
-        Debug.Log("Plz");
         SetUpSpells();
         healthBar.SetMaxHealth(data.maxHealth);
         manaBar.SetMaxMana(data.maxMana);

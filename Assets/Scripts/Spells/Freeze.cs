@@ -5,7 +5,7 @@ using UnityEngine;
 using static UnityEngine.EventSystems.EventTrigger;
 using UnityEngine.VFX;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Spells/Freeze")]
 public class Freeze : Spell
 {
     [SerializeField] private int damage = 2;
