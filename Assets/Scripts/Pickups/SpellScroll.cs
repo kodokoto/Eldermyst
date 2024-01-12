@@ -1,24 +1,17 @@
-using NUnit.Framework;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SpellScroll : Pickup
 {
     public Spell spell;
-    public Player player;
-    public List<Spell> Spells;
+    public PlayerInventory playerInventory;
     [SerializeField] private DialogueSignalSO dialogueSignal;
 
     private void Start()
     {
-        player = GameObject.Find("Player").GetComponent<Player>();
-        Spells = player.PlayerInventory.Spells;
-        for (int i = 0; i < Spells.Count; i++)
+        // check if player already has spell
+        if (playerInventory.HasSpell(spell))
         {
-            if (Spells[i].spellName == spell.spellName)
-            {
-                Destroy(gameObject);
-            }
+            Destroy(gameObject);
         }
     }
     void Update()

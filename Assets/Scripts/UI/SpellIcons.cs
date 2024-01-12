@@ -11,30 +11,67 @@ public class SpellIcons : MonoBehaviour
     public Player player;
     public List<SpellHandler> Spells;
     public GameObject ObjectToInstantiate;
-    public GameObject[] ObjectsInstantiated = new GameObject[6];
+    public List<GameObject> ObjectsInstantiated = new List<GameObject>();
+
+    [SerializeField] private SpellSignalSO _onSpellAqured;
     private int index = 0;
+
+    private void OnEnable()
+    {
+        _onSpellAqured.OnTriggered += OnNewSpellAcquired;
+    }
+
+    private void OnDisable()
+    {
+        _onSpellAqured.OnTriggered -= OnNewSpellAcquired;
+    }
 
     void Start()
     {
-        Debug.Log("Start loading icons");
         Spells = player.SpellHandlers;
-        for (int i =0; i<Spells.Count; i++)
+        for (int i = 0; i < Spells.Count; i++)
         {
-            Debug.Log("Spells found in SpellIcons");
-            Image[] img = ObjectToInstantiate.GetComponentsInChildren<Image>();
-            Transform child = ObjectToInstantiate.transform.GetChild(1);
-            child.gameObject.GetComponent<Image>().sprite = Spells[i].Spell.icon;
-            ObjectsInstantiated[index] = Instantiate(ObjectToInstantiate);
-            index++;
-            Debug.Log("Image should be instantiated");
+           InstantiateSpellPrefab(Spells[i].Spell);
         }
-        
+
+        RearrangePositions();
+    }
+
+    private void OnNewSpellAcquired(Spell spell)
+    {
+        InstantiateSpellPrefab(spell);
+        RearrangePositions();
+    }
+
+    private void RearrangePositions()
+    {
+        // Rearrange positions so that the first spell is furthest left
+        // and the last spell is furthest right
+        // iterate from reverse
+        for (int i = ObjectsInstantiated.Count - 1; i >= 0; i--)
+        {
+            ObjectsInstantiated[i].transform.localPosition = new Vector3(i * 40, 0, 0);
+        }
+    }
+    private void InstantiateSpellPrefab(Spell spell)
+    {
+        // instantiate prefab
+        GameObject spellPrefab = Instantiate(ObjectToInstantiate);
+        // set image
+        spellPrefab.GetComponent<Image>().sprite = spell.icon;
+
+        // set parent
+        spellPrefab.transform.SetParent(gameObject.transform);
+
+        // set anchor to top right
+        spellPrefab.GetComponent<RectTransform>().anchorMin = new Vector2(1, 1);
+
+        ObjectsInstantiated.Add(spellPrefab);
     }
 
     // Update is called once per frame
     void Update()
     {
-        InstantiatePrefabs();
         deaLWithCooldown();
     }
 
