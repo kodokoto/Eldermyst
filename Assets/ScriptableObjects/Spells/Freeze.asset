@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _guid: e11337db2e1b8f840ba28fe61c3dfdee
   spellName: Freeze
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 829f87064c4a5e7419e4d1e058595ece, type: 3}
   cooldownTime: 0
   activeTime: 3
   manaCost: 10
   combos:
-  - keys: 00000000020000000100000004000000
+  - keys: 90210000912100009221000045000000
   sentences:
   - A chill breeze arises...
   - within the scroll you find the following glyphs

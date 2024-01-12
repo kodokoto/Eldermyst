@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _guid: 6f8c5838fd62946049af07cc05ea0142
   spellName: Orb Blast
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: dd36aa8ada56948458aec98edb45a894, type: 3}
   cooldownTime: 0
   activeTime: 0
   manaCost: 20
   combos:
-  - keys: 000000000000000004000000
-  - keys: 010000000100000004000000
+  - keys: 922100009221000092210000
+  - keys: 902100009021000090210000
   sentences: []
   projectilePrefab: {fileID: 6539326632289364038, guid: 4063f456b3a8441f18b268b410dac2c6, type: 3}

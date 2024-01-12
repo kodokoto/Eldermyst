@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _guid: 512e9b086b19046febd3d9d66b74659c
   spellName: Shield
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: a6aa05f84abd84061b545b969c0d83d5, type: 3}
   cooldownTime: 0
   activeTime: 2
   manaCost: 20

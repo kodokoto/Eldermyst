@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 605c33c7b1bc9df4aabafd5b3bc25850, type: 3}
   m_Name: Ghost
   m_EditorClassIdentifier: 
-  _guid: 
-  spellName: 
-  icon: {fileID: 0}
+  _guid: c51cb9ffa780349f0ac7b2bc481fc03d
+  spellName: Ghost
+  icon: {fileID: 21300000, guid: 22392864f8016ec4bb7185a5b32a28e0, type: 3}
   cooldownTime: 0
   activeTime: 0
   manaCost: 0
