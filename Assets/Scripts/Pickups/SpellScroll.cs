@@ -4,6 +4,7 @@ public class SpellScroll : Pickup
 {
     public Spell spell;
     [SerializeField] private DialogueSignalSO dialogueSignal;
+    [SerializeField] private SpellSignalSO spellSignal;
 
     void Update()
     {
@@ -15,6 +16,7 @@ public class SpellScroll : Pickup
         // Add spell to player's spell list
         actor.GetComponent<Player>().AddSpell(spell);
         dialogueSignal.Trigger(spell.sentences);
+        spellSignal.Trigger(spell);
         Destroy(gameObject);
     }
 }
