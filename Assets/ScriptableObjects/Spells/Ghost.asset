@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _guid: 94a27eb62715748cd893783d187cee0b
   spellName: Ghost
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 22392864f8016ec4bb7185a5b32a28e0, type: 3}
   cooldownTime: 3
   activeTime: 5
   manaCost: 10

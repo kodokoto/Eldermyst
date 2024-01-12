@@ -78,4 +78,14 @@ public class SpellHandler : MonoBehaviour
             Casting = true;
         }
     }
+
+    public SpellState GetState()
+    {
+        return getState();
+    }
+
+    private SpellState getState()
+    {
+        return state;
+    }
 }

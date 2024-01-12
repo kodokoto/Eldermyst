@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _guid: 75ae984c91597fc4a904a7e0f52729db
   spellName: Heal
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 22392864f8016ec4bb7185a5b32a28e0, type: 3}
   cooldownTime: 0
   activeTime: 3
   manaCost: 10
