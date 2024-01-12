@@ -10,7 +10,7 @@ public class FlyingEnemy : Enemy, IPathable
     public List<Vector3> CurrentPath { get; set; }
 
     [SerializeField] private Transform AttackPosition;
-    [SerializeField] protected override int Health { get; set; } = 50;
+    [field: SerializeField] protected override int Health { get; set; } = 50;
     [field: SerializeField] protected override int XpValue { get; set; } = 10;
     [field: SerializeField] protected override float SearchRange { get; set; } = 20f;
     [field: SerializeField] protected override float AttackRate { get; set; } = 1f;
