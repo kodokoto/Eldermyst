@@ -36,7 +36,6 @@ public class SpellIcons : MonoBehaviour
     {
         InstantiatePrefabs();
         deaLWithCooldown();
-        
     }
 
     private void InstantiatePrefabs()
