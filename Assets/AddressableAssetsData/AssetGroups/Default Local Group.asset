@@ -52,36 +52,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ed4ab643e454b4b66a171f601e49460f
-    m_Address: Assets/ScriptableObjects/Spells/ProjectileSpell.asset
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 519dbff75219e410d803878a6d0e71ff
-    m_Address: Assets/ScriptableObjects/Spells/Shield.asset
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e514316db1dd04d899641440b5e5b296
-    m_Address: Assets/ScriptableObjects/Spells/Teleport.asset
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 75ae984c91597fc4a904a7e0f52729db
-    m_Address: Assets/ScriptableObjects/Spells/Health Spell.asset
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 94a27eb62715748cd893783d187cee0b
-    m_Address: Assets/ScriptableObjects/Spells/Ghost.asset
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e11337db2e1b8f840ba28fe61c3dfdee
-    m_Address: Assets/ScriptableObjects/Spells/Freeze.asset
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 07fe629da667a476ebac47514bcf8ce3
     m_Address: Assets/ScriptableObjects/SceneData/CavesScene.asset
     m_ReadOnly: 0
@@ -94,6 +64,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9d5d19b7836724e8f8d0594897637b55
     m_Address: Assets/ScriptableObjects/Signals/SceneLoading/LoadLevelSignal.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 14d6da9a0be4449d7aa5268d49b7f27a
+    m_Address: Assets/Scenes/Levels/Tutorial.unity
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

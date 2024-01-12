@@ -22,12 +22,12 @@ public class PlayerData : SerializableScriptableObject
     public int levelUpManaRate = 10;
 
     // Ingame stats
-    [HideInInspector] public int health;
-    [HideInInspector] public int mana;
-    [HideInInspector] public bool isShielded;
-    [HideInInspector] public int currentXp;
-    [HideInInspector] public int currentXpLevel;
-    [HideInInspector] public int excessHealth;
+    public int health;
+    public int mana;
+    public bool isShielded;
+    public int currentXp;
+    public int currentLevel;
+    public int excessHealth;
 
     public void SetPlayerData(PlayerData newData)
     {
@@ -46,7 +46,7 @@ public class PlayerData : SerializableScriptableObject
         mana = newData.mana;
         isShielded = newData.isShielded;
         currentXp = newData.currentXp;
-        currentXpLevel = newData.currentXpLevel;
+        currentLevel = newData.currentLevel;
         excessHealth = newData.excessHealth;
     }
 
@@ -58,7 +58,7 @@ public class PlayerData : SerializableScriptableObject
 
     public void HardReset()
     {
-        currentXpLevel = 0;
+        currentLevel = 0;
         SoftReset();
     }
 

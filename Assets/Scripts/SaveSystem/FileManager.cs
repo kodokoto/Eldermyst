@@ -8,8 +8,11 @@ public static class FileManager
     public static List<string> GetAllSaveFiles()
     {
         var files = new List<string>();
+		
         var directoryInfo = new DirectoryInfo(Application.persistentDataPath);
         var fileInfo = directoryInfo.GetFiles();
+		// sort by last write time
+		Array.Sort(fileInfo, (x, y) => DateTime.Compare(y.LastWriteTime, x.LastWriteTime));
         foreach (var file in fileInfo)
         {
             if (file.Extension == ".json")
@@ -17,7 +20,7 @@ public static class FileManager
                 files.Add(file.Name.TrimEnd(".json".ToCharArray()));
             }
         }
-
+		
         return files;
     }
 

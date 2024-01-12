@@ -592,9 +592,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inputManager: {fileID: 11400000, guid: fe9aa25dba7844e1f8272d492fdc1f00, type: 2}
   _saveManager: {fileID: 11400000, guid: 4114eb6b7bc2d44e99729b488ae6e8ce, type: 2}
-  _startingScene: {fileID: 11400000, guid: 07fe629da667a476ebac47514bcf8ce3, type: 2}
+  _startingScene: {fileID: 11400000, guid: 2cc0cadc98c7049e7a9a3947077321f1, type: 2}
   _saveNameInputField: {fileID: 2003580911}
   _savedGamesPanel: {fileID: 2024699159}
+  _continueButton: {fileID: 1070452132}
   _loadSceneSignal: {fileID: 11400000, guid: 9d5d19b7836724e8f8d0594897637b55, type: 2}
 --- !u!1 &390339530
 GameObject:
@@ -944,7 +945,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Start
+  m_text: Continue
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1710,7 +1711,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1070452131
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1777,7 +1778,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 330443857}
         m_TargetAssemblyTypeName: MainMenuManager, Assembly-CSharp
-        m_MethodName: StartNewGame
+        m_MethodName: ContinueGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
