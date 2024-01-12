@@ -5,22 +5,17 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Spells/Health")]
 public class Health : Spell
 {
-    private int OriginalHealth;
+    [SerializeField] private int _boostAmount = 50;
     public override void Activate(GameObject parent)
     {
         Player player = parent.GetComponent<Player>();
-        OriginalHealth = player.GetHealth();
-        if ((player.GetHealth() + 20 > player.GetMaxHealth())){
-            player.setExcess(player.GetMaxHealth() - (player.GetHealth() + 20));
-        }
-        player.RestoreHealth(50);
-        
+        player.SetMaxHealth(player.GetMaxHealth() + _boostAmount);
+        player.Heal(_boostAmount);
     }
 
     public override void Deactivate(GameObject parent)
     {
         Player player = parent.GetComponent<Player>();
-        player.setHealth(OriginalHealth);
-        
+        player.SetMaxHealth(player.GetMaxHealth() - _boostAmount);
     }
 }

@@ -12,6 +12,8 @@ public class ManaBar : MonoBehaviour
     {
         slider.maxValue = mana;
         slider.value = mana;
+        // increase gameobject length based on how health is set
+        gameObject.transform.localScale = new Vector3(mana / 100f, 1f, 1f);
     }
 
     public void SetMana(int mana)
