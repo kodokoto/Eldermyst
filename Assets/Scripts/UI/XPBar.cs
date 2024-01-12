@@ -1,19 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class XPBar : MonoBehaviour
 {
     public Slider slider;
+    // TMP Text
+    private TMP_Text text;
 
-    public void Start()
+    public void Awake()
     {
-        slider = gameObject.GetComponent<Slider>();
+        text = gameObject.GetComponentInChildren<TMP_Text>();
     }
 
     public void SetMaxXP(int xp)
     {
+        Debug.Log("Setting max XP to " + xp);
         slider.maxValue = xp;
     }
 
@@ -21,5 +25,10 @@ public class XPBar : MonoBehaviour
     {
         Debug.Log("Setting XP to " + xp);
         slider.value = xp;
+    }
+
+    public void SetLevel(int level)
+    {
+        text.text = level + 1 + "";
     }
 }

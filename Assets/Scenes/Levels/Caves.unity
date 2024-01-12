@@ -1213,6 +1213,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6768049492007034849, guid: 69c3d0dacd1b8eb4e8b23f6dc5db8db2, type: 3}
   m_PrefabInstance: {fileID: 135576174}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &142634701 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1419948772925537236, guid: e848ec94dfa6946b8baf39499877734b, type: 3}
+  m_PrefabInstance: {fileID: 1225921600}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &148022496
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2671,11 +2676,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1419948772925537236, guid: e848ec94dfa6946b8baf39499877734b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 121.854935
+      value: 10.99
       objectReference: {fileID: 0}
     - target: {fileID: 1419948772925537236, guid: e848ec94dfa6946b8baf39499877734b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -76.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1419948772925537236, guid: e848ec94dfa6946b8baf39499877734b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -10516,6 +10521,63 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6930952328927167202, guid: 43658eb604a030a4292b4278e8991a4d, type: 3}
   m_PrefabInstance: {fileID: 1276717574}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1225921600
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1828181212}
+    m_Modifications:
+    - target: {fileID: 1419948772925537236, guid: e848ec94dfa6946b8baf39499877734b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 121.854935
+      objectReference: {fileID: 0}
+    - target: {fileID: 1419948772925537236, guid: e848ec94dfa6946b8baf39499877734b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -76.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1419948772925537236, guid: e848ec94dfa6946b8baf39499877734b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1419948772925537236, guid: e848ec94dfa6946b8baf39499877734b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1419948772925537236, guid: e848ec94dfa6946b8baf39499877734b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1419948772925537236, guid: e848ec94dfa6946b8baf39499877734b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1419948772925537236, guid: e848ec94dfa6946b8baf39499877734b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1419948772925537236, guid: e848ec94dfa6946b8baf39499877734b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1419948772925537236, guid: e848ec94dfa6946b8baf39499877734b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1419948772925537236, guid: e848ec94dfa6946b8baf39499877734b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4857691583362144941, guid: e848ec94dfa6946b8baf39499877734b, type: 3}
+      propertyPath: m_Name
+      value: Health Potion (6)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e848ec94dfa6946b8baf39499877734b, type: 3}
 --- !u!1001 &1248827942
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17166,6 +17228,7 @@ Transform:
   - {fileID: 1275870546}
   - {fileID: 1796708865}
   - {fileID: 1437603167}
+  - {fileID: 142634701}
   - {fileID: 1621087316}
   - {fileID: 1254993462}
   - {fileID: 1342057701}

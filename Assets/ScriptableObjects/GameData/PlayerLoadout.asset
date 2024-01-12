@@ -15,3 +15,4 @@ MonoBehaviour:
   _guid: 3705d0a23c751413c9706dd0ec7d0070
   Spells:
   - {fileID: 11400000, guid: 6f8c5838fd62946049af07cc05ea0142, type: 2}
+  - {fileID: 11400000, guid: 87646b93b9c87449592ad3b043ed206a, type: 2}
