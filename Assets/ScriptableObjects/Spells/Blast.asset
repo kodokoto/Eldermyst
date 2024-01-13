@@ -19,7 +19,7 @@ MonoBehaviour:
   activeTime: 0
   manaCost: 20
   combos:
-  - keys: 922100009221000092210000
+  - keys: 922100009221000045000000
   - keys: 902100009021000045000000
   sentences: []
   projectilePrefab: {fileID: 6539326632289364038, guid: 4063f456b3a8441f18b268b410dac2c6, type: 3}

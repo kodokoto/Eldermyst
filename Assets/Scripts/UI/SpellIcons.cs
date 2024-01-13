@@ -45,11 +45,9 @@ public class SpellIcons : MonoBehaviour
         // instantiate prefab
         GameObject spellPrefab = Instantiate(ObjectToInstantiate);
 
-        Debug.Log("Instantiating spell prefab " + spellPrefab.name);
         Debug.Assert(spellPrefab != null, "spellPrefab did not instantiate properly");
         // set image
         spellPrefab.GetComponentsInChildren<Image>().Where(item => item.name == "Icon").ToList()[0].sprite = spellHandler.Spell.icon;
-        Debug.Log("Setting image to " + spellHandler.Spell.icon.name);
         // set parent
         spellPrefab.transform.SetParent(gameObject.transform);
 
@@ -72,10 +70,7 @@ public class SpellIcons : MonoBehaviour
         {
             if (pair.Item1.GetState() == SpellState.Cooldown)
             {
-                Debug.Log("Setting cooldown slider for " + pair.Item1.Spell.name);
-                Debug.Log("To: " + pair.Item1.CooldownTimer / pair.Item1.Spell.cooldownTime);
                 Slider slider = pair.Item2.GetComponentInChildren<Slider>();
-                Debug.Assert(slider != null, "Slider is null");
                 slider.value = 1 - pair.Item1.CooldownTimer / pair.Item1.Spell.cooldownTime;
             }
             else if (pair.Item1.GetState() == SpellState.Active)
