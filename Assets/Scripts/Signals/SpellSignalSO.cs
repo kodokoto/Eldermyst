@@ -1,4 +1,5 @@
+
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Signals/Spell Signal")]
-public class SpellSignalSO : SignalSO<Spell> {}
+public class SpellSignalSO : SignalSO<SpellHandler> {}

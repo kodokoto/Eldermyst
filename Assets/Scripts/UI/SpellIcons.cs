@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,14 +9,9 @@ using UnityEngine.UI;
 public class SpellIcons : MonoBehaviour
 {
     // Start is called before the first frame update
-
-    public Player player;
-    public List<SpellHandler> Spells;
     public GameObject ObjectToInstantiate;
-    public List<GameObject> ObjectsInstantiated = new List<GameObject>();
-
+    private readonly List<Tuple<SpellHandler, GameObject>> _cachedSpells = new List<Tuple<SpellHandler, GameObject>>();
     [SerializeField] private SpellSignalSO _onSpellAqured;
-    private int index = 0;
 
     private void OnEnable()
     {
@@ -26,20 +23,9 @@ public class SpellIcons : MonoBehaviour
         _onSpellAqured.OnTriggered -= OnNewSpellAcquired;
     }
 
-    void Start()
+    private void OnNewSpellAcquired(SpellHandler spellHandler)
     {
-        Spells = player.SpellHandlers;
-        for (int i = 0; i < Spells.Count; i++)
-        {
-           InstantiateSpellPrefab(Spells[i].Spell);
-        }
-
-        RearrangePositions();
-    }
-
-    private void OnNewSpellAcquired(Spell spell)
-    {
-        InstantiateSpellPrefab(spell);
+        InstantiateSpellPrefab(spellHandler);
         RearrangePositions();
     }
 
@@ -48,81 +34,55 @@ public class SpellIcons : MonoBehaviour
         // Rearrange positions so that the first spell is furthest left
         // and the last spell is furthest right
         // iterate from reverse
-        for (int i = ObjectsInstantiated.Count - 1; i >= 0; i--)
+        for (int i = 0; i < _cachedSpells.Count; i++)
         {
-            ObjectsInstantiated[i].transform.localPosition = new Vector3(i * 40, 0, 0);
+            _cachedSpells[i].Item2.transform.localPosition = new Vector3(i * -40, 0, 0);
         }
+
     }
-    private void InstantiateSpellPrefab(Spell spell)
+    private void InstantiateSpellPrefab(SpellHandler spellHandler)
     {
         // instantiate prefab
         GameObject spellPrefab = Instantiate(ObjectToInstantiate);
-        // set image
-        spellPrefab.GetComponent<Image>().sprite = spell.icon;
 
+        Debug.Log("Instantiating spell prefab " + spellPrefab.name);
+        Debug.Assert(spellPrefab != null, "spellPrefab did not instantiate properly");
+        // set image
+        spellPrefab.GetComponentsInChildren<Image>().Where(item => item.name == "Icon").ToList()[0].sprite = spellHandler.Spell.icon;
+        Debug.Log("Setting image to " + spellHandler.Spell.icon.name);
         // set parent
         spellPrefab.transform.SetParent(gameObject.transform);
 
         // set anchor to top right
         spellPrefab.GetComponent<RectTransform>().anchorMin = new Vector2(1, 1);
 
-        ObjectsInstantiated.Add(spellPrefab);
+        _cachedSpells.Add(new Tuple<SpellHandler, GameObject>(spellHandler, spellPrefab));
     }
 
     // Update is called once per frame
     void Update()
     {
-        deaLWithCooldown();
+        HandleCooldown();
     }
 
-    private void InstantiatePrefabs()
+    private void HandleCooldown()
     {
-        for (int i = index; i < Spells.Count; i++)
+        if (_cachedSpells == null) return;
+        foreach (Tuple<SpellHandler, GameObject> pair in _cachedSpells)
         {
-            Spells = player.SpellHandlers;
-            Debug.Log("Spells found in SpellIcons");
-            Image[] img = ObjectToInstantiate.GetComponentsInChildren<Image>();
-            Transform child2 = ObjectToInstantiate.transform.GetChild(2);
-            child2.gameObject.GetComponent<Image>().sprite = Spells[i].Spell.icon;
-            Transform child = ObjectToInstantiate.transform.GetChild(0);
-            Slider slider = child.gameObject.GetComponent<Slider>();
-            slider.maxValue = Spells[i].Spell.cooldownTime;
-            ObjectsInstantiated[index] = Instantiate(ObjectToInstantiate);
-            ObjectsInstantiated[index].transform.parent = gameObject.transform;
-            if (index > 0)
+            if (pair.Item1.GetState() == SpellState.Cooldown)
             {
-                ObjectsInstantiated[index].transform.localPosition = new Vector3(ObjectsInstantiated[index - 1].transform.localPosition.x + 40, ObjectsInstantiated[index - 1].transform.localPosition.y, ObjectsInstantiated[index - 1].transform.localPosition.z);
+                Debug.Log("Setting cooldown slider for " + pair.Item1.Spell.name);
+                Debug.Log("To: " + pair.Item1.CooldownTimer / pair.Item1.Spell.cooldownTime);
+                Slider slider = pair.Item2.GetComponentInChildren<Slider>();
+                Debug.Assert(slider != null, "Slider is null");
+                slider.value = 1 - pair.Item1.CooldownTimer / pair.Item1.Spell.cooldownTime;
             }
-            else
+            else if (pair.Item1.GetState() == SpellState.Active)
             {
-                ObjectsInstantiated[index].transform.localPosition = new Vector3(0, 0, 0);
-            }
-            index++;
-            Debug.Log("Image should be instantiated");
-        }
-    }
-
-    private void deaLWithCooldown()
-    {
-        Spells = player.SpellHandlers;
-        for (int i = 0; i < Spells.Count; i++)
-        {
-            if (Spells[i].GetState() == SpellState.Cooldown)
-            {
-                StartCoroutine(changeSlider(ObjectsInstantiated[i]));
+                // set slider to 0
+                pair.Item2.GetComponentInChildren<Slider>().value = 0;
             }
         }
-    }
-
-    private IEnumerator changeSlider(GameObject obj)
-    {
-        Transform child = obj.transform.GetChild(0);
-        Slider slider = child.gameObject.GetComponent<Slider>();
-        for (int i=0; i<= slider.maxValue; i++)
-        {
-            slider.value = i;
-            yield return new WaitForSeconds(1);
-        }
-
     }
 }

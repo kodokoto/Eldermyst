@@ -5,7 +5,6 @@ public class SpellScroll : Pickup
     public Spell spell;
     public PlayerInventory playerInventory;
     [SerializeField] private DialogueSignalSO dialogueSignal;
-
     private void Start()
     {
         // check if player already has spell
