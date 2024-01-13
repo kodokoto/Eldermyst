@@ -19,6 +19,6 @@ MonoBehaviour:
   activeTime: 3
   manaCost: 20
   combos:
-  - keys: 020000000200000005000000
+  - keys: 912100009121000051000000
   sentences: []
   _boostAmount: 50

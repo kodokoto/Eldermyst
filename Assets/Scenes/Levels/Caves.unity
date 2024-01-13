@@ -564,7 +564,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 898deed4af13f3b40a0452c48478b642, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 2131241295}
   ObjectToInstantiate: {fileID: 7176742607363097559, guid: b7cc55e7e2c5448d0a149308a8a8eca1, type: 3}
   _onSpellAqured: {fileID: 11400000, guid: c9e5accf855424f19848146aadb5692e, type: 2}
 --- !u!1001 &66116199
@@ -9886,8 +9885,7 @@ MonoBehaviour:
   - {fileID: 800177251}
   - {fileID: 871499930}
   objectToInstantiate: {fileID: 8149658165194128008, guid: 8da48ba59f23fb942879de66712a9497, type: 3}
-  PSpell: {fileID: 0}
-  spellSignal: {fileID: 11400000, guid: f068ab37c1032704ba0ccf190d8520f1, type: 2}
+  spellSignal: {fileID: 11400000, guid: c9e5accf855424f19848146aadb5692e, type: 2}
 --- !u!4 &1154655036 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 391297426723536245, guid: 50e2f09166fff074db654abf95fcced9, type: 3}
@@ -10295,6 +10293,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7807603894011105440, guid: 3bd6cad5feb19405b846519b5e5e4fc4, type: 3}
       insertIndex: 0
       addedObject: {fileID: 1143072073}
+    - targetCorrespondingSourceObject: {fileID: 31852754033135919, guid: 3bd6cad5feb19405b846519b5e5e4fc4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 60437263}
     - targetCorrespondingSourceObject: {fileID: 120075140311760129, guid: 3bd6cad5feb19405b846519b5e5e4fc4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 299885810}
@@ -20958,17 +20959,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4218751677261060075, guid: f98838c7300cd1342aab48e29259b16b, type: 3}
   m_PrefabInstance: {fileID: 512013266}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2131241295 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5809156591853880789, guid: f93fe2533336848f1beb77e895e9b908, type: 3}
-  m_PrefabInstance: {fileID: 1750425882}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f426f4525e0e45588cc77cd35220a99, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &2141101679 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6930952328927167202, guid: 43658eb604a030a4292b4278e8991a4d, type: 3}
