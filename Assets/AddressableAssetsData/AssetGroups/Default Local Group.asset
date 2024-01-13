@@ -72,6 +72,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c68a0274c5ca5ad4db3b57838f66549f
+    m_Address: Assets/Scenes/Levels/FinalBoss.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 0a14e66a8f69348deb5316a410aab14f, type: 2}
   m_SchemaSet:
