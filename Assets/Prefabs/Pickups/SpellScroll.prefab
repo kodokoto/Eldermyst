@@ -26,12 +26,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2020985474860397832}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 11.4, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0.27059805, y: -0.27059805, z: 0.6532815, w: 0.6532815}
+  m_LocalPosition: {x: 0, y: 0.4949747, z: -0.49497482}
+  m_LocalScale: {x: 0.19999999, y: 0.19999999, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 988769420652328099}
+  m_Father: {fileID: 6583048945563071936}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!108 &7097506416159944265
 Light:
@@ -148,8 +148,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6583048945563071936}
-  - {fileID: 1325177516535308441}
-  - {fileID: 2746915165511195592}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7996254142107062120
@@ -178,12 +176,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7996254142107062120}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.05, y: -3.84, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0.27059805, y: -0.6532815, z: 0.27059805, w: 0.6532815}
+  m_LocalPosition: {x: 0, y: -0.097580634, z: -0.0014141441}
+  m_LocalScale: {x: 0.19999999, y: 0.2, z: 0.19999996}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 988769420652328099}
+  m_Father: {fileID: 6583048945563071936}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!108 &2381844368245566291
 Light:
@@ -340,7 +338,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9e3b8a4712d777946872c9c1b1ef8b73, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1325177516535308441}
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9e3b8a4712d777946872c9c1b1ef8b73, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2746915165511195592}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9e3b8a4712d777946872c9c1b1ef8b73, type: 3}
       insertIndex: -1
@@ -388,6 +392,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spell: {fileID: 11400000, guid: e11337db2e1b8f840ba28fe61c3dfdee, type: 2}
+  playerInventory: {fileID: 0}
   dialogueSignal: {fileID: 11400000, guid: cda9bde42674943e99905365cd48a372, type: 2}
 --- !u!4 &6583048945563071936 stripped
 Transform:

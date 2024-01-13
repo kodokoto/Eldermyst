@@ -673,6 +673,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 928f69b0e6fd6204495673599f06940b, type: 3}
+--- !u!4 &481947590 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5132645758182098452, guid: f93fe2533336848f1beb77e895e9b908, type: 3}
+  m_PrefabInstance: {fileID: 1009258570}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &502604427
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1557,6 +1562,26 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0.49
       objectReference: {fileID: 0}
+    - target: {fileID: 5132645758182098452, guid: f93fe2533336848f1beb77e895e9b908, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5132645758182098452, guid: f93fe2533336848f1beb77e895e9b908, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5132645758182098452, guid: f93fe2533336848f1beb77e895e9b908, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5132645758182098452, guid: f93fe2533336848f1beb77e895e9b908, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5132645758182098452, guid: f93fe2533336848f1beb77e895e9b908, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5809156591853880789, guid: f93fe2533336848f1beb77e895e9b908, type: 3}
       propertyPath: xpBar
       value: 
@@ -1573,6 +1598,14 @@ PrefabInstance:
       propertyPath: currentSpawnPoint
       value: 
       objectReference: {fileID: 11400000, guid: 057e4c4a6a60743ce80d4e224cd7897b, type: 2}
+    - target: {fileID: 5809156591853880789, guid: f93fe2533336848f1beb77e895e9b908, type: 3}
+      propertyPath: _spellAquiredSignal
+      value: 
+      objectReference: {fileID: 11400000, guid: c9e5accf855424f19848146aadb5692e, type: 2}
+    - target: {fileID: 5809156591853880789, guid: f93fe2533336848f1beb77e895e9b908, type: 3}
+      propertyPath: <ProjectileSpawnPoint>k__BackingField
+      value: 
+      objectReference: {fileID: 481947590}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
