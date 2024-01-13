@@ -11,23 +11,8 @@ public class SpellBookManager : MonoBehaviour
 {
     public GameObject[] spellSlots;
     public GameObject objectToInstantiate;
-    public Spell PSpell;
-    private int Index=0;
     [SerializeField] private SpellSignalSO spellSignal; // reference the spell signal
-    Player player;
-    List<Spell> spells;
-
-    public void Start()
-    {
-        player = GameObject.Find("Player").GetComponent<Player>();
-        spells = player.PlayerInventory.Spells;
-        Debug.Log("Start book manager");
-        for(int i = 0; i < spells.Count; i++)
-        {
-            addSpellToBook(spells[i]);
-        }
-        Debug.Log("Book UI should be instantiated");
-    }
+    private int Index = 0;
 
     public void OnEnable()
     {
@@ -40,21 +25,21 @@ public class SpellBookManager : MonoBehaviour
 
 
     // this function gets called when the action is triggered
-    public void NewSpell(Spell spell)
+    public void NewSpell(SpellHandler spellHandler)
     {
-        addSpellToBook(spell);
+        addSpellToBook(spellHandler);
         Debug.Log("Spell added to book");
     }
 
-    private void addSpellToBook(Spell spell)
+    private void addSpellToBook(SpellHandler spellHandler)
     {
         // Here you have to code to add the spell to the book
-        objectToInstantiate.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = spell.spellName;
+        objectToInstantiate.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = spellHandler.Spell.spellName;
         string comboString = "";
-        comboString = ComboString(spell, comboString);
+        comboString = ComboString(spellHandler.Spell, comboString);
         
         objectToInstantiate.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>().text = comboString;
-        objectToInstantiate.transform.GetChild(2).gameObject.GetComponent<Image>().sprite = spell.icon;
+        objectToInstantiate.transform.GetChild(2).gameObject.GetComponent<Image>().sprite = spellHandler.Spell.icon;
         GameObject slot = Instantiate(objectToInstantiate, spellSlots[Index].transform);
         slot.transform.localPosition = new Vector3(-44, -475, 0);
         Index++;
