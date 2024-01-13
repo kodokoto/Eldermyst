@@ -1,15 +1,17 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour , ITakeDamage, IGhost
+public class Player : MonoBehaviour , ITakeDamage, IGhost, IFreezable, IFiresProjectiles
 {
 
     [Header("Data")]
     [SerializeField] public PlayerSpawnPoint currentSpawnPoint;
     [SerializeField] public PlayerData data;
     [SerializeField] public PlayerInventory PlayerInventory;
+    [SerializeField] private SpellSignalSO _spellAquiredSignal;
+    [field: SerializeField] public Transform ProjectileSpawnPoint { get; set; }
 
-    [SerializeField] private Transform projectileSpawnPoint;
     private float healthRegenTimer;
     private float manaRegenTimer;
     
@@ -25,14 +27,20 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost
 
     // State
     public bool IsGhost{ get; set; } = false;
-
+    public bool IsFrozen { get; set; }
 
     void Start()
     {
         SetUpSpells();
         healthBar.SetMaxHealth(data.maxHealth);
+        healthBar.SetHealth(data.health);
         manaBar.SetMaxMana(data.maxMana);
+        manaBar.SetMana(data.mana);
+        xpBar.SetMaxXP(data.xpLevels[data.currentLevel]);
+        xpBar.SetXP(data.currentXp);
+        xpBar.SetLevel(data.currentLevel);
         transform.position = currentSpawnPoint.GetSpawnPoint();
+        SetHealth(data.health); // this is to make sure that the health is not greater than the max health
     }
    
     void Update()
@@ -50,6 +58,7 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost
             SpellHandler spellHandler = gameObject.AddComponent<SpellHandler>();
             spellHandler.Spell = spell;
             SpellHandlers.Add(spellHandler);
+            _spellAquiredSignal.Trigger(spellHandler);
         }
     }
 
@@ -59,7 +68,7 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost
         {
             if (healthRegenTimer > data.healthRegenRate)
             {
-                RestoreHealth(data.healthRegen);
+                Heal(data.healthRegen);
                 healthRegenTimer = 0;
             }
             else
@@ -120,9 +129,15 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost
         RemoveMana(mana);
     }
 
-    public void RestoreHealth(int healAmount)
+    public void Heal(int healAmount)
     {
         AddHealth(healAmount);
+    }
+
+    // use to reduce health for logic purposes, not for damage
+    public void ReduceHealth(int amount)
+    {
+        RemoveHealth(amount);
     }
 
     public void RestoreMana(int mana)
@@ -130,116 +145,62 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost
         AddMana(mana);
     }
 
-
     public void AddXP(int xp)
     {
         Debug.Log("Xp before: " + data.currentXp);
         Debug.Log("Adding " + xp + " xp");
         data.currentXp += xp;
         Debug.Log("Xp after: " + data.currentXp);
-        if (data.currentXp >= data.xpLevels[data.currentXpLevel])
+        if (data.currentXp >= data.xpLevels[data.currentLevel])
         {
             LevelUp();
         }
         xpBar.SetXP(data.currentXp);
     }
-
-    public Transform GetProjectileSpawnPoint()
-    {
-        return projectileSpawnPoint;
-    }
-
     public int GetMaxHealth()
     {
         return data.maxHealth;
     }
 
-    public int getExcess()
-    {
-        return data.excessHealth;
-    }
-
-    public void setExcess(int amount)
-    {
-        SetExcess(amount);
-    }
-
-    public void setMaxHealth(int maxHealth)
-    {
-        data.maxHealth = maxHealth;
-        healthBar.SetMaxHealth(maxHealth);
-    }
-
-    public void setHealth(int health)
-    {
-        SetHealth(health);
-    }
-
-
     // private data modifiers
+    private void LevelUp()
+    {
+        // if current level is max level, do nothing
+        if (data.currentLevel >= data.xpLevels.Length)
+        {
+            return;
+        }
+
+        data.currentXp -= data.xpLevels[data.currentLevel];
+        data.currentLevel++;
+        SetMaxHealth(data.maxHealth + data.levelUpHealthRate);
+        AddHealth(data.levelUpHealthRate);
+        SetMaxMana(data.maxMana + data.levelUpManaRate);
+        AddMana(data.levelUpManaRate);
+        xpBar.SetMaxXP(data.xpLevels[data.currentLevel]);
+        xpBar.SetLevel(data.currentLevel);
+    }
 
     private void SetHealth(int health)
     {
         data.health = Mathf.Min(health, data.maxHealth);
+        healthBar.SetHealth(data.health);
     }
 
-    private void SetExcess(int amount)
-    {
-        data.excessHealth = amount;
-    }
-
-    private void LevelUp()
-    {
-        // if current level is max level, do nothing
-        if (data.currentXpLevel >= data.xpLevels.Length)
-        {
-            return;
-        }
-
-        data.currentXp -= data.xpLevels[data.currentXpLevel];
-        data.currentXpLevel++;
-        SetMaxHealth(data.maxHealth + data.levelUpHealthRate);
-        SetMaxMana(data.maxMana + data.levelUpManaRate);
-
-        xpBar.SetMaxXP(data.xpLevels[data.currentXpLevel]);
-    }
-
-
-
-    private void SetMaxHealth(int amount)
+    public void SetMaxHealth(int amount)
     {
         data.maxHealth = amount;
-        data.health = Mathf.Min(data.health, data.maxHealth);
         healthBar.SetMaxHealth(data.maxHealth);
-    }
-
-    private void SetMaxMana(int amount)
-    {
-        data.maxMana = amount;
-        data.mana = Mathf.Min(data.mana, data.maxMana);
-        manaBar.SetMaxMana(data.maxMana);
     }
 
     private void AddHealth(int amount)
     {
-        if(getExcess()!=0 && amount > getExcess())
-        {
-            amount = amount - getExcess();
-            setExcess(0);
-        }
-        else if(getExcess() != 0)
-        {
-            setExcess(getExcess()-amount);
-            return;
-        }
-        data.health = Mathf.Min(data.health + amount, data.maxHealth);
-        healthBar.SetHealth(data.health);
+        SetHealth(data.health + amount);
     }
 
     private void RemoveHealth(int amount)
     {
-        data.health = Mathf.Max(data.health - amount, 0);
-        healthBar.SetHealth(data.health);
+        SetHealth(Mathf.Max(data.health - amount, 0));
         if (data.health <= 0)
         {
             Debug.Log("Health is 0");
@@ -247,16 +208,26 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost
         }
     }
 
+    private void SetMana(int mana)
+    {
+        data.mana = Mathf.Min(mana, data.maxMana);
+        manaBar.SetMana(data.mana);
+    }
+
+    private void SetMaxMana(int amount)
+    {
+        data.maxMana = amount;
+        manaBar.SetMaxMana(data.maxMana);
+    }
+
     private void AddMana(int amount)
     {
-        data.mana = Mathf.Min(data.mana + amount, data.maxMana);
-        manaBar.SetMana(data.mana);
+        SetMana(data.mana + amount);
     }
 
     private void RemoveMana(int amount)
     {
-        data.mana = Mathf.Max(data.mana - amount, 0);
-        manaBar.SetMana(data.mana);
+        SetMana(Mathf.Max(data.mana - amount, 0));
     }
 
     private void HandleDeath()
@@ -270,5 +241,40 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost
         SpellHandler spellHandler = gameObject.AddComponent<SpellHandler>();
         spellHandler.Spell = spell;
         SpellHandlers.Add(spellHandler);
+        _spellAquiredSignal.Trigger(spellHandler);
     }
+
+    public void Freeze(int damage)
+    {
+        IsFrozen = true;
+        TakeDamage(damage, false);
+        StartCoroutine(FreezeEffect());
+    }
+
+    public void Unfreeze()
+    {
+        IsFrozen = false;
+    }
+
+    private IEnumerator FreezeEffect()
+    {   
+        Animator animator = GetComponent<Animator>();
+        PlayerMovement movement = GetComponent<PlayerMovement>();
+        MeshRenderer MeshRenderer = GetComponent<MeshRenderer>();
+
+        animator.speed = 0;
+        movement.Freeze();
+        Color c = MeshRenderer.material.GetColor("_BaseColor");
+        // 
+        MeshRenderer.material.SetColor("_BaseColor", new Color(93, 172, 177));
+        // wait for freeze to be false
+        while (IsFrozen)
+        {
+            yield return new WaitForSeconds(0.1f);
+        }
+        MeshRenderer.material.SetColor("_BaseColor", c);  
+        animator.speed = 1;
+        movement.Unfreeze();
+    }
+
 }

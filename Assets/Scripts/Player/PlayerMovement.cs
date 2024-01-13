@@ -87,7 +87,54 @@ public class PlayerMovement : MonoBehaviour
 	private bool ledgeBuffered;
 	private bool headBumpBuffered;
 
+	public void Freeze()
+	{
+		// disable gravity
+		rb.useGravity = false;
+		// set speed to 0
+		rb.velocity = Vector2.zero;
+		// disable input
+		inputManager.MoveEvent -= OnInputMove;
+		inputManager.JumpStartedEvent -= OnInputJumpPressed;
+		inputManager.JumpHeldEvent -= OnInputJumpHeld;
+		inputManager.JumpCancelEvent -= OnInputJumpReleased;
+		inputManager.DashEvent -= OnInputDash;
+		// cancel all states
+		grounded = false;
+		wasGrounded = false;
+		falling = false;
+		running = false;
+		jumping = false;
+		doubleJumping = false;
+		wallJumping = false;
+		dashing = false;
+		touchingWall = false;
+		touchingWallR = false;
+		touchingWallL = false;
+		wallSliding = false;
+		wallSlidingR = false;
+		wallSlidingL = false;
 
+		input = 0f;
+
+		currentSpeed = 0f;		
+
+	}
+
+	public void Unfreeze()
+	{
+		// enable gravity
+		rb.useGravity = true;
+		// enable input
+		inputManager.MoveEvent += OnInputMove;
+		inputManager.JumpStartedEvent += OnInputJumpPressed;
+		inputManager.JumpHeldEvent += OnInputJumpHeld;
+		inputManager.JumpCancelEvent += OnInputJumpReleased;
+		inputManager.DashEvent += OnInputDash;
+
+		currentSpeed = RUN_SPEED;
+		falling = true;
+	}
 	private void Awake()
 	{
 		Debug.Assert(inputManager != null, "InputManager is null, please assign in inspector.");

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 444a8de81e00740fe9c42797b34887bf, type: 3}
   m_Name: PlayerLoadout
   m_EditorClassIdentifier: 
+  _guid: 3705d0a23c751413c9706dd0ec7d0070
   Spells:
-  - {fileID: 11400000, guid: ed4ab643e454b4b66a171f601e49460f, type: 2}
-  SpellHandlers: []
+  - {fileID: 11400000, guid: 6f8c5838fd62946049af07cc05ea0142, type: 2}
+  - {fileID: 11400000, guid: 87646b93b9c87449592ad3b043ed206a, type: 2}

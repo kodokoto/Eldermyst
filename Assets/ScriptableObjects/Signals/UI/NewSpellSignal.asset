@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5b15f8509854487cace9866a42a34b1, type: 3}
-  m_Name: PlayerSpawnPoint
+  m_Script: {fileID: 11500000, guid: 237416352906a9d4c8c0ada6fbdc01e4, type: 3}
+  m_Name: NewSpellSignal
   m_EditorClassIdentifier: 
-  spawnPoint: {x: 0, y: 0, z: 0}
+  _guid: 

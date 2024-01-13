@@ -9,14 +9,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe9deba2fb86d1a4ea64dff126f436b7, type: 3}
-  m_Name: Health Spell
+  m_Script: {fileID: 11500000, guid: 092e9c3dfa7416943be5e27c70005a18, type: 3}
+  m_Name: Enemy Freeze
   m_EditorClassIdentifier: 
-  _guid: 75ae984c91597fc4a904a7e0f52729db
-  spellName: Heal
+  _guid: 8e6021f82345642e295136cf92b1ac0d
+  spellName: 
   icon: {fileID: 0}
   cooldownTime: 0
   activeTime: 3
-  manaCost: 10
+  manaCost: 0
   combos: []
   sentences: []
+  damage: 20
+  radius: 10
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 8
+  ObjectToSpawn: {fileID: 3607226259590179397, guid: 95e35cf0301dd124ca387705f29fddc7, type: 3}

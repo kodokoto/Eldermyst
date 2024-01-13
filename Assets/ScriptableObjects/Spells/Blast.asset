@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8f13fc83afcf04578a479440b1e649d6, type: 3}
-  m_Name: ProjectileSpell
+  m_Name: Blast
   m_EditorClassIdentifier: 
-  _guid: ed4ab643e454b4b66a171f601e49460f
+  _guid: 6f8c5838fd62946049af07cc05ea0142
   spellName: Blast
-  icon: {fileID: 21300000, guid: ad8a1111017517341b61ece57ff4f159, type: 3}
-  cooldownTime: 0
+  icon: {fileID: 21300000, guid: 5b8d138f41250d94195e827d76b5a104, type: 3}
+  cooldownTime: 4
   activeTime: 0
-  manaCost: 10
+  manaCost: 20
   combos:
-  - keys: 000000000000000000000000
-  - keys: 010000000100000001000000
+  - keys: 922100009221000045000000
+  - keys: 902100009021000045000000
   sentences: []
   projectilePrefab: {fileID: 6539326632289364038, guid: 4063f456b3a8441f18b268b410dac2c6, type: 3}

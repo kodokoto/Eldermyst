@@ -13,7 +13,7 @@ public class SpellHandler : MonoBehaviour
 {
     public Spell Spell;
     private SpellState state;
-    private float CooldownTimer;
+    public float CooldownTimer;
     private float ActiveTimer;
     private bool Casting = false;
 
@@ -77,5 +77,15 @@ public class SpellHandler : MonoBehaviour
         {
             Casting = true;
         }
+    }
+
+    public SpellState GetState()
+    {
+        return getState();
+    }
+
+    private SpellState getState()
+    {
+        return state;
     }
 }

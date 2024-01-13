@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &546638393492908465
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1615400453131227628}
+  - component: {fileID: 8439867530925846649}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1615400453131227628
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 546638393492908465}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.0094655, y: -10.078374, z: -4.139908}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8439867530925846649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 546638393492908465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26d3bfc473b3148ef9601865763fc1dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentSpawnPoint: {fileID: 11400000, guid: 488ab6c37fa3249739bb16c575e21166, type: 2}
+  playerData: {fileID: 11400000, guid: 18715116c749f48f68ea9ae1ab0843ad, type: 2}
+  _menuToLoad: {fileID: 11400000, guid: 315d012550d1b4aba93e97db42776511, type: 2}
+  _inputManager: {fileID: 11400000, guid: fe9aa25dba7844e1f8272d492fdc1f00, type: 2}
+  _saveManager: {fileID: 11400000, guid: 4114eb6b7bc2d44e99729b488ae6e8ce, type: 2}
+  _onRetry: {fileID: 11400000, guid: e0030fde79b6b43568a4d194f87057ce, type: 2}
+  _onExit: {fileID: 11400000, guid: e9920e2fffeed43f098b89d75ccab2da, type: 2}
+  _onReady: {fileID: 11400000, guid: 3f7f106b6691649b8b09c3d9f40f8aba, type: 2}
+  _spawnPointSignal: {fileID: 11400000, guid: 5cc5333c18a8946398a839673e1112fe, type: 2}
+  _loadLevelSignal: {fileID: 11400000, guid: 9d5d19b7836724e8f8d0594897637b55, type: 2}
+  _onRestartScene: {fileID: 11400000, guid: 1ee1321aa69ee4316a0124c81fe6a0cd, type: 2}

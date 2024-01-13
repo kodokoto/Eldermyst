@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe9deba2fb86d1a4ea64dff126f436b7, type: 3}
+  m_Name: Heal
+  m_EditorClassIdentifier: 
+  _guid: 87646b93b9c87449592ad3b043ed206a
+  spellName: Heal
+  icon: {fileID: 21300000, guid: 0b00a581f0fbbd94a9f0e1b902f816d0, type: 3}
+  cooldownTime: 10
+  activeTime: 3
+  manaCost: 20
+  combos:
+  - keys: 912100009121000051000000
+  sentences: []
+  _boostAmount: 50

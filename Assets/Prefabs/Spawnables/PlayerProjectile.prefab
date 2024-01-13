@@ -212,8 +212,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 20
   rb: {fileID: 6104472744687712918}
-  velocity: {x: 0, y: 0, z: 0}
-  targetTag: Enemy
+  targetLayerMask:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!1 &7603141075017274438
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,7 +8,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject _pauseScreen;
     [SerializeField] private GameObject _spellBookScreen;
     [SerializeField] private GameObject _deathScreen;
-    [SerializeField] private Dialogue _dialogueScreen;
+    [SerializeField] private DialogueManager _dialogueScreen;
 
     [Header("Listeners")]
     [SerializeField] private InputManager _inputManager;
@@ -18,7 +18,6 @@ public class UIManager : MonoBehaviour
     [Header("Broadcasts")]
     [SerializeField] private SignalSO _onRetry;
     [SerializeField] private SignalSO _onExitToMenu;
-
     public void OnEnable()
     {
         _inputManager.PauseEvent += OnPause;
@@ -101,7 +100,7 @@ public class UIManager : MonoBehaviour
     private void OnDialogueAdvanced()
     {
         // show next line, if there isnt one, close the dialogue
-        if (!_dialogueScreen.Advance())
+        if (!_dialogueScreen.AdvanceLine())
         {
             Time.timeScale = 1;
             _dialogueScreen.gameObject.SetActive(false);
