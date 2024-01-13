@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _guid: 18715116c749f48f68ea9ae1ab0843ad
   playerName: Blegg
-  maxHealth: 110
-  maxMana: 110
+  maxHealth: 100
+  maxMana: 100
   healthRegen: 1
   healthRegenRate: 1
   manaRegen: 1
@@ -23,9 +23,9 @@ MonoBehaviour:
   xpLevels: 0a000000140000001e0000002800000032000000
   levelUpHealthRate: 10
   levelUpManaRate: 10
-  health: 110
-  mana: 110
+  health: 100
+  mana: 100
   isShielded: 0
   currentXp: 0
-  currentXpLevel: 0
+  currentLevel: 0
   excessHealth: 0

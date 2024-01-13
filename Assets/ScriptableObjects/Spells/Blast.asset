@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f13fc83afcf04578a479440b1e649d6, type: 3}
   m_Name: Blast
   m_EditorClassIdentifier: 
-  _guid: 6f8c5838fd62946049af07cc05ea0142
-  spellName: Orb Blast
-  icon: {fileID: 21300000, guid: dd36aa8ada56948458aec98edb45a894, type: 3}
-  cooldownTime: 0
+  _guid: ed4ab643e454b4b66a171f601e49460f
+  spellName: Blast
+  icon: {fileID: 21300000, guid: 5b8d138f41250d94195e827d76b5a104, type: 3}
+  cooldownTime: 4
   activeTime: 0
   manaCost: 20
   combos:

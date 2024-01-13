@@ -10,6 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b5b15f8509854487cace9866a42a34b1, type: 3}
-  m_Name: PlayerSpawnPoint
+  m_Name: TutorialPlayerSpawnPoint
   m_EditorClassIdentifier: 
-  spawnPoint: {x: 0, y: 0, z: 0}
+  _guid: 057e4c4a6a60743ce80d4e224cd7897b
+  spawnPoint: {x: -7.3, y: -1.4, z: 0}

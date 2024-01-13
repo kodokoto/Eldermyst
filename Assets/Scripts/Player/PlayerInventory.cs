@@ -12,6 +12,11 @@ public class PlayerInventory : SerializableScriptableObject
         Spells.Add(spell);
     }
 
+    public bool HasSpell(Spell spell)
+    {
+        return Spells.Contains(spell);
+    }
+
     public void Reset()
     {
         Debug.Log("Resetting PlayerInventory");

@@ -7,7 +7,7 @@ public class HealthPotion : Pickup
     protected override void OnPickup(GameObject actor)
     {
         Player player = actor.GetComponent<Player>();
-        player.RestoreHealth(HealthBoost);
+        player.Heal(HealthBoost);
         Destroy(gameObject);
     }
 }

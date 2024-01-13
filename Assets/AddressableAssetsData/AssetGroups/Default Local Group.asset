@@ -67,6 +67,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 14d6da9a0be4449d7aa5268d49b7f27a
+    m_Address: Assets/Scenes/Levels/Tutorial.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 0a14e66a8f69348deb5316a410aab14f, type: 2}
   m_SchemaSet:
