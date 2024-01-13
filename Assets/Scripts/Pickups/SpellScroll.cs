@@ -3,8 +3,16 @@ using UnityEngine;
 public class SpellScroll : Pickup
 {
     public Spell spell;
+    public PlayerInventory playerInventory;
     [SerializeField] private DialogueSignalSO dialogueSignal;
-
+    private void Start()
+    {
+        // check if player already has spell
+        if (playerInventory.HasSpell(spell))
+        {
+            Destroy(gameObject);
+        }
+    }
     void Update()
     {
         transform.Rotate(Vector3.up, 50 * Time.deltaTime);

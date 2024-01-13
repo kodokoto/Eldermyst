@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour , ITakeDamage, IGhost
@@ -9,7 +8,7 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost
     [SerializeField] public PlayerSpawnPoint currentSpawnPoint;
     [SerializeField] public PlayerData data;
     [SerializeField] public PlayerInventory PlayerInventory;
-
+    [SerializeField] private SpellSignalSO _spellAquiredSignal;
     [SerializeField] private Transform projectileSpawnPoint;
     private float healthRegenTimer;
     private float manaRegenTimer;
@@ -57,6 +56,7 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost
             SpellHandler spellHandler = gameObject.AddComponent<SpellHandler>();
             spellHandler.Spell = spell;
             SpellHandlers.Add(spellHandler);
+            _spellAquiredSignal.Trigger(spellHandler);
         }
     }
 
@@ -245,5 +245,6 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost
         SpellHandler spellHandler = gameObject.AddComponent<SpellHandler>();
         spellHandler.Spell = spell;
         SpellHandlers.Add(spellHandler);
+        _spellAquiredSignal.Trigger(spellHandler);
     }
 }
