@@ -8,8 +8,8 @@ OcclusionCullingSettings:
     smallestOccluder: 5
     smallestHole: 0.25
     backfaceThreshold: 100
-  m_SceneGUID: 00000000000000000000000000000000
-  m_OcclusionCullingData: {fileID: 0}
+  m_SceneGUID: c68a0274c5ca5ad4db3b57838f66549f
+  m_OcclusionCullingData: {fileID: 36300000, guid: 4cb9d35f50eb242f9b6c4dccfe9d4b7a, type: 2}
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
@@ -601,9 +601,13 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 660721121383440983, guid: 5e816340336034d7fb7f092eec92c04f, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 5922504799124213718, guid: 5e816340336034d7fb7f092eec92c04f, type: 3}
       propertyPath: m_LocalScale.x
-      value: 10.3467655
+      value: 26.596455
       objectReference: {fileID: 0}
     - target: {fileID: 5922504799124213718, guid: 5e816340336034d7fb7f092eec92c04f, type: 3}
       propertyPath: m_LocalScale.z
@@ -611,7 +615,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5922504799124213718, guid: 5e816340336034d7fb7f092eec92c04f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 56.6
+      value: 48.475
       objectReference: {fileID: 0}
     - target: {fileID: 5922504799124213718, guid: 5e816340336034d7fb7f092eec92c04f, type: 3}
       propertyPath: m_LocalPosition.y
@@ -990,6 +994,10 @@ PrefabInstance:
     - target: {fileID: 3922192225763118543, guid: b0818e6df0779f84eb3a1672cc27e382, type: 3}
       propertyPath: m_Name
       value: RockPlatform (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3922192225763118543, guid: b0818e6df0779f84eb3a1672cc27e382, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4406136309368264565, guid: b0818e6df0779f84eb3a1672cc27e382, type: 3}
       propertyPath: m_LocalScale.x
@@ -1946,9 +1954,13 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 660721121383440983, guid: 5e816340336034d7fb7f092eec92c04f, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 5922504799124213718, guid: 5e816340336034d7fb7f092eec92c04f, type: 3}
       propertyPath: m_LocalScale.x
-      value: 10.3467655
+      value: 22.733913
       objectReference: {fileID: 0}
     - target: {fileID: 5922504799124213718, guid: 5e816340336034d7fb7f092eec92c04f, type: 3}
       propertyPath: m_LocalScale.z
@@ -1956,7 +1968,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5922504799124213718, guid: 5e816340336034d7fb7f092eec92c04f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -33.3
+      value: -27.1065
       objectReference: {fileID: 0}
     - target: {fileID: 5922504799124213718, guid: 5e816340336034d7fb7f092eec92c04f, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2321,6 +2333,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RockPlatform
       objectReference: {fileID: 0}
+    - target: {fileID: 3922192225763118543, guid: b0818e6df0779f84eb3a1672cc27e382, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 4406136309368264565, guid: b0818e6df0779f84eb3a1672cc27e382, type: 3}
       propertyPath: m_LocalScale.x
       value: 4346.8325
@@ -2594,6 +2610,10 @@ PrefabInstance:
     - target: {fileID: 3922192225763118543, guid: b0818e6df0779f84eb3a1672cc27e382, type: 3}
       propertyPath: m_Name
       value: RockPlatform (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3922192225763118543, guid: b0818e6df0779f84eb3a1672cc27e382, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4406136309368264565, guid: b0818e6df0779f84eb3a1672cc27e382, type: 3}
       propertyPath: m_LocalScale.x
@@ -3071,6 +3091,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RockPlatform (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 3922192225763118543, guid: b0818e6df0779f84eb3a1672cc27e382, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 4406136309368264565, guid: b0818e6df0779f84eb3a1672cc27e382, type: 3}
       propertyPath: m_LocalScale.x
       value: 1000
@@ -3226,6 +3250,10 @@ PrefabInstance:
     - target: {fileID: 3922192225763118543, guid: b0818e6df0779f84eb3a1672cc27e382, type: 3}
       propertyPath: m_Name
       value: RockPlatform (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3922192225763118543, guid: b0818e6df0779f84eb3a1672cc27e382, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4406136309368264565, guid: b0818e6df0779f84eb3a1672cc27e382, type: 3}
       propertyPath: m_LocalScale.x
@@ -3398,6 +3426,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RockPlatform (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 3922192225763118543, guid: b0818e6df0779f84eb3a1672cc27e382, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 4406136309368264565, guid: b0818e6df0779f84eb3a1672cc27e382, type: 3}
       propertyPath: m_LocalScale.x
       value: 1000
@@ -3537,6 +3569,10 @@ PrefabInstance:
     - target: {fileID: 3922192225763118543, guid: b0818e6df0779f84eb3a1672cc27e382, type: 3}
       propertyPath: m_Name
       value: RockPlatform (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3922192225763118543, guid: b0818e6df0779f84eb3a1672cc27e382, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4406136309368264565, guid: b0818e6df0779f84eb3a1672cc27e382, type: 3}
       propertyPath: m_LocalScale.x
