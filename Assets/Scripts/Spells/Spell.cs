@@ -4,12 +4,12 @@ using UnityEngine;
 
 public enum SpellKey
 {
-    Left,
-    Right,
-    Up,
-    Down,
-    Attack,
-    Defend
+    Left='\u2190',
+    Right= '\u2192',
+    Up= '\u2191',
+    Down= '\u2193',
+    Attack='E',
+    Defend='Q'
 }
 
 [System.Serializable]
