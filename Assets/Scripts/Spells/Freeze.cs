@@ -9,7 +9,7 @@ using UnityEngine.VFX;
 public class Freeze : Spell
 {
     [SerializeField] private int damage = 2;
-    [SerializeField] private float radius = 10f;
+    [SerializeField] public float radius = 10f;
     [SerializeField] private LayerMask targetMask;
     public GameObject ObjectToSpawn;
     private GameObject explosion;
@@ -23,12 +23,11 @@ public class Freeze : Spell
         Debug.Assert(parent != null, "Parent is null");
 
         Debug.Assert(ObjectToSpawn != null, "ObjectToSpawn is null");
-        Player player = parent.GetComponent<Player>();
-        explosion = Instantiate(ObjectToSpawn, player.transform.position, player.transform.rotation);
+        explosion = Instantiate(ObjectToSpawn, parent.transform.position, parent.transform.rotation);
         
         // assert explosion is not null
         Debug.Assert(explosion != null, "Explosion is null");
-        collisionChecks = Physics.OverlapSphere(player.transform.position, radius, targetMask);
+        collisionChecks = Physics.OverlapSphere(parent.transform.position, radius, targetMask);
         Debug.Log("Freeze collision checks " + collisionChecks.Length);
         foreach (Collider c in collisionChecks)
         {

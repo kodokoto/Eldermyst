@@ -1,18 +1,17 @@
+using NUnit.Framework.Interfaces;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    public float speed;
+    public float speed = 20f;
     public Rigidbody rb;
 
-    public Vector3 velocity;
     // tag to make immune to the projectile
-    public string targetTag;
+    [SerializeField] private LayerMask targetLayerMask;
     //
     void Start()
-    {
-        rb.velocity = transform.right * speed;
-        velocity = rb.velocity;
+    {   
+        rb.velocity = speed * transform.forward;
     }
 
     void Update()
@@ -22,17 +21,18 @@ public class Projectile : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
     }
 
     // Destroy the projectile if it hits an enemy
     void OnTriggerEnter(Collider other)
     {        
-        if (other.gameObject.CompareTag(targetTag) )
+        // if other has the same layermask as targetLayer, take damage
+        if (targetLayerMask == (targetLayerMask | (1 << other.gameObject.layer)))
         {
             other.gameObject.GetComponent<ITakeDamage>().TakeDamage(10);
             Destroy(gameObject);
-        } else if (other.gameObject.CompareTag("StickyWall"))
+        } 
+        else if (other.gameObject.layer == LayerMask.NameToLayer("Ground") || other.gameObject.layer == LayerMask.NameToLayer("StickyWall"))
         {
             Destroy(gameObject);
         }

@@ -1,9 +1,10 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class BossWitch : Enemy, IPathable
+public class BossWitch : Enemy, IPathable, IFiresProjectiles
 {
 
     private Collider Col;
@@ -15,9 +16,17 @@ public class BossWitch : Enemy, IPathable
     [SerializeField] protected override int Health { get; set; } = 100;
     [SerializeField] protected override float SearchRange { get; set; } = 30f;
     [SerializeField] protected override float AttackRate { get; set; } = 1f;
-    [SerializeField] protected override float AttackRange { get; set; } = 10f;
+    [SerializeField] protected override float AttackRange { get; set; } = 20f;
     [SerializeField] protected override int AttackDamage { get; set; } = 10;
+    [field: SerializeField] public Transform ProjectileSpawnPoint { get; set; }
+    public Projectile projectile;
     [SerializeField] protected float movementSpeed = 3f;
+
+    [SerializeField] private Freeze IceSpell;
+    private bool IceAttackReady = true;
+
+    private bool ProjectileAttackReady = true;
+
 
     void Awake()
     {
@@ -28,8 +37,32 @@ public class BossWitch : Enemy, IPathable
 
     protected override void Attack()
     {
-        return;
+        return; // DELETE THIS
+        Animator.SetTrigger("Attack");
+        if (Vector3.Distance(transform.position, Player.GetComponent<Collider>().bounds.center) < IceSpell.radius && IceAttackReady)
+        {
+            StartCoroutine(IceAttack());
+        }
+        else if (ProjectileAttackReady)
+        {
+            ProjectileSpawnPoint.LookAt(Player.GetComponent<Collider>().bounds.center);
+            Instantiate(projectile, ProjectileSpawnPoint.position, ProjectileSpawnPoint.rotation);
+        }
     }
+
+    private IEnumerator IceAttack()
+    {
+        IceAttackReady = false;
+        
+        IceSpell.Activate(gameObject);
+        yield return new WaitForSeconds(3f);
+        IceSpell.Deactivate(gameObject);
+
+
+        // cooldown
+        yield return new WaitForSeconds(5f);
+        IceAttackReady = true;
+    } 
 
     protected void Move()
     {
