@@ -59,6 +59,15 @@ public class PlayerData : SerializableScriptableObject
     public void HardReset()
     {
         currentLevel = 0;
+        maxHealth = 100;
+        maxMana = 100;
+        healthRegen = 1;
+        healthRegenRate = 1;
+        manaRegen = 1;
+        manaRegenRate = 1;
+        xpLevels = new int[] { 10, 20, 30, 40, 50 };
+        levelUpHealthRate = 10;
+        levelUpManaRate = 10;
         SoftReset();
     }
 

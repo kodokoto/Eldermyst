@@ -153,6 +153,13 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost, IFreezable, IFiresPro
         Debug.Log("Xp after: " + data.currentXp);
         if (data.currentXp >= data.xpLevels[data.currentLevel])
         {
+            if (data.currentLevel >= data.xpLevels.Length -1)
+            {
+                
+                return;
+            }
+            data.currentLevel++;
+            data.currentXp -= data.xpLevels[data.currentLevel];
             LevelUp();
         }
         xpBar.SetXP(data.currentXp);
@@ -165,20 +172,20 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost, IFreezable, IFiresPro
     // private data modifiers
     private void LevelUp()
     {
-        // if current level is max level, do nothing
-        if (data.currentLevel >= data.xpLevels.Length)
-        {
-            return;
-        }
+        Debug.Log("Leveling up");
 
-        data.currentXp -= data.xpLevels[data.currentLevel];
-        data.currentLevel++;
+        // if current level is max level, do nothing
+
         SetMaxHealth(data.maxHealth + data.levelUpHealthRate);
         AddHealth(data.levelUpHealthRate);
         SetMaxMana(data.maxMana + data.levelUpManaRate);
         AddMana(data.levelUpManaRate);
-        xpBar.SetMaxXP(data.xpLevels[data.currentLevel]);
+        Debug.Log("Current level is now " + data.currentLevel);
+        xpBar.SetMaxXP(data.xpLevels[data.currentLevel-1]);
         xpBar.SetLevel(data.currentLevel);
+
+        Debug.Log("Max health is now " + data.maxHealth);
+        Debug.Log("Max mana is now " + data.maxMana);
     }
 
     private void SetHealth(int health)
@@ -264,15 +271,22 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost, IFreezable, IFiresPro
 
         animator.speed = 0;
         movement.Freeze();
-        Color c = MeshRenderer.material.GetColor("_BaseColor");
-        // 
+        // save the original texture
+        Texture c = MeshRenderer.material.GetTexture("_BaseMap");
+        // delete the texture
+        MeshRenderer.material.SetTexture("_BaseMap", null);
+
+        // cache the colour
+        Color c2 = MeshRenderer.material.GetColor("_BaseColor");
+        // set the colour to blue
         MeshRenderer.material.SetColor("_BaseColor", new Color(93, 172, 177));
         // wait for freeze to be false
         while (IsFrozen)
         {
             yield return new WaitForSeconds(0.1f);
         }
-        MeshRenderer.material.SetColor("_BaseColor", c);  
+        MeshRenderer.material.SetTexture("_BaseMap", c);
+        MeshRenderer.material.SetColor("_BaseColor", c2);
         animator.speed = 1;
         movement.Unfreeze();
     }

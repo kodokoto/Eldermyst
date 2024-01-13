@@ -9,12 +9,13 @@ public class FlyingEnemy : Enemy, IPathable
     public PathfinderGrid Grid { get; set;}
     public List<Vector3> CurrentPath { get; set; }
 
+    [SerializeField] private Transform AttackPosition;
     [field: SerializeField] protected override int Health { get; set; } = 50;
     [field: SerializeField] protected override int XpValue { get; set; } = 10;
     [field: SerializeField] protected override float SearchRange { get; set; } = 20f;
     [field: SerializeField] protected override float AttackRate { get; set; } = 1f;
     [field: SerializeField] protected override float AttackRange { get; set; } = 3f;
-    [field: SerializeField] protected override int AttackDamage { get; set; } = 10;
+    protected override int AttackDamage { get; set; } = 10;
 
     [SerializeField] protected float flyingSpeed = 5f;
 
