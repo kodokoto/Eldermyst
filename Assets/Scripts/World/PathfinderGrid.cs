@@ -40,8 +40,8 @@ public class PathfinderNode
 public class PathfinderGrid : MonoBehaviour
 {
     // grid size
-    private int gridSizeX = 200;
-    private int gridSizeY = 150;
+    [SerializeField] private int gridSizeX = 200;
+    [SerializeField] private int gridSizeY = 150;
     private float nodeRadius = 1.2f;
     [SerializeField] private LayerMask SolidLayer;
 
@@ -49,7 +49,7 @@ public class PathfinderGrid : MonoBehaviour
     // grid offset transform matrix
     // - negate the y value and shift the grid up by 1
 
-    private Vector3 gridOffset = new Vector3(-11, 13, 0);
+    [SerializeField] private Vector3 gridOffset = new Vector3(-11, 13, 0);
     
     public PathfinderNode[,] nodes;
 
@@ -74,12 +74,14 @@ public class PathfinderGrid : MonoBehaviour
                 // calculate the position of the node
                 Vector3 nodePosition = new Vector3(x * nodeRadius, y * nodeRadius * -1, 0) + gridOffset;
                 // check if the node is walkable
-                bool isFlyable = IsNodeFlyable(nodePosition + new Vector3(0, 0, -2));
+                bool isFlyable = IsNodeFlyable(nodePosition + new Vector3(0, 0, 0));
                 // bool isWalkable = isFlyable && IsNodeWalkable(nodePosition);
                 // create the node
                 nodes[x, y] = new PathfinderNode(new Vector2Int(x, y), nodePosition, false, isFlyable);
             }
         }
+    
+        Debug.Log("Size of nodes array: " + nodes.Length);
 
         // this is ugly but time is forcing my hand
         for (int x = 1; x < gridSizeX -1; x++)
@@ -107,10 +109,10 @@ public class PathfinderGrid : MonoBehaviour
     private bool IsNodeFlyable(Vector3 nodePosition)
     {
         // get the position of the node in world space
-        Vector3 worldPosition = transform.TransformPoint(nodePosition);
+        // Vector3 worldPosition = transform.TransformPoint(nodePosition);
         // overlap sphere at the position of the node
         
-        Collider[] colliders = Physics.OverlapSphere(worldPosition, .9f, SolidLayer);
+        Collider[] colliders = Physics.OverlapSphere(nodePosition, .9f, SolidLayer);
 
         if (colliders.Length > 0)
         {
@@ -146,16 +148,22 @@ public class PathfinderGrid : MonoBehaviour
 
         foreach (PathfinderNode node in nodes)
         {
-            Gizmos.color = Color.red;
-            // if (node.isFlyable)
-            // {
-            //     Gizmos.color = Color.green;
-            //     Gizmos.DrawSphere(node.worldPosition, 0.1f);
-            // }
+            
+            // Gizmos.DrawSphere(node.worldPosition, 0.1f);
 
             if (node.isWalkable)
             {
                 Gizmos.color = Color.blue;
+                Gizmos.DrawSphere(node.worldPosition, 0.1f);
+            }
+            else if (node.isFlyable)
+            {
+                Gizmos.color = Color.green;
+                Gizmos.DrawSphere(node.worldPosition, 0.1f);
+            }
+            else
+            {
+                Gizmos.color = Color.red;
                 Gizmos.DrawSphere(node.worldPosition, 0.1f);
             }
         }
@@ -277,6 +285,16 @@ public class PathfinderGrid : MonoBehaviour
         }
 
         return lowestFCostNode;
+    }
+
+    public Vector3 GetRandomWalkablePosition()
+    {
+        PathfinderNode node = nodes[Random.Range(0, gridSizeX), Random.Range(0, gridSizeY)];
+        while (!node.isWalkable)
+        {
+            node = nodes[Random.Range(0, gridSizeX), Random.Range(0, gridSizeY)];
+        }
+        return node.worldPosition;
     }
     
     public List<Vector3> GetPath(Vector3 startPosition, Vector3 endPosition, PathfindingMode mode = PathfindingMode.Flying)

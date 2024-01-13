@@ -52,6 +52,7 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage, IFreezable
 
     void Update()
     {
+        Debug.Log("Current Health: " + Health);
         // Debug.Log("Current State: " + CurrentState);
         if (IsFrozen)
         {
@@ -204,10 +205,8 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage, IFreezable
         if (Health <= 0)
         {
             Player.AddXP(XpValue);
-            Animator.SetTrigger("Death");
             Destroy(gameObject);
         }
-        Animator.SetTrigger("Hit");
     }
 
     private IEnumerator DamageFlash()
