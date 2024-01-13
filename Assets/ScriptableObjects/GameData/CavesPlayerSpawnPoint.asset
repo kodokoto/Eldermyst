@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5b15f8509854487cace9866a42a34b1, type: 3}
   m_Name: CavesPlayerSpawnPoint
   m_EditorClassIdentifier: 
-  spawnPoint: {x: 0, y: 0, z: 0}
+  _guid: 488ab6c37fa3249739bb16c575e21166
+  spawnPoint: {x: 0, y: -2, z: 0}

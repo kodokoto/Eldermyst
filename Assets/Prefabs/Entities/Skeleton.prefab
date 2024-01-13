@@ -655,7 +655,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e7b2e3f5891e0a7449f7bd4f9420bcd5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 20.65
+      value: 20.493
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e7b2e3f5891e0a7449f7bd4f9420bcd5, type: 3}
       propertyPath: m_LocalPosition.y
@@ -663,7 +663,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e7b2e3f5891e0a7449f7bd4f9420bcd5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e7b2e3f5891e0a7449f7bd4f9420bcd5, type: 3}
       propertyPath: m_LocalRotation.w
@@ -696,6 +696,14 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: e7b2e3f5891e0a7449f7bd4f9420bcd5, type: 3}
       propertyPath: m_Name
       value: Skeleton
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e7b2e3f5891e0a7449f7bd4f9420bcd5, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e7b2e3f5891e0a7449f7bd4f9420bcd5, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: e7b2e3f5891e0a7449f7bd4f9420bcd5, type: 3}
       propertyPath: m_Controller
@@ -776,7 +784,7 @@ MonoBehaviour:
   obstructionMask:
     serializedVersion: 2
     m_Bits: 192
-  projectileSpawnPoint: {fileID: 1618873517401019619}
+  <ProjectileSpawnPoint>k__BackingField: {fileID: 1618873517401019619}
   projectile: {fileID: 1847172924239988109, guid: 51e6a1c0ce4dd4ac2a3d01c1353c5875, type: 3}
   <Health>k__BackingField: 50
   <XpValue>k__BackingField: 10

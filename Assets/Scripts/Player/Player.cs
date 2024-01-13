@@ -1,7 +1,8 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour , ITakeDamage, IGhost
+public class Player : MonoBehaviour , ITakeDamage, IGhost, IFreezable, IFiresProjectiles
 {
 
     [Header("Data")]
@@ -9,7 +10,8 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost
     [SerializeField] public PlayerData data;
     [SerializeField] public PlayerInventory PlayerInventory;
     [SerializeField] private SpellSignalSO _spellAquiredSignal;
-    [SerializeField] private Transform projectileSpawnPoint;
+    [field: SerializeField] public Transform ProjectileSpawnPoint { get; set; }
+
     private float healthRegenTimer;
     private float manaRegenTimer;
     
@@ -25,7 +27,7 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost
 
     // State
     public bool IsGhost{ get; set; } = false;
-
+    public bool IsFrozen { get; set; }
 
     void Start()
     {
@@ -155,12 +157,6 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost
         }
         xpBar.SetXP(data.currentXp);
     }
-
-    public Transform GetProjectileSpawnPoint()
-    {
-        return projectileSpawnPoint;
-    }
-
     public int GetMaxHealth()
     {
         return data.maxHealth;
@@ -247,4 +243,38 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost
         SpellHandlers.Add(spellHandler);
         _spellAquiredSignal.Trigger(spellHandler);
     }
+
+    public void Freeze(int damage)
+    {
+        IsFrozen = true;
+        TakeDamage(damage, false);
+        StartCoroutine(FreezeEffect());
+    }
+
+    public void Unfreeze()
+    {
+        IsFrozen = false;
+    }
+
+    private IEnumerator FreezeEffect()
+    {   
+        Animator animator = GetComponent<Animator>();
+        PlayerMovement movement = GetComponent<PlayerMovement>();
+        MeshRenderer MeshRenderer = GetComponent<MeshRenderer>();
+
+        animator.speed = 0;
+        movement.Freeze();
+        Color c = MeshRenderer.material.GetColor("_BaseColor");
+        // 
+        MeshRenderer.material.SetColor("_BaseColor", new Color(93, 172, 177));
+        // wait for freeze to be false
+        while (IsFrozen)
+        {
+            yield return new WaitForSeconds(0.1f);
+        }
+        MeshRenderer.material.SetColor("_BaseColor", c);  
+        animator.speed = 1;
+        movement.Unfreeze();
+    }
+
 }

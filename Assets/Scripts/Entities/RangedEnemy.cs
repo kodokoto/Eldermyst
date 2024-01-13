@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class RangedEnemy : Enemy
+public class RangedEnemy : Enemy, IFiresProjectiles
 {
-    public Transform projectileSpawnPoint;
+    [field: SerializeField] public Transform ProjectileSpawnPoint { get; set; }
     public Projectile projectile;
 
     [field: SerializeField] protected override int Health { get; set; } = 50;
@@ -17,9 +17,9 @@ public class RangedEnemy : Enemy
         Animator.SetTrigger("Attack");
         Debug.Log("Attack");
         // aim projectilspawnpoint at player so that transform.right is pointing at the player
-        projectileSpawnPoint.LookAt(Player.GetComponent<Collider>().bounds.center);
+        ProjectileSpawnPoint.LookAt(Player.GetComponent<Collider>().bounds.center);
         // spawn projectile
-        Instantiate(projectile, projectileSpawnPoint.position, projectileSpawnPoint.rotation);
+        Instantiate(projectile, ProjectileSpawnPoint.position, ProjectileSpawnPoint.rotation);
     }
 
     protected override void Chase()
