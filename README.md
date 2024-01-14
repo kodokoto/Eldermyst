@@ -15,6 +15,7 @@
 - [ ] Down arrow Up arrow Q is Shield spell.
 - [ ] Tab brings up spell book inventory.
 - [ ] Click anything to go through dialogue.
+- [ ] To bring up pause screen, press esc.
 
 ## References
 - [ ] Player and boss model and animations: https://kaylousberg.itch.io/kaykit-adventurers.
