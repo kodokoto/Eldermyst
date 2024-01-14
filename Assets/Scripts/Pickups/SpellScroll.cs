@@ -16,6 +16,11 @@ public class SpellScroll : Pickup
     void Update()
     {
         transform.Rotate(Vector3.up, 50 * Time.deltaTime);
+        // check if player already has spell
+        if (playerInventory.HasSpell(spell))
+        {
+            Destroy(gameObject);
+        }
     }
 
     protected override void OnPickup(GameObject actor)

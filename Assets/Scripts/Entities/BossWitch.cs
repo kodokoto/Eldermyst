@@ -14,7 +14,7 @@ public class BossWitch : Enemy, IPathable, IFiresProjectiles
 
     protected override int XpValue { get; set; } = 10;
 
-    [SerializeField] protected override int Health { get; set; } = 100;
+    [SerializeField] protected override int Health { get; set; } = 50;
     [SerializeField] protected override float SearchRange { get; set; } = 20f;
     [SerializeField] protected override float AttackRate { get; set; } = 1f;
     [SerializeField] protected override float AttackRange { get; set; } = 10f;
