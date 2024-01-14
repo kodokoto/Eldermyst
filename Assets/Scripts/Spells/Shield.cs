@@ -12,7 +12,7 @@ public class Shield : Spell
     {
         Player player = parent.GetComponent<Player>();
         player.SetIsShielded(true);
-        shieldParticles = Instantiate(ObjectToSpawn);
+        shieldParticles = Instantiate(ObjectToSpawn, parent.transform.position, parent.transform.rotation);
     }
 
     public override void Deactivate(GameObject parent)

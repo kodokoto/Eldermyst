@@ -20,7 +20,7 @@ MonoBehaviour:
   healthRegenRate: 1
   manaRegen: 1
   manaRegenRate: 1
-  xpLevels: 0a000000140000001e0000002800000032000000
+  xpLevels: 0f0000001e000000230000003c0000004b000000
   levelUpHealthRate: 10
   levelUpManaRate: 10
   health: 100
