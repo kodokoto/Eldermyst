@@ -21,10 +21,8 @@ MonoBehaviour:
   combos:
   - keys: 90210000912100009221000045000000
   sentences:
-  - A chill breeze arises...
-  - within the scroll you find the following glyphs
-  - "\u2190 \u2191 \u2192 E"
-  - what could they mean?
+  - You have found freeze spell!!
+  - Hold tab to see combo
   damage: 10
   radius: 10
   targetMask:

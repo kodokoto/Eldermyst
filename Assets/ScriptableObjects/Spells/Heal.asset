@@ -20,5 +20,7 @@ MonoBehaviour:
   manaCost: 10
   combos:
   - keys: 912100009121000051000000
-  sentences: []
+  sentences:
+  - You have found heal spell!!
+  - Hold tab to see combo
   _boostAmount: 50

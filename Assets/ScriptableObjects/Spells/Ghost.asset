@@ -20,4 +20,6 @@ MonoBehaviour:
   manaCost: 5
   combos:
   - keys: 932100009321000051000000
-  sentences: []
+  sentences:
+  - You have found ghost spell!
+  - Hold tab to see combo

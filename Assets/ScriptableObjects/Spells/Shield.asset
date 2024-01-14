@@ -20,5 +20,7 @@ MonoBehaviour:
   manaCost: 5
   combos:
   - keys: 932100009121000051000000
-  sentences: []
+  sentences:
+  - You have found shield spell!!
+  - Hold tab to see combo
   ObjectToSpawn: {fileID: 8949330691328959716, guid: bec396535b9f3084aa099513ad82f4cf, type: 3}
