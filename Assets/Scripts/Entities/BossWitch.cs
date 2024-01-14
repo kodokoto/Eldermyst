@@ -32,6 +32,8 @@ public class BossWitch : Enemy, IPathable, IFiresProjectiles
 
 
 
+
+
     void Awake()
     {
         // cache grid
@@ -41,6 +43,10 @@ public class BossWitch : Enemy, IPathable, IFiresProjectiles
 
     protected override void Attack()
     {
+        if (Player.IsGhost)
+        {
+            return;
+        }
         Animator.SetTrigger("Attack");
         if (Vector3.Distance(transform.position, Player.GetComponent<Collider>().bounds.center) < IceSpell.radius && IceAttackReady)
         {

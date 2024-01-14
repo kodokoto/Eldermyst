@@ -28,6 +28,10 @@ public class FlyingEnemy : Enemy, IPathable
 
     protected override void Attack()
     {
+        if (Player.IsGhost)
+        {
+            return;
+        }
         Player.TakeDamage(AttackDamage);
         Animator.SetTrigger("Attack");
     }
@@ -35,7 +39,7 @@ public class FlyingEnemy : Enemy, IPathable
     protected void Move()
     {
         // while we have a path, move along it
-        if (CurrentPath != null) {
+        if (CurrentPath != null && !Player.IsGhost) {
             if (CurrentPath.Count > 0) {
                 if (CurrentPath[0] != Vector3.zero) {
                     Quaternion targetRotation = Quaternion.LookRotation(CurrentPath[0] - transform.position).normalized;

@@ -565,6 +565,14 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: OnSave
       objectReference: {fileID: 0}
+    - target: {fileID: 2282501545339724730, guid: 3bd6cad5feb19405b846519b5e5e4fc4, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 389789843}
+    - target: {fileID: 2282501545339724730, guid: 3bd6cad5feb19405b846519b5e5e4fc4, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnRetry
+      objectReference: {fileID: 0}
     - target: {fileID: 2488812986201521139, guid: 3bd6cad5feb19405b846519b5e5e4fc4, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
