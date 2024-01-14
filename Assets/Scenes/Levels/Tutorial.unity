@@ -1039,6 +1039,14 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2214307342377480867, guid: 3bd6cad5feb19405b846519b5e5e4fc4, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1334432021}
+    - target: {fileID: 2214307342377480867, guid: 3bd6cad5feb19405b846519b5e5e4fc4, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnSave
+      objectReference: {fileID: 0}
     - target: {fileID: 2488812986201521139, guid: 3bd6cad5feb19405b846519b5e5e4fc4, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -1974,6 +1982,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 47c5f05eea39b48a88c12759a21658df, type: 3}
+--- !u!114 &1334432021 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8439867530925846649, guid: 47c5f05eea39b48a88c12759a21658df, type: 3}
+  m_PrefabInstance: {fileID: 1334432020}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26d3bfc473b3148ef9601865763fc1dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1379028254 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5025288534408550107, guid: afe6f15284db9cc4ab6225c0dff508b7, type: 3}
@@ -2384,9 +2403,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6e27eaac6cde417790f8f5bfc6aebc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gridSizeX: 200
+  gridSizeY: 150
   SolidLayer:
     serializedVersion: 2
     m_Bits: 64
+  gridOffset: {x: -11, y: 13, z: 0}
 --- !u!4 &1611693513
 Transform:
   m_ObjectHideFlags: 0

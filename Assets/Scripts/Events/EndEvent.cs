@@ -2,11 +2,15 @@ using UnityEngine;
 
 public class EndPoint : MonoBehaviour
 {
-    void OnTriggerEnter(Collider other)
+
+    public GameObject MainEnemy;
+    public GameObject winScreen;
+
+    private void Update()
     {
-        if (other.gameObject.CompareTag("Player"))
+       if (MainEnemy == null)
         {
-            // GameManager.instance.SetGameState(GameState.Won);
+            winScreen.SetActive(true);
         }
     }
 }
