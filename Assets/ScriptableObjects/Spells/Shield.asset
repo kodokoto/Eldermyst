@@ -18,6 +18,7 @@ MonoBehaviour:
   cooldownTime: 10
   activeTime: 2
   manaCost: 20
-  combos: []
+  combos:
+  - keys: 932100009121000051000000
   sentences: []
   ObjectToSpawn: {fileID: 8949330691328959716, guid: bec396535b9f3084aa099513ad82f4cf, type: 3}
