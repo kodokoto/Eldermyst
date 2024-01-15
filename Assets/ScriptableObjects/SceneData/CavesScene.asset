@@ -20,4 +20,4 @@ MonoBehaviour:
     m_EditorAssetChanged: 0
   sceneType: 0
   sceneName: Caves
-  music: {fileID: 8300000, guid: c1de2e595303f48feba44b2b0e29f6f1, type: 3}
+  music: {fileID: 0}

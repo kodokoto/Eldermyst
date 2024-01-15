@@ -22,6 +22,7 @@ public class DialogueManager : MonoBehaviour
         {
             this.dialogue = dialogue;
             index = 0;
+            text.text = "";
             ShowCurrentLine();
         }
     }
@@ -30,7 +31,10 @@ public class DialogueManager : MonoBehaviour
     {
         if (index < dialogue.Count)
         {
-            ShowCurrentLine();
+            if (_isDialogueDoneDisplaying)
+            {
+                ShowCurrentLine();
+            }
             return true;
         }
         else
@@ -51,7 +55,7 @@ public class DialogueManager : MonoBehaviour
         for (int i = 0; i < t.Length; i++)
         {
             this.text.text = t.Substring(0, i+1);
-            yield return new WaitForSecondsRealtime(0.05f);
+            yield return new WaitForSecondsRealtime(0.005f);
         }
         _isDialogueDoneDisplaying = true;
     }

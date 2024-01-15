@@ -32,6 +32,7 @@ public class AudioManager : MonoBehaviour
 
     private void PlaySFX(AudioClip audioClip, Vector3 position, float volume)
     {
+        Debug.Log("Playing SFX at " + position + " with volume " + volume);
         AudioSource.PlayClipAtPoint(audioClip, position, volume);
     }
 

@@ -25,9 +25,11 @@ public class SpellScroll : Pickup
 
     protected override void OnPickup(GameObject actor)
     {
+        _pickupAudioSignal.Trigger(_pickupSFX, actor.transform.position, 50f);
         // Add spell to player's spell list
         actor.GetComponent<Player>().AddSpell(spell);
         dialogueSignal.Trigger(spell.sentences);
+        Debug.Log("Playing SFX at " + transform.position + " with volume 50");
         Destroy(gameObject);
     }
 }
