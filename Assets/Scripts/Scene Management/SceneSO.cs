@@ -18,6 +18,5 @@ public class SceneSO : SerializableScriptableObject
 
     // webgl sucks, have to hardcode scene names
     public string sceneName;
-    
-    // TODO: scene audio goes here
+    public AudioClip music;
 }

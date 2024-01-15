@@ -42,6 +42,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Gameplay Scene is ready");
         _inputManager.EnableGameplayInput();
+
     }
 
     private void RestartGame()

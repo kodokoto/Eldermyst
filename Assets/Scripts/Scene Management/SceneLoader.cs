@@ -14,6 +14,7 @@ public class SceneLoader : MonoBehaviour
 
     [Header("Broadcasts")]
     [SerializeField] private SignalSO _onSceneReady;
+    [SerializeField] private AudioSignalSO _playSceneMusic;
 
     private SceneSO _currentScene;
     private SceneSO _sceneToLoad;
@@ -94,6 +95,7 @@ public class SceneLoader : MonoBehaviour
 
     private void StartGameplay()
 	{
+        _playSceneMusic.Trigger(_currentScene.music, Vector3.zero, 1f);
 		_onSceneReady.Trigger(); //Spawn system will spawn the PigChef in a gameplay scene
 	}
 }
