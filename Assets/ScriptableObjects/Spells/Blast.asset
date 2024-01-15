@@ -18,6 +18,7 @@ MonoBehaviour:
   cooldownTime: 3
   activeTime: 0
   manaCost: 10
+  _castSFX: {fileID: 8300000, guid: 109bfc7057e794ee088974ae30b7dba3, type: 3}
   combos:
   - keys: 922100009221000045000000
   - keys: 902100009021000045000000

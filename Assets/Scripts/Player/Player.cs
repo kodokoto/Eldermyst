@@ -11,6 +11,7 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost, IFreezable, IFiresPro
     [SerializeField] public PlayerInventory PlayerInventory;
     [SerializeField] private SpellSignalSO _spellAquiredSignal;
     [field: SerializeField] public Transform ProjectileSpawnPoint { get; set; }
+    [SerializeField] private AudioSignalSO _sfxAudioSignal;
 
     private float healthRegenTimer;
     private float manaRegenTimer;
@@ -57,6 +58,7 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost, IFreezable, IFiresPro
         {
             SpellHandler spellHandler = gameObject.AddComponent<SpellHandler>();
             spellHandler.Spell = spell;
+            spellHandler.audioSignalSO = _sfxAudioSignal;
             SpellHandlers.Add(spellHandler);
             _spellAquiredSignal.Trigger(spellHandler);
         }
@@ -247,6 +249,7 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost, IFreezable, IFiresPro
         PlayerInventory.AddSpell(spell);
         SpellHandler spellHandler = gameObject.AddComponent<SpellHandler>();
         spellHandler.Spell = spell;
+        spellHandler.audioSignalSO = _sfxAudioSignal;
         SpellHandlers.Add(spellHandler);
         _spellAquiredSignal.Trigger(spellHandler);
     }

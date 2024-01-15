@@ -17,6 +17,8 @@ public class SpellHandler : MonoBehaviour
     private float ActiveTimer;
     private bool Casting = false;
 
+    public AudioSignalSO audioSignalSO;
+
     void Start()
     {
         state = SpellState.Ready;
@@ -38,9 +40,11 @@ public class SpellHandler : MonoBehaviour
                     Spell.Activate(gameObject);
                     state = SpellState.Active;
                     ActiveTimer = Spell.activeTime;
+                    audioSignalSO.Trigger(Spell._castSFX, transform.position, 20f);
                 }
                 break;
             case SpellState.Active:
+                Casting = false;
                 if (ActiveTimer > 0)
                 {
                     ActiveTimer -= Time.deltaTime;
@@ -54,6 +58,7 @@ public class SpellHandler : MonoBehaviour
                 }
                 break;
             case SpellState.Cooldown:
+                Casting = false;
                 if (CooldownTimer > 0)
                 {
                     CooldownTimer -= Time.deltaTime;

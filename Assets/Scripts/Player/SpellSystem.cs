@@ -76,7 +76,7 @@ public class SpellSystem : MonoBehaviour
             validInputsCount = 0; // Reset valid inputs count on invalid combo
         }
 
-        _sfxAudioSignal.Trigger(clipToPlay, player.transform.position, 20f);
+        _sfxAudioSignal.Trigger(clipToPlay, player.transform.position, 40f);
     }
  private void CheckCombos()
 {
@@ -87,6 +87,7 @@ public class SpellSystem : MonoBehaviour
     {
         foreach (SpellHandler sh in player.SpellHandlers)
         {
+            if (sh.GetState() != SpellState.Ready) continue;
             foreach (SpellCombo combo in sh.Spell.combos)
             {
                 if (IsComboMatch(combo.keys, inputList))

@@ -18,6 +18,7 @@ MonoBehaviour:
   cooldownTime: 0
   activeTime: 0
   manaCost: 0
+  _castSFX: {fileID: 8300000, guid: 109bfc7057e794ee088974ae30b7dba3, type: 3}
   combos: []
   sentences: []
   projectilePrefab: {fileID: 3769169423986491440, guid: 51e6a1c0ce4dd4ac2a3d01c1353c5875, type: 3}
