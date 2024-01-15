@@ -20,3 +20,4 @@ MonoBehaviour:
     m_EditorAssetChanged: 0
   sceneType: 0
   sceneName: Tutorial
+  music: {fileID: 8300000, guid: 90962b837fa844c0f9b00b6f04ded801, type: 3}

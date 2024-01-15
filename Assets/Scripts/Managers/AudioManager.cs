@@ -6,7 +6,17 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSignalSO _sfxAudioSignal = default;
     [SerializeField] private AudioSignalSO _musicAudioSignal = default;
 
-    [SerializeField] private AudioSource _musicSource = default;
+    private AudioSource _musicSource;
+
+    private void Awake()
+    {
+        _musicSource = GetComponent<AudioSource>();
+        if (_musicSource == null)
+        {
+            Debug.LogError("No AudioSource found on AudioManager");
+        }
+        _musicSource.loop = true;
+    }
 
     private void OnEnable()
     {
@@ -29,7 +39,6 @@ public class AudioManager : MonoBehaviour
     {
         _musicSource.clip = audioClip;
         _musicSource.volume = volume;
-        _musicSource.loop = true;
         _musicSource.Play();
     }
 }
