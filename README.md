@@ -29,6 +29,7 @@
 - [ ]	Scroll: https://www.youtube.com/watch?v=I0aUMdrHqKI&t=605s
 - [ ]	VFX tutorial: https://youtube.com/watch?v=l8PxZUnMO0Q
 - [ ]   All sprites and music were made by us. The models listed above in the tutorials section was also made by us, just inspired by those tutorials. Other models not listed in references above were also made by us.
+- [ ]  font used: https://www.dafont.com/free-pixel.font
 
 
 ### Prototype
