@@ -17,7 +17,7 @@ public class PlayerData : SerializableScriptableObject
     public float healthRegenRate;
     public int manaRegen;
     public float manaRegenRate;
-    public int[] xpLevels = new int[] { 10, 20, 30, 40, 50 };
+    public int[] xpLevels = new int[] { 15, 30, 45, 60, 75 };
     public int levelUpHealthRate = 10;
     public int levelUpManaRate = 10;
 

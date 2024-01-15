@@ -14,6 +14,10 @@ public class RangedEnemy : Enemy, IFiresProjectiles
 
     protected override void Attack()
     {
+        if (Player.IsGhost)
+        {
+            return;
+        }
         Animator.SetTrigger("Attack");
         Debug.Log("Attack");
         // aim projectilspawnpoint at player so that transform.right is pointing at the player

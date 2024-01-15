@@ -17,8 +17,10 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 0b00a581f0fbbd94a9f0e1b902f816d0, type: 3}
   cooldownTime: 10
   activeTime: 3
-  manaCost: 20
+  manaCost: 10
   combos:
   - keys: 912100009121000051000000
-  sentences: []
+  sentences:
+  - You have found heal spell!!
+  - Hold tab to see combo
   _boostAmount: 50

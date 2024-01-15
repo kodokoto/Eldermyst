@@ -3,15 +3,25 @@
 
 ## Project Plan
 
-## Instructions for prototype 
-•	A goes left.
-•	D goes right.
-•	Space bar does jump and double jump.
-•	E key is projectile (shoot) spell.
-•	F key is teleport spell.
-•	R key is shield spell.
-•	Shift + direction key(A or D) is dash.
+## Play instructions 
+- [ ] A goes left.
+- [ ] D goes right.
+- [ ] Space bar does jump and double jump.
+- [ ] Shift + direction key(A or D) is dash.
+- [ ] Right arrow Right arrow E is Shoot spell.
+- [ ] Left arrow Up arrow Right arrow is Freeze spell.
+- [ ] Down arrow Down arrow Q is Ghost spell.
+- [ ] Up arrow Up arrow Q is Heal spell.
+- [ ] Down arrow Up arrow Q is Shield spell.
+- [ ] Tab brings up spell book inventory.
+- [ ] Click to go through dialogue.
+- [ ] To bring up pause screen, press esc.
 
+## References
+- [ ] Player and boss model and animations: https://kaylousberg.itch.io/kaykit-adventurers.
+- [ ] Skeleton model and staff: https://kaylousberg.itch.io/kaykit-skeletons.
+- [ ] Animation used for skeleton: https://kaylousberg.itch.io/kaykit-animations.
+- [ ] Bat model and animation: https://quaternius.itch.io/lowpoly-animated-monsters.
 
 ### Prototype
 

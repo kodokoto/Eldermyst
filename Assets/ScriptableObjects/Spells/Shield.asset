@@ -17,8 +17,10 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 891a871b7f4710440a2562618f2a399a, type: 3}
   cooldownTime: 10
   activeTime: 2
-  manaCost: 20
+  manaCost: 5
   combos:
   - keys: 932100009121000051000000
-  sentences: []
+  sentences:
+  - You have found shield spell!!
+  - Hold tab to see combo
   ObjectToSpawn: {fileID: 8949330691328959716, guid: bec396535b9f3084aa099513ad82f4cf, type: 3}

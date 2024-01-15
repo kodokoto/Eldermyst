@@ -77,6 +77,16 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 54ad604676ce7ef40b13e8a37ef91d79
+    m_Address: Assets/ScriptableObjects/GameData/BossSpawnPoint.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 057e4c4a6a60743ce80d4e224cd7897b
+    m_Address: Assets/ScriptableObjects/GameData/TutorialPlayerSpawnPoint.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 0a14e66a8f69348deb5316a410aab14f, type: 2}
   m_SchemaSet:
