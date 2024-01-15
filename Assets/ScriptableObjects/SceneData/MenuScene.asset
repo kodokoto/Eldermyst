@@ -20,4 +20,4 @@ MonoBehaviour:
     m_EditorAssetChanged: 0
   sceneType: 1
   sceneName: MainMenu
-  music: {fileID: 8300000, guid: 00422f25880474d4ebaf1065e9f90c51, type: 3}
+  music: {fileID: 8300000, guid: 051e28f54629740cba79a0738efdb173, type: 3}
