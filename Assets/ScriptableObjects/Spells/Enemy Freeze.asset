@@ -18,6 +18,7 @@ MonoBehaviour:
   cooldownTime: 0
   activeTime: 3
   manaCost: 0
+  _castSFX: {fileID: 8300000, guid: 8420020e66d894cc7941054d021ed645, type: 3}
   combos: []
   sentences: []
   damage: 20

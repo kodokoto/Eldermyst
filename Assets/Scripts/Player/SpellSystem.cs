@@ -4,11 +4,17 @@ using System.Linq;
 
 public class SpellSystem : MonoBehaviour
 {
-    private readonly Queue<KeyValuePair<SpellKey, float>> inputQueue = new();
+    private readonly List<KeyValuePair<SpellKey, float>> inputList = new();
     private readonly float maxComboDelay = 1f;
     [SerializeField] private InputManager inputManager = default;
+    [SerializeField] private AudioSignalSO _sfxAudioSignal = default;
 
-    // Define combos
+    [SerializeField] private AudioClip _combo1SFX = default;
+    [SerializeField] private AudioClip _combo2SFX = default;
+    [SerializeField] private AudioClip _combo3SFX = default;
+    [SerializeField] private AudioClip _invalidComboSFX = default;
+
+    private int validInputsCount = 0;
     private Player player;
 
     void Awake()
@@ -38,48 +44,110 @@ public class SpellSystem : MonoBehaviour
 
     private void OnSpellInput(SpellKey key)
     {
-        inputQueue.Enqueue(new KeyValuePair<SpellKey, float>(key, Time.time));
+        inputList.Add(new KeyValuePair<SpellKey, float>(key, Time.time));
+        ExpireOldInputs();
         CheckCombos();
     }
 
     private void ExpireOldInputs()
     {
-        while (inputQueue.Count > 0 && Time.time - inputQueue.Peek().Value > maxComboDelay)
+        inputList.RemoveAll(kvp => Time.time - kvp.Value > maxComboDelay);
+        if (inputList.Count == 0)
         {
-            inputQueue.Dequeue();
+            validInputsCount = 0;
         }
     }
 
-    private void CheckCombos()
+    private void PlayComboSound(bool isComboInProgress)
     {
-        if (player?.SpellHandlers != null)
+        AudioClip clipToPlay;
+        if (isComboInProgress)
         {
-            foreach (SpellHandler sh in player.SpellHandlers)
+            switch (validInputsCount % 3)
             {
-                foreach (SpellCombo combo in sh.Spell.combos)
-                {
-                    if (IsComboMatch(combo.keys))
-                    {
-                        sh.Cast();
-                        inputQueue.Clear();
-                        break; // Consider if you want to break here or allow overlapping combos
-                    }
-                }
+                case 1: clipToPlay = _combo1SFX; break;
+                case 2: clipToPlay = _combo2SFX; break;
+                default: clipToPlay = _combo3SFX; break;
             }
         }
-    }
-
-    private bool IsComboMatch(List<SpellKey> combo)
-    {
-        if (inputQueue.Count < combo.Count) return false;
-
-        var comboQueue = new Queue<SpellKey>(inputQueue.Select(kvp => kvp.Key));
-        foreach (var key in combo)
+        else
         {
-            if (comboQueue.Count == 0 || key != comboQueue.Dequeue())
-                return false;
+            clipToPlay = _invalidComboSFX;
+            validInputsCount = 0; // Reset valid inputs count on invalid combo
         }
 
-        return true;
+        _sfxAudioSignal.Trigger(clipToPlay, player.transform.position, 40f);
     }
+ private void CheckCombos()
+{
+    bool isComboComplete = false;
+    bool isPartialMatch = false;
+
+    if (player?.SpellHandlers != null)
+    {
+        foreach (SpellHandler sh in player.SpellHandlers)
+        {
+            if (sh.GetState() != SpellState.Ready) continue;
+            foreach (SpellCombo combo in sh.Spell.combos)
+            {
+                if (IsComboMatch(combo.keys, inputList))
+                {
+                    sh.Cast();
+                    isComboComplete = true;
+                    inputList.Clear();
+                    break;
+                }
+                else if (IsPartialComboMatch(combo.keys, inputList))
+                {
+                    isPartialMatch = true;
+                }
+            }
+
+            if (isComboComplete) break;
+        }
+    }
+
+    if (isComboComplete)
+    {
+        validInputsCount = 0;
+        PlayComboSound(true);
+    }
+    else if (isPartialMatch)
+    {
+        validInputsCount = (validInputsCount + 1) % 3;
+        PlayComboSound(true);
+    }
+    else
+    {
+        validInputsCount = 0;
+        PlayComboSound(false);
+    }
+}
+
+private bool IsComboMatch(List<SpellKey> combo, List<KeyValuePair<SpellKey, float>> inputs)
+{
+    if (inputs.Count < combo.Count) return false;
+
+    for (int i = inputs.Count - combo.Count, j = 0; i < inputs.Count; i++, j++)
+    {
+        if (inputs[i].Key != combo[j])
+            return false;
+    }
+
+    return true;
+}
+
+private bool IsPartialComboMatch(List<SpellKey> combo, List<KeyValuePair<SpellKey, float>> inputs)
+{
+    if (inputs.Count == 0 || combo.Count == 0 || inputs.Count > combo.Count) return false;
+
+    for (int i = 0; i < inputs.Count; i++)
+    {
+        if (inputs[i].Key != combo[i])
+            return false; // Mismatch found, not a partial combo
+    }
+
+    return true; // No mismatches found, it's a valid partial combo
+}
+
 }

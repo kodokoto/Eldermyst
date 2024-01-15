@@ -20,6 +20,11 @@ public class BossWitch : Enemy, IPathable, IFiresProjectiles
     [SerializeField] protected override float AttackRange { get; set; } = 10f;
     [SerializeField] protected override int AttackDamage { get; set; } = 10;
     [field: SerializeField] public Transform ProjectileSpawnPoint { get; set; }
+
+    [SerializeField] private AudioSignalSO _sfxAudioSignal;
+    [SerializeField] private AudioClip _IceAttackSFX = default;
+    [SerializeField] private AudioClip _attackSFX = default;
+    [SerializeField] private AudioClip _warpSFX = default;
     public Projectile projectile;
     [SerializeField] protected float movementSpeed = 3f;
 
@@ -54,6 +59,7 @@ public class BossWitch : Enemy, IPathable, IFiresProjectiles
         }
         else if (ProjectileAttackReady)
         {
+            _sfxAudioSignal.Trigger(_attackSFX, Player.transform.position, 20f);
             ProjectileSpawnPoint.LookAt(Player.GetComponent<Collider>().bounds.center);
             Instantiate(projectile, ProjectileSpawnPoint.position, ProjectileSpawnPoint.rotation);
         }
@@ -61,6 +67,7 @@ public class BossWitch : Enemy, IPathable, IFiresProjectiles
 
     private IEnumerator IceAttack()
     {
+        _sfxAudioSignal.Trigger(_IceAttackSFX, Player.transform.position, 20f);
         IceAttackReady = false;
         
         IceSpell.Activate(gameObject);
@@ -106,6 +113,7 @@ public class BossWitch : Enemy, IPathable, IFiresProjectiles
 
     public IEnumerator WarpTo(Vector3 position, float cooldown)
     {
+        _sfxAudioSignal.Trigger(_warpSFX, Player.transform.position, 20f);
         warpIsAvailable = false;
         Debug.Log("Warping");
         transform.position = position;

@@ -14,6 +14,7 @@ public class MainMenuManager : MonoBehaviour
 
     [Header("Data")]
     [SerializeField] private SceneSO _startingScene;
+    [SerializeField] private AudioClip _actionSFX;
 
     [Header("UI")]
     [SerializeField] private TMP_InputField _saveNameInputField;
@@ -22,6 +23,7 @@ public class MainMenuManager : MonoBehaviour
 
     [Header("Broadcasts")]
     [SerializeField] private LoadSceneSignalSO _loadSceneSignal;
+    [SerializeField] private AudioSignalSO _sfxAudioSignal;
 
     private List<string> _files;
 
@@ -107,6 +109,12 @@ public class MainMenuManager : MonoBehaviour
 		}
 
 	}
+
+    public void PlayActionSFX()
+    {
+        Debug.Log("Playing action sfx");
+        _sfxAudioSignal.Trigger(_actionSFX, Vector3.zero, 20f);
+    }
 
     public void QuitGame()
     {

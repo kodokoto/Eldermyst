@@ -77,6 +77,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 537e07d508ffa43958a8e626d2c77faa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _pickupAudioSignal: {fileID: 11400000, guid: 8bdf7d2c5db314106b89ecdf33aad3a4, type: 2}
+  _pickupSFX: {fileID: 8300000, guid: 187c99869fda440d6bdda784afbac324, type: 3}
   SpeedBoost: 10
   Duration: 3
 --- !u!198 &871782751610240319

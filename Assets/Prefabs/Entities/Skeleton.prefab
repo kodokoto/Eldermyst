@@ -794,7 +794,9 @@ MonoBehaviour:
   <SearchRange>k__BackingField: 20
   <AttackRate>k__BackingField: 3
   <AttackRange>k__BackingField: 19
-  <AttackDamage>k__BackingField: 10
+  <AttackDamage>k__BackingField: 50
+  _sfxAudioSignal: {fileID: 11400000, guid: 8bdf7d2c5db314106b89ecdf33aad3a4, type: 2}
+  _attackSFX: {fileID: 8300000, guid: ae7f9e7a7dd5e4a81b3790543c3d19ed, type: 3}
 --- !u!65 &4130038266600087698
 BoxCollider:
   m_ObjectHideFlags: 0

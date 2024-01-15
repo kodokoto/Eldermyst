@@ -18,12 +18,13 @@ MonoBehaviour:
   cooldownTime: 5
   activeTime: 3
   manaCost: 10
+  _castSFX: {fileID: 8300000, guid: 8420020e66d894cc7941054d021ed645, type: 3}
   combos:
   - keys: 90210000912100009221000045000000
   sentences:
   - You have found freeze spell!!
   - Hold tab to see combo
-  damage: 10
+  damage: 30
   radius: 10
   targetMask:
     serializedVersion: 2

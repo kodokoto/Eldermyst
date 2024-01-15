@@ -42,6 +42,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Gameplay Scene is ready");
         _inputManager.EnableGameplayInput();
+
     }
 
     private void RestartGame()
@@ -52,13 +53,9 @@ public class GameManager : MonoBehaviour
 
     private void SaveAndQuit()
     {
-        _loadLevelSignal.Trigger(_menuToLoad);
-    }
-
-    public void OnSave()
-    {
         _saveManager.saveFilename = playerData.playerName + ".json";
         _saveManager.SaveGame();
+        _loadLevelSignal.Trigger(_menuToLoad);
     }
 
     public void SetSpawnPoint(Vector3 spawnPoint)

@@ -8,7 +8,7 @@ using UnityEngine.VFX;
 [CreateAssetMenu(menuName = "Spells/Freeze")]
 public class Freeze : Spell
 {
-    [SerializeField] private int damage = 2;
+    [SerializeField] private int damage = 20;
     [SerializeField] public float radius = 10f;
     [SerializeField] private LayerMask targetMask;
     public GameObject ObjectToSpawn;
