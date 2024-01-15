@@ -101,11 +101,14 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   AttackPosition: {fileID: 0}
+  <Health>k__BackingField: 50
   <XpValue>k__BackingField: 10
   <SearchRange>k__BackingField: 20
   <AttackRate>k__BackingField: 1
   <AttackRange>k__BackingField: 2
-  flyingSpeed: 5
+  _sfxAudioSignal: {fileID: 11400000, guid: 8bdf7d2c5db314106b89ecdf33aad3a4, type: 2}
+  _attackSFX: {fileID: 8300000, guid: 454938d26ec674b14ba2266ea7a44312, type: 3}
+  flyingSpeed: 7
 --- !u!136 &1935416920552389087
 CapsuleCollider:
   m_ObjectHideFlags: 0

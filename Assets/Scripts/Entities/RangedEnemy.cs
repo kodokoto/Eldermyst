@@ -12,6 +12,9 @@ public class RangedEnemy : Enemy, IFiresProjectiles
     [field: SerializeField] protected override float AttackRange { get; set; } = 20f;
     [field: SerializeField] protected override int AttackDamage { get; set; } = 10;
 
+    [SerializeField] private AudioSignalSO _sfxAudioSignal;
+    [SerializeField] private AudioClip _attackSFX = default;
+
     protected override void Attack()
     {
         if (Player.IsGhost)
@@ -20,6 +23,7 @@ public class RangedEnemy : Enemy, IFiresProjectiles
         }
         Animator.SetTrigger("Attack");
         Debug.Log("Attack");
+        _sfxAudioSignal.Trigger(_attackSFX, Player.transform.position, 20f);
         // aim projectilspawnpoint at player so that transform.right is pointing at the player
         ProjectileSpawnPoint.LookAt(Player.GetComponent<Collider>().bounds.center);
         // spawn projectile

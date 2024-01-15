@@ -18301,6 +18301,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1163486976}
     - target: {fileID: 5809156591853880789, guid: f93fe2533336848f1beb77e895e9b908, type: 3}
+      propertyPath: _damageSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: 44797b1b2bbec489ca7c3108fa832368, type: 3}
+    - target: {fileID: 5809156591853880789, guid: f93fe2533336848f1beb77e895e9b908, type: 3}
       propertyPath: _sfxAudioSignal
       value: 
       objectReference: {fileID: 11400000, guid: 8bdf7d2c5db314106b89ecdf33aad3a4, type: 2}

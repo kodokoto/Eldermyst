@@ -29,7 +29,7 @@ public class Projectile : MonoBehaviour
         // if other has the same layermask as targetLayer, take damage
         if (targetLayerMask == (targetLayerMask | (1 << other.gameObject.layer)))
         {
-            other.gameObject.GetComponent<ITakeDamage>().TakeDamage(10);
+            other.gameObject.GetComponent<ITakeDamage>().TakeDamage(50);
             Destroy(gameObject);
         } 
         else if (other.gameObject.layer == LayerMask.NameToLayer("Ground") || other.gameObject.layer == LayerMask.NameToLayer("StickyWall"))

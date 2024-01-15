@@ -15,6 +15,9 @@ public class FlyingEnemy : Enemy, IPathable
     [field: SerializeField] protected override float SearchRange { get; set; } = 20f;
     [field: SerializeField] protected override float AttackRate { get; set; } = 1f;
     [field: SerializeField] protected override float AttackRange { get; set; } = 3f;
+    
+    [SerializeField] private AudioSignalSO _sfxAudioSignal;
+    [SerializeField] private AudioClip _attackSFX = default;
     protected override int AttackDamage { get; set; } = 10;
 
     [SerializeField] protected float flyingSpeed = 5f;
@@ -32,6 +35,7 @@ public class FlyingEnemy : Enemy, IPathable
         {
             return;
         }
+        _sfxAudioSignal.Trigger(_attackSFX, Player.transform.position, 20f);
         Player.TakeDamage(AttackDamage);
         Animator.SetTrigger("Attack");
     }

@@ -11,7 +11,8 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost, IFreezable, IFiresPro
     [SerializeField] public PlayerInventory PlayerInventory;
     [SerializeField] private SpellSignalSO _spellAquiredSignal;
     [field: SerializeField] public Transform ProjectileSpawnPoint { get; set; }
-    [SerializeField] private AudioSignalSO _sfxAudioSignal;
+
+    [SerializeField] private AudioClip _damageSFX = default;
 
     private float healthRegenTimer;
     private float manaRegenTimer;
@@ -23,8 +24,10 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost, IFreezable, IFiresPro
 
     public List<SpellHandler> SpellHandlers;
 
+    [Header("Broadcasts")]
     // Broadcasts
     [SerializeField] private SignalSO _onPlayerDeath;
+    [SerializeField] private AudioSignalSO _sfxAudioSignal;
 
     // State
     public bool IsGhost{ get; set; } = false;
@@ -122,6 +125,7 @@ public class Player : MonoBehaviour , ITakeDamage, IGhost, IFreezable, IFiresPro
     {
         if (!data.isShielded)
         {
+             _sfxAudioSignal.Trigger(_damageSFX, transform.position, 20f);
              RemoveHealth(damage);
         }
     }
