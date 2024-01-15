@@ -5,7 +5,7 @@ public class RangedEnemy : Enemy, IFiresProjectiles
     [field: SerializeField] public Transform ProjectileSpawnPoint { get; set; }
     public Projectile projectile;
 
-    [field: SerializeField] protected override int Health { get; set; } = 50;
+    [field: SerializeField] protected override int Health { get; set; } = 100;
     [field: SerializeField] protected override int XpValue { get; set; } = 10;
     [field: SerializeField] protected override float SearchRange { get; set; } = 20f;
     [field: SerializeField] protected override float AttackRate { get; set; } = 3f;

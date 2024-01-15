@@ -22,6 +22,14 @@
 - [ ] Skeleton model and staff: https://kaylousberg.itch.io/kaykit-skeletons.
 - [ ] Animation used for skeleton: https://kaylousberg.itch.io/kaykit-animations.
 - [ ] Bat model and animation: https://quaternius.itch.io/lowpoly-animated-monsters.
+- [ ] Tutorials that inspired models (made by us, but used these videos to learn how to make them):
+- [ ]	Bush and tree: https://www.youtube.com/watch?v=DEgzuMmJtu8&t=1317s
+- [ ]	Tree body: https://www.youtube.com/watch?v=p-9pgZI3inI&t=284s
+- [ ]	Lamp: https://www.youtube.com/watch?v=5JT__rCvVQ4&t=257s
+- [ ]	Scroll: https://www.youtube.com/watch?v=I0aUMdrHqKI&t=605s
+- [ ]	VFX tutorial: https://youtube.com/watch?v=l8PxZUnMO0Q
+- [ ]   All sprites and music were made by us. The models listed above in the tutorials section was also made by us, just inspired by those tutorials. Other models not listed in references above were also made by us.
+
 
 ### Prototype
 
