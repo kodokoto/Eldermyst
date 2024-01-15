@@ -24,6 +24,7 @@ public class MainMenuManager : MonoBehaviour
     [Header("Broadcasts")]
     [SerializeField] private LoadSceneSignalSO _loadSceneSignal;
     [SerializeField] private AudioSignalSO _sfxAudioSignal;
+
     private List<string> _files;
 
     public void OnEnable()

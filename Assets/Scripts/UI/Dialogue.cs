@@ -9,8 +9,6 @@ public class DialogueManager : MonoBehaviour
     private int index;
     private List<string> dialogue; 
 
-    private bool _isDialogueDoneDisplaying = true;
-
     public void Awake()
     {
         text = GetComponentInChildren<TextMeshProUGUI>();
@@ -18,23 +16,17 @@ public class DialogueManager : MonoBehaviour
 
     public void SetDialogue(List<string> dialogue)
     {
-        if (_isDialogueDoneDisplaying)
-        {
             this.dialogue = dialogue;
             index = 0;
             text.text = "";
             ShowCurrentLine();
-        }
     }
 
     public bool AdvanceLine()
     {
         if (index < dialogue.Count)
         {
-            if (_isDialogueDoneDisplaying)
-            {
                 ShowCurrentLine();
-            }
             return true;
         }
         else
@@ -51,12 +43,10 @@ public class DialogueManager : MonoBehaviour
 
     public IEnumerator DisplayText(string t)
     {
-        _isDialogueDoneDisplaying = false;
         for (int i = 0; i < t.Length; i++)
         {
             this.text.text = t.Substring(0, i+1);
             yield return new WaitForSecondsRealtime(0.005f);
         }
-        _isDialogueDoneDisplaying = true;
     }
 }

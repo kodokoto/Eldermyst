@@ -24,7 +24,7 @@ MonoBehaviour:
   sentences:
   - You have found freeze spell!!
   - Hold tab to see combo
-  damage: 10
+  damage: 30
   radius: 10
   targetMask:
     serializedVersion: 2

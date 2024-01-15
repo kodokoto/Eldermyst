@@ -199,7 +199,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.509
+  m_Volume: 0.513
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -297,6 +297,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sfxAudioSignal: {fileID: 11400000, guid: 8bdf7d2c5db314106b89ecdf33aad3a4, type: 2}
   _musicAudioSignal: {fileID: 11400000, guid: e7e5f79878db1460c88407d694ef4d70, type: 2}
+  _sfxVolumeSignal: {fileID: 11400000, guid: 052dbf8d2d4254a79aba3d4caa724fc5, type: 2}
+  _musicVolumeSignal: {fileID: 11400000, guid: 866c3c78f64774f4cbe53b34c96a8fec, type: 2}
 --- !u!4 &1316918439
 Transform:
   m_ObjectHideFlags: 0

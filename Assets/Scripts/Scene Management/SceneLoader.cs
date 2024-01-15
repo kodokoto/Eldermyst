@@ -96,6 +96,6 @@ public class SceneLoader : MonoBehaviour
     private void StartGameplay()
 	{
         _playSceneMusic.Trigger(_currentScene.music, Vector3.zero, 1f);
-		_onSceneReady.Trigger(); //Spawn system will spawn the PigChef in a gameplay scene
+		_onSceneReady.Trigger();
 	}
 }
