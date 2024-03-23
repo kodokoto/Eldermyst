@@ -1,73 +1,35 @@
 # Project-Hogsmeade
-2.5D wizard platformer
+A 2.5D wizard-themed platformer made in Unity. Featuring a combo-based spell system, a variety of enemies, and a unique spell book inventory system.
 
-## Project Plan
+![Gameplay](https://i.imgur.com/W9fpqNY.gif)
 
-## Play instructions 
-- [ ] A goes left.
-- [ ] D goes right.
-- [ ] Space bar does jump and double jump.
-- [ ] Shift + direction key(A or D) is dash.
-- [ ] Right arrow Right arrow E is Shoot spell.
-- [ ] Left arrow Up arrow Right arrow is Freeze spell.
-- [ ] Down arrow Down arrow Q is Ghost spell.
-- [ ] Up arrow Up arrow Q is Heal spell.
-- [ ] Down arrow Up arrow Q is Shield spell.
-- [ ] Tab brings up spell book inventory.
-- [ ] Click to go through dialogue.
-- [ ] To bring up pause screen, press esc.
-
-## References
-- [ ] Player and boss model and animations: https://kaylousberg.itch.io/kaykit-adventurers.
-- [ ] Skeleton model and staff: https://kaylousberg.itch.io/kaykit-skeletons.
-- [ ] Animation used for skeleton: https://kaylousberg.itch.io/kaykit-animations.
-- [ ] Bat model and animation: https://quaternius.itch.io/lowpoly-animated-monsters.
-- [ ] Tutorials that inspired models (made by us, but used these videos to learn how to make them):
-- [ ]	Bush and tree: https://www.youtube.com/watch?v=DEgzuMmJtu8&t=1317s
-- [ ]	Tree body: https://www.youtube.com/watch?v=p-9pgZI3inI&t=284s
-- [ ]	Lamp: https://www.youtube.com/watch?v=5JT__rCvVQ4&t=257s
-- [ ]	Scroll: https://www.youtube.com/watch?v=I0aUMdrHqKI&t=605s
-- [ ]	VFX tutorial: https://youtube.com/watch?v=l8PxZUnMO0Q
-- [ ]   All sprites and music were made by us. The models listed above in the tutorials section was also made by us, just inspired by those tutorials. Other models not listed in references above were also made by us.
-- [ ]  font used: https://www.dafont.com/free-pixel.font
+You can play it right now on the browser right [here](https://kodokoto.github.io/Eldermyst/).
 
 
-### Prototype
+## Getting started
 
+### Prerequisites
 
+- [Unity 2020.3.14f1](https://unity.com/)
 
-- [x] player script, which holds the different properties for a player and proides helper methods for interacting with the player.
-- [x] player movement script, with custom logic for jumping, double jumping, and wall jumping.
-- [x] spell system, casting different spells. Including validation, cooldowns and sync it to the players mana.
-- [x] script for pickups and prefabs for potions.
-- [x] simple HUD, which displays the players health and mana.
-- [x] simple enemy AI, which targets the player and throws projectiles at them.
-- [x] basic menu system, with start game, options and quit buttons.
-- [ ] simple tilemap system for creating levels 
-- [ ] different types of terrains that affect the player, i.e by damaging, slowing or trapping them.
-- [ ] xp and level system for the player 
-- [ ] build at least 2 levels, whcih include transitions from one level to the next.
-- [ ] add win/lose states
-- [ ] build a save/load state and menu
-- [ ] add a simple instructions scene
+### Features
 
-
-### Full Game
-
-- [ ] Write lore
-- [ ] Implement tilemap rules
-- [ ] Spell slot system
-- [ ] Implement full stat system
-- [ ] add more spells, enemies, terrains and pickups
-- [ ] Create entity sprites and animations
-- [ ] Create terrain sprites
-- [ ] Create spectial fx sprites and animations
-- [ ] Create sound fx and music
-- [ ] Create lore dialogues
-- [ ] Create lore cutscenes
-- [ ] add boss battle
-- [ ] add more settings to the options menu such as button mapping and diffictuly
-- [ ] Add a win state
+- [x] Custom render pipeline with post-processing effects for pixelation.
+- [ ] Custom player controller with double jump, wall jump, and dash mechanics.
+- [ ] Combo-based spell system with 5 different spells.
+- [ ] Spell book inventory system.
+- [ ] 3 different enemy types.
+- [ ] 3 different terrains that affect the player.
+- [ ] 3 different pickups.
+- [ ] 3 levels 
+- [ ] Save/load system.
+- [ ] Main menu, pause menu, and win/lose screens.
+- [ ] Sound effects and music.
+- [ ] Lore and dialogue system.
+- [ ] Boss battle.
+- [ ] XP and level system.
+- [ ] Settings menu 
+- 
  
 ## Contrubution Guidelines
 
