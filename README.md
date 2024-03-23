@@ -1,11 +1,6 @@
 # Project-Hogsmeade
 A 2.5D wizard-themed platformer made in Unity. Featuring a combo-based spell system, a variety of enemies, and a unique spell book inventory system.
 
-![Gameplay](https://i.imgur.com/W9fpqNY.gif)
-
-You can play it right now on the browser right [here](https://kodokoto.github.io/Eldermyst/).
-
-
 ## Getting started
 
 ### Prerequisites
@@ -15,21 +10,20 @@ You can play it right now on the browser right [here](https://kodokoto.github.io
 ### Features
 
 - [x] Custom render pipeline with post-processing effects for pixelation.
-- [ ] Custom player controller with double jump, wall jump, and dash mechanics.
-- [ ] Combo-based spell system with 5 different spells.
-- [ ] Spell book inventory system.
-- [ ] 3 different enemy types.
-- [ ] 3 different terrains that affect the player.
-- [ ] 3 different pickups.
-- [ ] 3 levels 
-- [ ] Save/load system.
-- [ ] Main menu, pause menu, and win/lose screens.
-- [ ] Sound effects and music.
-- [ ] Lore and dialogue system.
-- [ ] Boss battle.
-- [ ] XP and level system.
-- [ ] Settings menu 
-- 
+- [x] Custom player controller with double jump, wall jump, and dash mechanics.
+- [x] Combo-based spell system with 5 different spells.
+- [x] Spell book inventory system.
+- [x] 3 different enemy types.
+- [x] 3 different terrains that affect the player.
+- [x] 3 different pickups.
+- [x] 3 levels 
+- [x] Save/load system.
+- [x] Main menu, pause menu, and win/lose screens.
+- [x] Sound effects and music.
+- [x] Lore and dialogue system.
+- [x] Boss battle.
+- [x] XP and level system.
+- [x] Settings menu 
  
 ## Contrubution Guidelines
 
