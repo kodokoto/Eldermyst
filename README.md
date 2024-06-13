@@ -1,4 +1,4 @@
-# Project-Hogsmeade
+# Eldermyst
 A 2.5D wizard-themed platformer made in Unity. Featuring a combo-based spell system, a variety of enemies, and a unique spell book inventory system.
 
 ![Gameplay](./Eldermyst%20(1).gif)
