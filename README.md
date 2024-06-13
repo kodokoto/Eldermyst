@@ -3,8 +3,7 @@ A 2.5D wizard-themed platformer made in Unity. Featuring a combo-based spell sys
 
 ![Gameplay](./Eldermyst%20(1).gif)
 
-You can play the game right now on your browser [here](https://kodokoto.github.io/Eldermyst/)
-
+You can play the game right now on your browser [here](https://kodokoto.github.io/Eldermyst-build/)
 ## Getting started
 
 ### Prerequisites
